@@ -1,7 +1,7 @@
 
 package OODoc::Text::Structure;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Text';
 
 use strict;
@@ -57,6 +57,11 @@ sub niceName()
 
 
 sub path() { confess "Not implemented" }
+
+#-------------------------------------------
+
+
+sub findEntry($) { confess "Not implemented" }
 
 #-------------------------------------------
 

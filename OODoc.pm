@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Object';
 
 use strict;
@@ -14,9 +14,6 @@ use File::Copy;
 use File::Spec;
 use File::Basename;
 use IO::File;
-
-
-#-------------------------------------------
 
 
 #-------------------------------------------

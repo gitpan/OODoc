@@ -116,6 +116,16 @@ Read the manifest file.
 
 =back
 
+$obj-E<gt>B<relative>(FILENAME)
+
+=over 4
+
+Returns the name of the file relative to the location of the MANIFEST
+file.  The MANIFEST file should always be in top of the directory tree,
+so the FILENAME should be in the same directory and below.
+
+=back
+
 $obj-E<gt>B<write>
 
 =over 4
@@ -207,11 +217,18 @@ I<Error:> Cannot read manifest file $filename: $!
 
 The manifest file could not be opened for reading.
 
+I<Warning:> MANIFEST file $name lists filename outside (sub)directory: $file
+
+The MANIFEST file of a distributed package should be located in the top
+directory of that packages.  All files of the distribution are in that
+same directory, or one of its sub-directories, otherwise they will not
+be packaged.
+
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -224,7 +241,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -261,7 +261,7 @@ $obj-E<gt>B<findOption>(NAME)
 
 =over 4
 
-Does a little more thorrow job than L<option()|"Collected"> bu searching the inherited
+Does a little more thorrow job than L<option()|OODoc::Text::Subroutine/"Collected"> bu searching the inherited
 options for this subroutine as well.
 
 =back
@@ -366,9 +366,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> subroutine $name extended by different type:
 
@@ -399,7 +399,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -1,7 +1,7 @@
 
 package OODoc::Text::SubSection;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -19,6 +19,13 @@ sub init($)
     $self->SUPER::init($args) or return;
 
     $self;
+}
+
+#-------------------------------------------
+
+sub findEntry($)
+{  my ($self, $name) = @_;
+   $self->name eq $name ? $self : ();
 }
 
 #-------------------------------------------

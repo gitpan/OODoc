@@ -1,7 +1,7 @@
 
 package OODoc::Text::Section;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -48,6 +48,15 @@ sub findSubroutine($)
     }
 
     undef;
+}
+
+#-------------------------------------------
+
+sub findEntry($)
+{   my ($self, $name) = @_;
+    return $self if $self->name eq $name;
+    my $subsect = $self->subsection($name);
+    defined $subsect ? $subsect : ();
 }
 
 #-------------------------------------------

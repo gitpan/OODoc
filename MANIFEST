@@ -43,6 +43,7 @@ OODoc/Text/SubSection.pod
 OODoc/Text/Subroutine.pm
 OODoc/Text/Subroutine.pod
 README.examples
+examples/mailbox.tar.gz
 examples/mimetypes.tar.gz
 examples/oodoc.tar.gz
 t/00works.t

@@ -1,7 +1,7 @@
 
 package OODoc::Object;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 
 use strict;
 use warnings;

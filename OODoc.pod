@@ -33,7 +33,7 @@ the output of the formatters to your taste using templates, although
 it is not donfigurable in full extend.
 
 Please contribute ideas.  Have a look at the main website of this
-project at C<http://perl.overmeer.net/oodoc/>.
+project at L<http://perl.overmeer.net/oodoc/>.
 
 
 =head1 OVERLOADED
@@ -177,7 +177,7 @@ $obj-E<gt>B<selectFiles>(WHICH, LIST)
 
 Returns two array references: the first with files to process, and the second
 with files which do not need to be processed.  WHICH comes from
-L<processFiles(select)|"Parser"> and the LIST are files from a manifest.
+L<processFiles(select)|OODoc/"Parser"> and the LIST are files from a manifest.
 
 =back
 
@@ -207,8 +207,8 @@ $obj-E<gt>B<prepare>(OPTIONS)
 =over 4
 
 Add information to the documentation tree about inheritance relationships
-of the packages.  C<prepare> must be called between L<processFiles()|"Parser">
-and L<create()|"Formatter">.
+of the packages.  C<prepare> must be called between L<processFiles()|OODoc/"Parser">
+and L<create()|OODoc/"Formatter">.
 
  Option   Defined in  Default      
  verbose              <from object>
@@ -250,7 +250,7 @@ or an instantiated formatter.
 
 =over 4
 
-The value is passed on to L<OODoc::Format::createManual(append)|"Page generation">,
+The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"Page generation">,
 but the behavior is formatter dependent.
 
 =back
@@ -277,7 +277,7 @@ is given, no file will be written for this.
 
 =over 4
 
-Options passed to L<OODoc::Format::createManual(format_options)|"Page generation"> when
+Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"Page generation"> when
 a manual page has to be produced.  See the applicable formatter
 manual page for the possible flags and values.
 
@@ -287,7 +287,7 @@ manual page for the possible flags and values.
 
 =over 4
 
-Passed to L<OODoc::Format::createManual(template)|"Page generation">, and defines the
+Passed to L<OODoc::Format::createManual(template)|OODoc::Format/"Page generation">, and defines the
 location of the set of pages which has to be created for each manual
 page.  Some formatters do not support templates and the valid values
 are formatter dependent.
@@ -299,7 +299,7 @@ are formatter dependent.
 =over 4
 
 Other files which have to be copied
-passed to L<OODoc::Format::createOtherPages(source)|"Page generation">.
+passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Page generation">.
 
 =back
 
@@ -309,7 +309,7 @@ passed to L<OODoc::Format::createOtherPages(source)|"Page generation">.
 
 Selects the files which are to be processed for special markup information.
 Other files, like image files, will be simply copied.  The value will be
-passed to L<OODoc::Format::createOtherPages(process)|"Page generation">.
+passed to L<OODoc::Format::createOtherPages(process)|OODoc::Format/"Page generation">.
 
 =back
 
@@ -439,9 +439,9 @@ The formatter which is specified does not compile, so can not be used.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> no file $fn to include in the distribution
 
@@ -482,7 +482,7 @@ documentation.
 
 I<Error:> use regex, code reference or array for file selection
 
-The L<processFiles(select)|"Parser"> option is not understood.  You may specify
+The L<processFiles(select)|OODoc/"Parser"> option is not understood.  You may specify
 an ARRAY, regular expression, or a code reference.
 
 
@@ -579,7 +579,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -264,7 +264,7 @@ $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
 =over 4
 
-Call L<OODoc::Text::Structure::all()|"Collected"> on all chapters, passing the METHOD
+Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Collected"> on all chapters, passing the METHOD
 and PARAMETERS.  In practice, this means that you can simply collect
 kinds of information from various parts within the manual page.
 
@@ -304,7 +304,7 @@ $obj-E<gt>B<ownSubroutines>
 =over 4
 
 Returns only the subroutines which are described in this manual page
-itself.  L<subroutines()|"Collected"> returns them all.
+itself.  L<subroutines()|OODoc::Manual/"Collected"> returns them all.
 
 =back
 
@@ -512,9 +512,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Error:> no name in manual in $source
 
@@ -571,7 +571,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

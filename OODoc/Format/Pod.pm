@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Format';
 
 use strict;
@@ -28,7 +28,7 @@ sub link($$;$)
 
     return "L<$text$object>" if $object->isa('OODoc::Manual');
 
-    my $manlink = $manual eq $object->manual ? '' : $object->manual.'/';
+    my $manlink = defined $manual ? $object->manual.'/' : '';
 
       $object->isa('OODoc::Text::Structure') ? qq(L<$text$manlink"$object">)
     : confess "cannot link to a ".ref $object;
@@ -45,9 +45,10 @@ sub createManual($@)
 
     print $manual->orderedChapters." chapters in $manual\n" if $verbose==3;
     (my $podname = $manual->source) =~ s/\.pm$/.pod/;
-    $self->manifest->add($podname);
 
     my $podfile  = File::Spec->catfile($self->workdir, $podname);
+    $self->manifest->add($podfile);
+
     my $output  = IO::File->new($podfile, "w")
         or die "ERROR: cannot write pod manual at $podfile: $!";
 
@@ -236,17 +237,18 @@ sub showDiagnostics(@)
 sub chapterInheritance(@)
 {   my ($self, %args) = @_;
 
-    my $package = $args{manual} or confess;
-    my $output  = $args{output} or confess;
+    my $package  = $args{manual} or confess;
+    my $output   = $args{output} or confess;
+
+    my $realized = $package->realizes;
+    my @supers   = (ref $realized ? $realized : $package)->superClasses;
+
+    return unless $realized || @supers;
 
     $output->print("\n=head1 INHERITANCE\n");
 
-    my @supers = $package->superClasses;
-
-    if(my $realized = $package->realizes)
-    {   $output->print("\n $package realizes a $realized\n");
-        @supers = $realized->superClasses if ref $realized;
-    }
+    $output->print("\n $package realizes a $realized\n")
+       if $realized;
 
     if(my @extras = $package->extraCode)
     {   $output->print("\n $package has extra code in\n");

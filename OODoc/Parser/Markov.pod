@@ -50,7 +50,7 @@ OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
 =over 4
 
 Reference to an array which contains references to match-action pairs,
-as accepted by L<rule()|"Parsing a file">.  These rules get preference over the existing
+as accepted by L<rule()|OODoc::Parser::Markov/"Parsing a file">.  These rules get preference over the existing
 rules.
 
 =back
@@ -170,7 +170,13 @@ $obj-E<gt>B<cleanupHtml>(FORMATTER, MANUAL, STRING)
 
 =back
 
-$obj-E<gt>B<cleanupHtmlLink>(FORMATTER, MANUAL, LINK)
+$obj-E<gt>B<cleanupHtmlL>(FORMATTER, MANUAL, LINK)
+
+=over 4
+
+=back
+
+$obj-E<gt>B<cleanupHtmlM>(FORMATTER, MANUAL, LINK)
 
 =over 4
 
@@ -188,7 +194,16 @@ $obj-E<gt>B<cleanupPodLink>(FORMATTER, MANUAL, LINK)
 
 =back
 
-$obj-E<gt>B<decomposeLink>(MANUAL, LINK)
+$obj-E<gt>B<decomposeL>(MANUAL, LINK)
+
+=over 4
+
+Decompose the L-tags.  These tags are described in L<perlpod>, but
+they will not refer to items: only headers.
+
+=back
+
+$obj-E<gt>B<decomposeM>(MANUAL, LINK)
 
 =over 4
 
@@ -283,6 +298,9 @@ first position of a line.  Other lines in a method are always indented,
 which means that these debugging lines are clearly visible.  You may
 simply ingnore this warning.
 
+I<Warning:> Manual $manual links to unknown entry "$item" in $manual
+
+
 I<Error:> The formatter type $class is not known for cleanup
 
 Text blocks have to get the finishing touch in the final formatting
@@ -327,6 +345,9 @@ I<Warning:> doc did not end in $input
 When the whole $input was parsed, the documentation part was still open.
 Probably you forgot to terminate it with a C<=cut>.
 
+I<Warning:> empty L link in $manual
+
+
 I<Error:> example outside chapter in $file line $number
 
 An example can belong to a subroutine, chapter, section, and subsection.
@@ -335,9 +356,9 @@ the file.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> no diagnostic message supplied in $file line $number
 
@@ -518,16 +539,52 @@ to manuals as well, however then the POD output filter will modify the
 manual page while converting it to other manual formats.
 
 Syntax of the C<M>-link:
- ME<lt>OODoc::ObjectE<gt>
- ME<lt>OODoc::Object::new()E<gt>
- ME<lt>OODoc::Object::new(verbose)E<gt>
- ME<lt>new()E<gt>
- ME<lt>new(verbose)E<gt>
+ M E<lt> OODoc::Object E<gt>
+ M E<lt> OODoc::Object::new() E<gt>
+ M E<lt> OODoc::Object::new(verbose) E<gt>
+ M E<lt> new() E<gt>
+ M E<lt> new(verbose) E<gt>
 
 These links refer to a manual page, a subroutine within a manual page, and
 an option of a subroutine respectively.  And then two abbreviations are
 shown: they refer to subroutines of the same manual page, in which case
 you may refer to inherited documentation as well.
+
+=head3 The L-link
+
+The standard POD defines a C<L> markup tag.  This can also be used with
+this Markov parser.
+
+The following syntaxes are supported:
+ L E<lt> manual E<gt>
+ L E<lt> manual/section E<gt>
+ L E<lt> manual/"section" E<gt>
+ L E<lt> manual/subsection E<gt>
+ L E<lt> manual/"subsection" E<gt>
+ L E<lt> /section E<gt>
+ L E<lt> /"section" E<gt>
+ L E<lt> /subsection E<gt>
+ L E<lt> /"subsection" E<gt>
+ L E<lt> "section" E<gt>
+ L E<lt> "subsection" E<gt>
+ L E<lt> unix-manual E<gt>
+ L E<lt> url E<gt>
+ 
+In the above, I<manual> is the name of a manual, I<section> the name of
+any section (in that manual, by default the current manual), and
+I<subsection> a subsection (in that manual, by default the current manual).
+
+The I<unix-manual> MUST be formatted with its chapter number, for instance
+C<cat(1)>, otherwise a link will be created.  See the following examples
+in the html version of these manual pages:
+
+ M E<lt> perldoc E<gt>              illegal: not in distribution
+ L E<lt> perldoc E<gt>              L<perldoc>
+ L E<lt> perldoc(1perl) E<gt>       L<perldoc(1perl)>
+
+ M E<lt> OODoc::Object E<gt>        L<OODoc::Object|OODoc::Object>
+ L E<lt> OODoc::Object E<gt>        L<OODoc::Object>
+ L E<lt> OODoc::Object(3pm) E<gt>   L<OODoc::Object(3pm)>
 
 =head2 Grouping subroutines
 
@@ -621,7 +678,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -90,9 +90,9 @@ platform dependend black hole is used (/dev/null on UNIX).
 After the manuals have been parsed into objects, the information can
 be formatted in various ways, for instance into POD and HTML.  However,
 the parsing is not yet complete: the structure has been decomposed 
-with L<parse()|"Parsing a file">, but the text blocks not yet.  This is because the
+with L<parse()|OODoc::Parser/"Parsing a file">, but the text blocks not yet.  This is because the
 transformations which are needed are context dependent.  For each
-text section L<cleanup()|"Formatting text pieces"> is called for the final touch.
+text section L<cleanup()|OODoc::Parser/"Formatting text pieces"> is called for the final touch.
 
 $obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
 
@@ -196,9 +196,9 @@ the object.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -211,7 +211,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -73,14 +73,14 @@ OODoc::Text::Section-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option       Defined in       Default                  
- chapter                       <required>               
- container    L<OODoc::Text>   L<new(chapter)|"METHODS">
- description  L<OODoc::Text>   C<''>                    
- level        L<OODoc::Text::Structure>  C<2>                     
- linenr       L<OODoc::Text>   <required>               
- name         L<OODoc::Text>   undef                    
- type         L<OODoc::Text>   C<'Section'>             
+ Option       Defined in       Default                                       
+ chapter                       <required>                                    
+ container    L<OODoc::Text>   L<new(chapter)|OODoc::Text::Section/"METHODS">
+ description  L<OODoc::Text>   C<''>                                         
+ level        L<OODoc::Text::Structure>  C<2>                                          
+ linenr       L<OODoc::Text>   <required>                                    
+ name         L<OODoc::Text>   undef                                         
+ type         L<OODoc::Text>   C<'Section'>                                  
 
 . chapter OBJECT
 
@@ -168,6 +168,14 @@ $obj-E<gt>B<chapter>
 =over 4
 
 Returns the chapter object for this section.
+
+=back
+
+$obj-E<gt>B<findEntry>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
 
 =back
 
@@ -382,9 +390,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -397,7 +405,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

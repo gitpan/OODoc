@@ -134,7 +134,7 @@ $obj-E<gt>B<cleanupString>(MANUAL, OBJECT)
 
 =over 4
 
-The general L<cleanup()|"Page generation"> is too over eager: it turns all pieces of text
+The general L<cleanup()|OODoc::Format/"Page generation"> is too over eager: it turns all pieces of text
 into paragraphs.  So things, like names of chapters, are not paragraphs
 at all: these simple strings are to be cleaned from paragraph information.
 
@@ -680,9 +680,9 @@ I<Error:> illegal value to show_sections: $show_sec
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> missing required chapter $name in $manual
 
@@ -743,7 +743,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

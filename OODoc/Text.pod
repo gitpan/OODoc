@@ -92,7 +92,7 @@ All text objects except chapters are contained in some other object.
 =over 4
 
 The text which is contained in the body of this text item.  Often, this
-is filled in later by L<openDescription()|"Collected">.
+is filled in later by L<openDescription()|OODoc::Text/"Collected">.
 
 =back
 
@@ -180,7 +180,7 @@ $obj-E<gt>B<manual>([NAME])
 
 Without a NAME, the manual of the text object is returned. With a NAME,
 the manual with that name is returned, even when that does not have a
-relation to the object: it calls L<OODoc::Object::manual()|"Manual Repository">.
+relation to the object: it calls L<OODoc::Object::manual()|OODoc::Object/"Manual Repository">.
 
 =back
 
@@ -324,9 +324,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Error:> no text container specified for the $type object
 
@@ -345,7 +345,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

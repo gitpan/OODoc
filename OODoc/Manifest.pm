@@ -1,7 +1,7 @@
 
 package OODoc::Manifest;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Object';
 
 use strict;
@@ -9,6 +9,7 @@ use warnings;
 
 use Carp;
 use IO::File;
+use File::Basename 'dirname';
 
 
 use overload '@{}' => sub { [ shift->files ] };
@@ -45,9 +46,9 @@ sub files() { keys %{shift->{O_files}} }
 sub add($)
 {   my $self = shift;
     while(@_)
-    {   my $filename = shift;
-        $self->modified(1) unless exists $self->{O_file}{$filename};
-        $self->{O_files}{$filename}++;
+    {   my $add = $self->relative(shift);
+        $self->modified(1) unless exists $self->{O_file}{$add};
+        $self->{O_files}{$add}++;
     }
     $self;
 }
@@ -96,6 +97,25 @@ sub write()
 }
 
 sub DESTROY() { shift->write }
+
+#-------------------------------------------
+
+
+sub relative($)
+{   my ($self, $filename) = @_;
+    my $dir = dirname $self->filename;
+    return $filename if $dir eq '.';
+
+    if(substr($filename, 0, length($dir)+1) eq "$dir/")
+    {   substr $filename, 0, length($dir)+1, '';
+        return $filename;
+    }
+
+    warn "WARNING: MANIFEST file ".$self->filename
+            . " lists filename outside (sub)directory: $filename\n";
+
+    $filename;
+}
 
 #-------------------------------------------
 

@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.05';
+$VERSION = '0.06';
 use base 'OODoc::Parser';
 
 use strict;
@@ -20,6 +20,9 @@ use OODoc::Manual;
 use Carp;
 use File::Spec;
 use IO::File;
+
+my $url_modsearch = "http://search.cpan.org/perldoc?";
+my $url_coderoot  = 'CODE';
 
 
 #-------------------------------------------
@@ -261,7 +264,7 @@ sub docCut($$$$)
 
 sub docChapter($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
-    $line =~ s/^\=chapter\s+//;
+    $line =~ s/^\=(chapter|head1)\s+//;
     $line =~ s/\s+$//;
 
     $self->closeChapter;
@@ -293,7 +296,7 @@ sub closeChapter()
 
 sub docSection($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
-    $line =~ s/^\=section\s+//;
+    $line =~ s/^\=(section|head2)\s+//;
     $line =~ s/\s+$//;
 
     $self->closeSection;
@@ -325,7 +328,7 @@ sub closeSection()
 
 sub docSubSection($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
-    $line =~ s/^\=subsection\s+//;
+    $line =~ s/^\=(subsection|head3)\s+//;
     $line =~ s/\s+$//;
 
     $self->closeSubSection;
@@ -556,7 +559,7 @@ sub forgotCut($$$$)
 #-------------------------------------------
 
 
-sub decomposeLink($$)
+sub decomposeM($$)
 {   my ($self, $manual, $link) = @_;
 
     my ($subroutine, $option)
@@ -607,10 +610,103 @@ sub decomposeLink($$)
 #-------------------------------------------
 
 
+sub decomposeL($$)
+{   my ($self, $manual, $link) = @_;
+    my $text = $link =~ s/^([^|]*)\|// ? $1 : undef;
+
+    unless(length $link)
+    {   warn "WARNING: empty L link in $manual";
+        return ();
+    }
+
+    if($link  =~ m/^[a-z]+\:[^:]/ )
+    {   $text         = $link unless defined $text;
+        return (undef, undef, $link, $text);
+    }
+
+    my ($name, $item) = $link =~ m[(.*?)(?:/(.*))?$];
+
+    ($name, $item)    = (undef, $name) if $name =~ m/^".*"$/;
+    $item     =~ s/^"(.*)"$/$1/        if defined $item;
+
+    my $man   = length $name ? ($self->manual($name) || $name) : $manual;
+
+    my $dest;
+    if(!ref $man)
+    {   unless(defined $text && length $text)
+        {  $text = "manual $man";
+           $text .= " entry $item" if defined $item && length $item;
+        }
+
+        $dest = "$url_modsearch$man"
+           unless $man =~ m/\(\d.*\)\s*$/;
+    }
+    elsif(!defined $item)
+    {   $dest  = $man;
+        $text  = $man->name unless defined $text;
+    }
+    elsif(my @obj = $man->all(findEntry => $item))
+    {   $dest  = shift @obj;
+        $text  = $item unless defined $text;
+    }
+    else
+    {   warn "WARNING: Manual $manual links to unknown entry \"$item\" in $man\n";
+        $dest = $man;
+        $text = "$man" unless defined $text;
+    }
+
+    ($man, $dest, undef, $text);
+}
+
+#-------------------------------------------
+
+
 sub cleanupPod($$$)
 {   my ($self, $formatter, $manual, $string) = @_;
-    $string =~ s/M\<([^>]*)\>/$self->cleanupPodLink($formatter, $manual, $1)/ge;
-    $string;
+    return '' unless defined $string && length $string;
+
+    my @lines   = split /^/, $string;
+    my $protect;
+
+    for(my $i=0; $i < @lines; $i++)
+    {   $protect = $1  if $lines[$i] =~ m/^=(for|begin)\s+\w/;
+
+        undef $protect if $lines[$i] =~ m/^=end/;
+
+        undef $protect if $lines[$i] =~ m/^\s*$/
+                       && $protect && $protect eq 'for';
+
+        next if $protect;
+
+        $lines[$i] =~
+             s/\bM\<([^>]*)\>/$self->cleanupPodLink($formatter,$manual,$1)/ge;
+
+        # permit losing blank lines around pod statements.
+        if(substr($lines[$i], 0, 1) eq '=')
+        {   if($i > 0 && $lines[$i-1] ne "\n")
+            {   splice @lines, $i-1, 0, "\n";
+                $i++;
+            }
+            elsif($i < $#lines && $lines[$i+1] ne "\n"
+                  && substr($lines[$i], 0, 5) ne "=for ")
+            {   splice @lines, $i+1, 0, "\n";
+            }
+        }
+        else
+        {   $lines[$i] =~ s/^\\\=/\=/;
+        }
+
+        # Remove superfluous blanks
+        if($i < $#lines && $lines[$i] eq "\n" && $lines[$i+1] eq "\n")
+        {   splice @lines, $i+1, 1;
+        }
+    }
+
+    # remove leading and trailing blank lines
+    shift @lines while @lines && $lines[0]  eq "\n";
+    pop   @lines while @lines && $lines[-1] eq "\n";
+
+    @lines ? join('', @lines) : '';
 }
 
 #-------------------------------------------
@@ -618,25 +714,48 @@ sub cleanupPod($$$)
 
 sub cleanupPodLink($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
-    my ($toman, $to) = $self->decomposeLink($manual, $link);
+    my ($toman, $to) = $self->decomposeM($manual, $link);
     ref $to ? $formatter->link($toman, $to, $link) : $to;
 }
 
 #-------------------------------------------
 
 
-my $url_modsearch = "http://search.cpan.org/perldoc?";
-my $url_coderoot  = 'CODE';
-
 sub cleanupHtml($$$)
 {   my ($self, $formatter, $manual, $string) = @_;
     return '' unless defined $string && length $string;
 
+    if($string =~ m/(?:\A|\n)                   # start of line
+                    \=begin\s+(:?\w+)\s*        # begin statement
+                    (.*?)                       # encapsulated
+                    \n\=end\s+\1\s*             # related end statement
+                    /xs
+     || $string =~ m/(?:\A|\n)                  # start of line
+                     \=for\s+(:?\w+)\b          # for statement
+                     (.*?)\n                    # encapsulated
+                     (\n|\Z)                    # end of paragraph
+                    /xs
+      )
+    {   my ($before, $type, $capture, $after) = ($`, lc($1), $2, $');
+        if($type =~ s/^\:(text|html)\b// )
+        {   $type    = $1;
+            $capture = $self->cleanupHtml($formatter, $manual, $capture);
+        }
+
+        my $take = $type eq 'text' ? "<pre>\n". $capture . "</pre>\n"
+                 : $type eq 'html' ? $capture
+                 :                   '';   # ignore
+
+        return $self->cleanupHtml($formatter, $manual, $before)
+             . $take
+             . $self->cleanupHtml($formatter, $manual, $after);
+    }
+
     for($string)
-    {   s#\&#\amp;#g;
+    {   s#\&#\&amp;#g;
         s#(?<!\b[LFCIBEM])\<#&lt;#g;
-        s/\bM\<([^>]*)\>/$self->cleanupHtmlLink($formatter, $manual, $1)/ge;
-        s#\bL\<([^>]*)\>#<a href="$url_modsearch$1">$1</a>#g;
+        s/\bM\<([^>]*)\>/$self->cleanupHtmlM($formatter, $manual, $1)/ge;
+        s/\bL\<([^>]*)\>/$self->cleanupHtmlL($formatter, $manual, $1)/ge;
         s#\bF\<([^>]*)\>#<a href="$url_coderoot"/$1>$1</a>#g;
         s#\bC\<([^>]*)\>#<code>$1</code>#g;
         s#\bI\<([^>]*)\>#<em>$1</em>#g;
@@ -644,8 +763,9 @@ sub cleanupHtml($$$)
         s#\bE\<([^>]*)\>#\&$1;#g;
         s#\-\>#-\&gt;#g;
         s#^\=over\s+\d+\s*#\n<ul>\n#gms;
-        s#(?:\A|\s*\n)\=item\s*(?:\*\s*)?([^\n]*)\s*#\n<li><b>$1</b><br />\n#gms;
-        s#(?:\A|\s*)\=back\b#\n</ul>\n#gms;
+        s#(?:\A|\n)\=item\s*(?:\*\s*)?([^\n]*)#\n<li><b>$1</b><br />#gms;
+        s#(?:\A|\s*)\=back\b#\n</ul>#gms;
+        s#^=pod\b##gm;
  
         my ($label, $level, $title);
         s#^\=head([1-6])\s*([^\n]*)#
@@ -675,10 +795,23 @@ sub cleanupHtml($$$)
 #-------------------------------------------
 
 
-sub cleanupHtmlLink($$$)
+sub cleanupHtmlM($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
-    my ($toman, $to) = $self->decomposeLink($manual, $link);
+    my ($toman, $to) = $self->decomposeM($manual, $link);
     ref $to ? $formatter->link($toman, $to, $link) : $to;
+}
+
+#-------------------------------------------
+
+
+sub cleanupHtmlL($$$)
+{   my ($self, $formatter, $manual, $link) = @_;
+    my ($toman, $to, $href, $text) = $self->decomposeL($manual, $link);
+
+     defined $href ? qq[<a href="$href">$text</a>]
+   : !defined $to  ? $text
+   : ref $to       ? $formatter->link($toman, $to, $text)
+   :                 qq[<a href="$to">$text</a>]
 }
 
 #-------------------------------------------

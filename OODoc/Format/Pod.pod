@@ -146,7 +146,7 @@ $obj-E<gt>B<createManual>(OPTIONS)
 =over 4
 
 Text to be added at the end of each manual page.
-See L<formatManual(append)|"Page generation"> for an explanation.
+See L<formatManual(append)|OODoc::Format::Pod/"Page generation"> for an explanation.
 
 =back
 
@@ -187,7 +187,7 @@ They are completed with the defaults set by L<createManual(format_options)|OODoc
 Used after each manual page has been formatting according to the
 standard rules.  When a STRING is specified, it will be appended to
 the manual page.  When a CODE reference is given, that function is
-called with all the options that L<showChapter()|"Page generation"> usually gets.
+called with all the options that L<showChapter()|OODoc::Format/"Page generation"> usually gets.
 
 Using C<append> is one of the alternatives to create the correct
 Reference, Copyrights, etc chapters at the end of each manual
@@ -451,13 +451,13 @@ I<Error:> formatter does not know the version.
 I<Error:> formatter has no project name.
 
 A formatter was created without a name specified for the project at
-hand.  This should be passed with L<new(project)|"METHODS">.
+hand.  This should be passed with L<new(project)|OODoc::Format/"METHODS">.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> missing required chapter $name in $manual
 
@@ -474,7 +474,7 @@ I<Error:> no package name for pod production
 I<Error:> no working directory specified.
 
 The formatter has to know where the output can be written.  This
-directory must be provided via L<new(workdir)|"METHODS">, but was not specified.
+directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was not specified.
 
 I<Warning:> unknown subroutine type $type for $name in $manual
 
@@ -491,9 +491,9 @@ Therefore, there are a few ways to adapt the output.
 
 =head3 Configuring with format options
 
-L<createManual(format_options)|OODoc::Format/"Page generation"> or L<OODoc::create(format_options)|"Formatter">
+L<createManual(format_options)|OODoc::Format/"Page generation"> or L<OODoc::create(format_options)|OODoc/"Formatter">
 can be used with a list of formatting options which are passed to
-L<showChapter()|"Page generation">.  This will help you to produce pages which have
+L<showChapter()|OODoc::Format/"Page generation">.  This will help you to produce pages which have
 pre-planned changes in layout.
 
 I<Example:> format options
@@ -516,7 +516,7 @@ I<Example:> format options
 By default, the last chapters are not filled in: the C<REFERENCES> and
 C<COPYRIGHTS> chapters are very personal.  You can fill these in by
 extending the POD generator, as described in the next section, or take
-a very simple approach simply using L<createManual(append)|"Page generation">.
+a very simple approach simply using L<createManual(append)|OODoc::Format::Pod/"Page generation">.
 
 I<Example:> appending text to a page
 
@@ -548,7 +548,7 @@ I<Example:> remove chapter inheritance
  sub chapterInheritance(@) {shift};
 
 The C<MyPod> package is extending the standard POD generator, by overruling
-the default behavior of L<chapterInheritance()|"Page generation"> by producing nothing.
+the default behavior of L<chapterInheritance()|OODoc::Format::Pod/"Page generation"> by producing nothing.
 
 I<Example:> changing the chapter's output
 
@@ -595,7 +595,7 @@ I<Example:> adding to a chapter's output
 
 =head3 Configuring with Text::MagicTemplate
 
-When using 'pod2' in stead of 'pod' when L<OODoc::create()|"Formatter"> is called,
+When using 'pod2' in stead of 'pod' when L<OODoc::create()|OODoc/"Formatter"> is called,
 the L<OODoc::Format::Pod2|OODoc::Format::Pod2> will be used.   It's nearly a drop-in
 replacement by its default behavior.  When you specify
 your own template file, every thing can be made.
@@ -639,7 +639,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -60,14 +60,14 @@ OODoc::Text::Default-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option       Defined in       Default                     
- container    L<OODoc::Text>   L<new(subroutine)|"METHODS">
- description  L<OODoc::Text>   C<''>                       
- linenr       L<OODoc::Text>   <required>                  
- name         L<OODoc::Text>   undef                       
- subroutine                    <required>                  
- type         L<OODoc::Text>   C<'Default'>                
- value                         <required>                  
+ Option       Defined in       Default                                          
+ container    L<OODoc::Text>   L<new(subroutine)|OODoc::Text::Default/"METHODS">
+ description  L<OODoc::Text>   C<''>                                            
+ linenr       L<OODoc::Text>   <required>                                       
+ name         L<OODoc::Text>   undef                                            
+ subroutine                    <required>                                       
+ type         L<OODoc::Text>   C<'Default'>                                     
+ value                         <required>                                       
 
 . container OBJECT
 
@@ -293,9 +293,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -308,7 +308,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.05.
+Module version 0.06.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
