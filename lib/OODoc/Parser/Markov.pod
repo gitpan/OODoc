@@ -405,6 +405,13 @@ I<Error:> no input file to parse specified
 The parser needs the name of a file to be read, otherwise it can not
 work.
 
+I<Warning:> no manual for $package (correct casing?)
+
+The manual for $package cannot be found.  If you have a module named this
+way, this may indicate that the NAME chapter of the manual page in that
+module differs from the package name.  Often, this is a typo in the
+NAME... probably a difference in used cases.
+
 I<Warning:> option "$name" is not defined for subroutine $name in $package, but is linked to in $manual
 
 
@@ -710,7 +717,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.08.
+Module version 0.09.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

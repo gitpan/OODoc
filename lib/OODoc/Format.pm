@@ -1,7 +1,7 @@
 
 package OODoc::Format;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
 use base 'OODoc::Object';
 
 use strict;
@@ -54,9 +54,6 @@ sub workdir() {shift->{OF_workdir}}
 
 
 sub manifest() {shift->{OF_manifest}}
-
-#-------------------------------------------
-
 
 #-------------------------------------------
 

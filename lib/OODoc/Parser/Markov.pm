@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
 use base 'OODoc::Parser';
 
 use strict;
@@ -597,6 +597,12 @@ sub decomposeM($$)
         unless defined $subroutine && length $subroutine;
 
     my $package = $self->manual($man->package);
+    unless(defined $package)
+    {   my $want = $man->package;
+        warn "WARNING: no manual for $want (correct casing?)\n";
+        return (undef, "$want subroutine $subroutine");
+    }
+
     my $sub     = $package->subroutine($subroutine);
     unless(defined $sub)
     {   warn "WARNING: subroutine $subroutine() is not defined by $package, but linked to in $manual\n";

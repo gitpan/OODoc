@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.08';
+$VERSION = '0.09';
 use base 'OODoc::Object';
 
 use strict;
@@ -219,7 +219,7 @@ sub processFiles(@)
             );
 
         if($verbose > 2)
-        {   print "Stripped $fn into $dn\n";
+        {   print "Stripped $fn into $dn\n" if defined $dn;
             print $_->stats foreach @manuals;
         }
 
@@ -354,10 +354,12 @@ sub create($@)
     {   foreach my $manual ($self->manualsForPackage($package))
         {   next unless $select->($manual);
 
-            print "Creating manual $manual\n" if $verbose > 1;
+            print "Creating manual $manual with ",ref($format), "\n"
+                if $verbose > 1;
+
             $format->createManual
-             ( manual   => $manual
-             , template => $args{manual_template}
+             ( manual         => $manual
+             , template       => $args{manual_template}
              , append         => $args{append}
              , format_options => ($args{manual_format} || [])
              );
