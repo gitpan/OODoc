@@ -1,75 +1,51 @@
 
 =head1 NAME
 
-OODoc::Format::Pod - Produce POD pages from the doc tree
+OODoc::Format::PodTemplate - Produce POD pages from the doc tree with a template
 
 
 =head1 INHERITANCE
 
- OODoc::Format::Pod
+ OODoc::Format::PodTemplate
+   is a OODoc::Format::Pod
    is a OODoc::Format
    is a OODoc::Object
-
- OODoc::Format::Pod is extended by
-   OODoc::Format::PodTemplate
 
 
 =head1 SYNOPSIS
 
  my $doc = OODoc->new(...);
  $doc->createManual
-   ( 'pod'
+   ( 'pod2'   # or 'OODoc::Format::PodTemplate'
    , format_options => [show_examples => 'NO']
-   , append         => "extra text\n"
    );
 
 
 =head1 DESCRIPTION
 
-Create manual pages in the POD syntax.  POD is the standard document
-description syntax for Perl.  POD can be translated to many different
-operating system specific manual systems, like the Unix C<man> system.
+Create manual pages in the POD syntax, using the Text::MagicTemplate subroutine 
+template system.  It may be a bit simpler to configure the outcome
+using the template, than using L<OODoc::Format::Pod|OODoc::Format::Pod>, however you
+first need to install L<Bundle::Text::MagicTemplate>.
 
 
 
 =head1 METHODS
 
 
-$obj-E<gt>B<chapterInheritance>(OPTIONS)
-
-=over 4
-
-Produces the chapter which shows inheritance relationships.
-
- Option  Defined in       Default   
- manual                   <required>
- output                   <required>
-
-. manual OBJECT
-
-. output IO::File
-
-=back
-
-$obj-E<gt>B<createManual>(OPTIONS)
+OODoc::Format::PodTemplate-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
  Option          Defined in       Default   
- append                           ''        
+ append          OODoc::Format::Pod  ''        
  format_options  OODoc::Format    []        
  manifest        OODoc::Format    C<undef>  
  manual          OODoc::Format    <required>
+ template                         <in code> 
  workdir         OODoc::Format    <required>
 
 . append STRING|CODE
-
-=over 4
-
-Text to be added at the end of each manual page.
-See L<formatManual(append)|"METHODS"> for an explanation.
-
-=back
 
 . format_options ARRAY
 
@@ -77,90 +53,30 @@ See L<formatManual(append)|"METHODS"> for an explanation.
 
 . manual MANUAL
 
+. template FILENAME
+
+=over 4
+
+The default template is included in the DATA segment of
+L<OODoc::Format::PodTemplate|OODoc::Format::PodTemplate>.  You may start your own template
+by copying it to a file.
+
+=back
+
 . workdir DIRECTORY
 
 =back
 
-$obj-E<gt>B<formatManual>(OPTIONS)
+$obj-E<gt>B<templateChapter>
 
 =over 4
-
-The OPTIONS are a collection of all options available to show* methods.
-They are completed with the defaults set by L<createManual(format_options)|OODoc::Format/"METHODS">.
-
- Option  Defined in       Default   
- append                   ''        
- manual                   <required>
- output                   <required>
-
-. append STRING|CODE
-
-=over 4
-
-Used after each manual page has been formatting according to the
-standard rules.  When a STRING is specified, it will be appended to
-the manual page.  When a CODE reference is given, that function is
-called with all the options that OODoc::Format::Pod subroutine showChapter usually gets.
-
-Using C<append> is one of the alternatives to create the correct
-Reference, Copyrights, etc chapters at the end of each manual
-page.  See L</Configuring>.
-
-=back
-
-. manual MANUAL
-
-. output FILE
-
-=back
-
-$obj-E<gt>B<link>(MANUAL, OBJECT, [TEXT])
-
-=over 4
-
-Create the text for a link which refers to the OBJECT.  The link will be
-shown somewhere in the MANUAL.  The TEXT will be displayed is stead
-of the link path, when specified.
-
-=back
-
-$obj-E<gt>B<showChapterIndex>(FILE, CHAPTER, INDENT)
-
-=over 4
-
-=back
-
-$obj-E<gt>B<writeTable>
-
-=over 4
-
- Option  Defined in       Default   
- ARRAY                    <required>
- header                   <required>
- output                   <required>
- widths                   C<undef>  
-
-. ARRAY -OF-ARRAYS
-
-=over 4
-
-An array of arrays, each describing a row for the output.  The first row
-is the header.
-
-=back
-
-. header ARRAY
-
-. output FILE
-
-. widths ARRAY
 
 =back
 
 =head2 Initiation
 
 
-OODoc::Format::Pod-E<gt>B<new>(OPTIONS)
+OODoc::Format::PodTemplate-E<gt>B<new>(OPTIONS)
 
 =over 4
 
@@ -184,7 +100,7 @@ See L<OODoc::Object/"Inheritance">
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Format::Pod-E<gt>B<filenameToPackage>(FILENAME)
+OODoc::Format::PodTemplate-E<gt>B<filenameToPackage>(FILENAME)
 
 =over 4
 
@@ -202,7 +118,7 @@ See L<OODoc::Object/"Commonly used functions">
 
 $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Format::Pod-E<gt>B<mkdirhier>(DIRECTORY)
+OODoc::Format::PodTemplate-E<gt>B<mkdirhier>(DIRECTORY)
 
 =over 4
 
@@ -267,8 +183,10 @@ See L<OODoc::Object/"Manual database">
 
 =head1 DIAGNOSTICS
 
-I<Error:> cannot write pod manual at $manfile: $!
+I<Error:> chapter without name in template.
 
+In your template file, a {chapter} statement is used, which is
+erroneous, because it requires a chapter name.
 
 I<Error:> manual definition requires manual object
 
@@ -276,16 +194,7 @@ A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual ob
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
 
-I<Error:> no directory to put pod for $name in
-
-
-I<Error:> no directory to put pod manual for $name in
-
-
-I<Error:> no package name for pod production
-
-
-I<Error:> no package name for pod production
+I<Warning:> no meaning for container $container in chapter block\n"
 
 
 I<Warning:> order conflict "$take" before "$insert" in $file line $number
@@ -306,9 +215,9 @@ Therefore, there are a few ways to adapt the output.
 
 =head3 Configuring with format options
 
-L<createManual(format_options)|OODoc::Format/"METHODS"> or L<OODoc::createManual(format_options)|OODoc/"Formatter">
+OODoc::Format::PodTemplate subroutine createManual option format_options or L<OODoc::createManual(format_options)|OODoc/"Formatter">
 can be used with a list of formatting options which are passed to
-OODoc::Format::Pod subroutine showChapter.  This will help you to produce pages which have
+OODoc::Format::PodTemplate subroutine showChapter.  This will help you to produce pages which have
 pre-planned changes in layout.
 
 I<Example:> format options
@@ -331,7 +240,7 @@ I<Example:> format options
 By default, the last chapters are not filled in: the C<REFERENCES> and
 C<COPYRIGHTS> chapters are very personal.  You can fill these in by
 extending the POD generator, as described in the next section, or take
-a very simple approach simply using L<createManual(append)|"METHODS">.
+a very simple approach simply using L<createManual(append)|OODoc::Format::Pod/"METHODS">.
 
 I<Example:> appending text to a page
 
@@ -363,7 +272,7 @@ I<Example:> remove chapter inheritance
  sub chapterInheritance(@) {shift};
 
 The C<MyPod> package is extending the standard POD generator, by overruling
-the default behavior of L<chapterInheritance()|"METHODS"> by producing nothing.
+the default behavior of OODoc::Format::PodTemplate subroutine chapterInheritance by producing nothing.
 
 I<Example:> changing the chapter's output
 

@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars 'VERSION';
-$VERSION = '0.02';
+$VERSION = '0.03';
 use base 'OODoc::Object';
 
 use strict;
@@ -205,7 +205,10 @@ sub getPackageRelations()
 
     foreach my $manual (@manuals)
     {   if($manual->name ne $manual->package)     # autoloaded code
-        {   $self->mainManual("$manual")->extraCode($manual);
+        {   
+warn "main manual of $manual";
+            my $main = $self->mainManual("$manual");
+            $main->extraCode($manual) if defined $main;
             next;
         }
         my %uses = $manual->collectPackageRelations;
@@ -241,6 +244,7 @@ sub expandManuals() { $_->expand foreach shift->manuals }
 
 our %formatters =
  ( pod  => 'OODoc::Format::Pod'
+ , pod2 => 'OODoc::Format::PodTemplate'
  , html => 'OODoc::Format::Html'
  );
 

@@ -3,10 +3,12 @@
 
 OODoc::Manual - Contains the information found in one manual about a package
 
+
 =head1 INHERITANCE
 
  OODoc::Manual
    is a OODoc::Object
+
 
 =head1 SYNOPSIS
 
@@ -19,7 +21,10 @@ OODoc::Manual - Contains the information found in one manual about a package
  print $manual->name;
  print $manual->package;
 
+
 =head1 DESCRIPTION
+
+
 
 
 =head1 METHODS
@@ -377,6 +382,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -402,6 +409,11 @@ I<Error:> two chapters name $name in $filename line $ln1 and $ln2
 The indicated file contains two chapters with the same name, which
 is not permitted.  Join the contents of both parts.
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -415,4 +427,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

@@ -3,13 +3,16 @@
 
 OODoc::Parser::Markov - Parser for the MARKOV syntax
 
+
 =head1 INHERITANCE
 
  OODoc::Parser::Markov
    is a OODoc::Parser
    is a OODoc::Object
 
+
 =head1 SYNOPSIS
+
 
 
 =head1 DESCRIPTION
@@ -24,20 +27,7 @@ part and a documentation tree.  The code is written to a directory
 where the module distribution is built, the documenation tree is
 later formatted into manual pages.
 
-See L</DETAILS> chapter below
-   General Description
-      Disadvantages
-   Structural tags
-      Heading
-      Subroutines
-      Include examples
-      Include diagnostics
-      Compatibility
-   Text markup
-      The M-link
-   Grouping subroutines
-   Caveats
-   Examples
+
 
 =head1 METHODS
 
@@ -271,6 +261,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Warning:> =cut does not terminate any doc in $file line $number
@@ -394,6 +386,7 @@ I<Warning:> unknown markup in $file line $number: $line
 
 The standard pod and the extensions made by this parser define a long
 list of markup keys, but yours is not one of these predefined names.
+
 
 =head1 DETAILS
 
@@ -615,6 +608,10 @@ I<Example:> how subroutines are documented
     ...
  }
 
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -628,4 +625,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

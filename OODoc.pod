@@ -3,10 +3,12 @@
 
 OODoc - object oriented production of code documentation
 
+
 =head1 INHERITANCE
 
  OODoc
    is a OODoc::Object
+
 
 =head1 SYNOPSIS
 
@@ -17,6 +19,7 @@ OODoc - object oriented production of code documentation
  my $pod = OODoc::POD->new(...);
  $pod->produce($doc);
 
+
 =head1 DESCRIPTION
 
 OODoc stands for "Object Oriented Documentation".  The OO part refers
@@ -24,13 +27,7 @@ to two things: this module simplifies writing documentation for Object
 Oriented programs, and at the same time, it is Object Oriented itself:
 easily extensible.
 
-See L</DETAILS> chapter below
-   Why use OODoc in stead of POD
-   How does OODoc work
-      The parser
-      Collecting relations
-      The formatter
-   Getting Started
+
 
 =head1 METHODS
 
@@ -343,6 +340,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> Cannot compile $parser class
@@ -405,6 +404,7 @@ I<Error:> requires a directory to write the manuals to
 You have to give a value to C<workdir>, which will be used as top directory
 for the produced output.  It does not matter whether there is already some
 stuff in that directory.
+
 
 =head1 DETAILS
 
@@ -490,6 +490,10 @@ described in L<OODoc::Format::Pod|OODoc::Format::Pod>.
 Once you have this working, you may decide to add options to the
 calls to adapt the result more to your own taste.
 
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -503,4 +507,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

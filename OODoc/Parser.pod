@@ -3,6 +3,7 @@
 
 OODoc::Parser - base class for all OODoc parsers.
 
+
 =head1 INHERITANCE
 
  OODoc::Parser
@@ -11,11 +12,15 @@ OODoc::Parser - base class for all OODoc parsers.
  OODoc::Parser is extended by
    OODoc::Parser::Markov
 
+
 =head1 SYNOPSIS
 
  # Never instantiated directly.
 
+
 =head1 DESCRIPTION
+
+
 
 
 =head1 METHODS
@@ -176,6 +181,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> The formatter type $class is not known for cleanup
@@ -196,6 +203,11 @@ The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -209,4 +221,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

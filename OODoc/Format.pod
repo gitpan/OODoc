@@ -3,6 +3,7 @@
 
 OODoc::Format - base class for all OODoc formatters
 
+
 =head1 INHERITANCE
 
  OODoc::Format
@@ -11,14 +12,18 @@ OODoc::Format - base class for all OODoc formatters
  OODoc::Format is extended by
    OODoc::Format::Pod
 
+
 =head1 SYNOPSIS
 
  # Never instantiated directly.
+
 
 =head1 DESCRIPTION
 
 A formater produces manual pages in some way or an other which contain
 (parts of) the module documentation.
+
+
 
 =head1 METHODS
 
@@ -470,6 +475,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -490,6 +497,11 @@ received from both classes is undertermined.
 I<Warning:> unknown subroutine type $type for $name in $manual
 
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -503,4 +515,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

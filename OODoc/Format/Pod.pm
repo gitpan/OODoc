@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod;
 use vars 'VERSION';
-$VERSION = '0.02';
+$VERSION = '0.03';
 use base 'OODoc::Format';
 
 use strict;
@@ -56,7 +56,7 @@ sub createManual($@)
     my $output  = IO::File->new($podfile, "w")
     or die "ERROR: cannot write pod manual at $podfile: $!";
 
-    $self->showChapters
+    $self->formatManual
       ( manual => $manual
       , output => $output
       , append => $args{append}
@@ -69,7 +69,7 @@ sub createManual($@)
 #-------------------------------------------
 
 
-sub showChapters($@)
+sub formatManual(@)
 {   my $self = shift;
     $self->chapterName(@_);
     $self->chapterInheritance(@_);
@@ -82,8 +82,14 @@ sub showChapters($@)
     $self->chapterDetails(@_);
     $self->chapterReferences(@_);
     $self->chapterCopyrights(@_);
+    $self->showApppend(@_);
+    $self;
+}
 
-    my %args   = @_;
+#-------------------------------------------
+
+sub showAppend(@)
+{   my ($self, %args) = @_;
     my $append = $args{append};
 
        if(!defined $append)      { ; }

@@ -3,6 +3,7 @@
 
 OODoc::Text::Structure - base class for chapters, sections and sub-sections
 
+
 =head1 INHERITANCE
 
  OODoc::Text::Structure
@@ -14,11 +15,15 @@ OODoc::Text::Structure - base class for chapters, sections and sub-sections
    OODoc::Text::Section
    OODoc::Text::SubSection
 
+
 =head1 SYNOPSIS
 
  # Cannot be instantiated itself
 
+
 =head1 DESCRIPTION
+
+
 
 
 =head1 METHODS
@@ -258,6 +263,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -272,6 +279,11 @@ The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -285,4 +297,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

@@ -3,13 +3,16 @@
 
 OODoc::Text::Default - one default for an option in one subroutine
 
+
 =head1 INHERITANCE
 
  OODoc::Text::Default
    is a OODoc::Text
    is a OODoc::Object
 
+
 =head1 SYNOPSIS
+
 
 
 =head1 DESCRIPTION
@@ -17,6 +20,8 @@ OODoc::Text::Default - one default for an option in one subroutine
 Each OODoc::Text::Subroutine can have a list of options, which have
 default values which are each captured in a separate object as described
 in this manual page.
+
+
 
 =head1 METHODS
 
@@ -224,6 +229,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -238,6 +245,11 @@ The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -251,4 +263,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

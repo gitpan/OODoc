@@ -1,7 +1,7 @@
 
 package OODoc::Object;
 use vars 'VERSION';
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use strict;
 use warnings;
@@ -24,7 +24,6 @@ sub new(@)
     if(my @missing = keys %args)
     {   local $" = ', ';
         carp "WARNING: Unknown ".(@missing==1?'option':'options')." @missing";
-confess;
     }
 
     $self;

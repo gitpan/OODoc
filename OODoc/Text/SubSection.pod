@@ -3,6 +3,7 @@
 
 OODoc::Text::SubSection - collects the text of one subsection within a section
 
+
 =head1 INHERITANCE
 
  OODoc::Text::SubSection
@@ -10,16 +11,20 @@ OODoc::Text::SubSection - collects the text of one subsection within a section
    is a OODoc::Text
    is a OODoc::Object
 
+
 =head1 SYNOPSIS
 
  my $section = $subsection->section;
  my $chapter = $subsection->chapter;
+
 
 =head1 DESCRIPTION
 
 A subsection (or head3) is the third level of refining document
 hierarchies.  A subsection must be a part of a section, which is
 part of a chapter.
+
+
 
 =head1 METHODS
 
@@ -248,6 +253,8 @@ See L<OODoc::Object/"Manual database">
 
 =back
 
+
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -262,6 +269,11 @@ The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
+
+
+
+
+
 =head1 REFERENCES
 
 See the OODoc website at L<$website> for more details.
@@ -275,4 +287,5 @@ other contributors.
 Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
+
 

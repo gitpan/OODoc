@@ -8,6 +8,8 @@ OODoc/Format.pm
 OODoc/Format.pod
 OODoc/Format/Pod.pm
 OODoc/Format/Pod.pod
+OODoc/Format/PodTemplate.pm
+OODoc/Format/PodTemplate.pod
 OODoc/Manifest.pm
 OODoc/Manifest.pod
 OODoc/Manual.pm
