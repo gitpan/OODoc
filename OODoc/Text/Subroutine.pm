@@ -1,7 +1,7 @@
 
 package OODoc::Text::Subroutine;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Text';
 
 use strict;
@@ -72,6 +72,19 @@ sub option($)
 }
 
 #-------------------------------------------
+
+
+sub findOption($)
+{   my ($self, $name) = @_;
+    my $option = $self->option($name);
+    return $option if $option;
+
+    my $extends = $self->extends or return;
+    $extends->option($name);
+}
+
+#-------------------------------------------
+
 
 
 sub options() { values %{shift->{OTS_options}} }

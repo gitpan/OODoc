@@ -175,17 +175,28 @@ respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
  Option          Defined in       Default           
+ append                           C<undef>          
  format_options                   []                
  manifest                         <workdir>/MANIFEST
  verbose                          0                 
  workdir                          <required>        
 
+. append STRING|CODE
+
+=over 4
+
+The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"METHODS">,
+but the behavior is formatter dependent.
+
+=back
+
 . format_options ARRAY
 
 =over 4
 
-Options passed to the formatter when created.  See the applicable formatter
-manual page.
+Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"METHODS"> when
+a manual page has to be produced.  See the applicable formatter
+manual page for the possible flags and values.
 
 =back
 
@@ -478,3 +489,18 @@ described in L<OODoc::Format::Pod|OODoc::Format::Pod>.
 
 Once you have this working, you may decide to add options to the
 calls to adapt the result more to your own taste.
+
+=head1 REFERENCES
+
+See the OODoc website at L<$website> for more details.
+
+=head1 COPYRIGHTS
+
+Module version $version.
+Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+

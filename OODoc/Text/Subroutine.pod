@@ -76,6 +76,15 @@ Returns a list of all diagnostics.
 
 =back
 
+$obj-E<gt>B<findOption>(NAME)
+
+=over 4
+
+Does a little more thorrow job than L<option()|"Collected"> bu searching the inherited
+options for this subroutine as well.
+
+=back
+
 $obj-E<gt>B<option>(NAME|OBJECT)
 
 =over 4
@@ -273,3 +282,18 @@ manual pages.  You may change the level of clearness about the
 exact location (place in the chapter in one page, and in a subsection
 in the next), as long as it is not conflicting (the subsection must
 be a part of the chapter).
+
+=head1 REFERENCES
+
+See the OODoc website at L<$website> for more details.
+
+=head1 COPYRIGHTS
+
+Module version $version.
+Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+

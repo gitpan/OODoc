@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Object';
 
 use strict;
@@ -118,7 +118,7 @@ sub processFiles(@)
         $self->mkdirhier(dirname $dn);
 
         copy($fn, $dn)
-           or die "ERROR: cannot copy distribution file $fn to $dest: $!";
+           or die "ERROR: cannot copy distribution file $fn to $dest: $!\n";
 
         print "Copied $fn to $dest\n" if $verbose > 2;
     }
@@ -258,8 +258,7 @@ sub createManual($@)
         eval "require $format";
         die "ERROR: formatter $format has compilation errors: $@" if $@;
 
-        my $options = $args{format_options} || [];
-        $format = $format->new(@$options);
+        $format = $format->new();
     }
 
     #
@@ -275,15 +274,17 @@ sub createManual($@)
     #
 
     foreach my $package (sort $self->packageNames)
-    {   my @manuals = $self->manualsForPackage($package);
+    {   foreach my $manual ($self->manualsForPackage($package))
+        {   print "Creating manual $manual for $package\n" if $verbose > 1;
+            $format->createManual
+             ( manual   => $manual
+             , workdir  => $dest
+             , manifest => $manifest
 
-        print "Creating manual for $package\n" if $verbose > 1;
-        $format->createPackageManual
-         ( package  => $package
-         , workdir  => $dest
-         , manuals  => \@manuals
-         , manifest => $manifest
-         );
+             , append         => $args{append}
+             , format_options => ($args{format_options} || [])
+             );
+        }
     }
 
     #

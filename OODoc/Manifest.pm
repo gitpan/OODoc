@@ -1,7 +1,7 @@
 
 package OODoc::Manifest;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Object';
 
 use strict;

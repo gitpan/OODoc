@@ -44,24 +44,35 @@ $obj-E<gt>B<createIndexPages>(OPTIONS)
 
 =back
 
-$obj-E<gt>B<createPackageManual>(OPTIONS)
+$obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
- Option    Defined in       Default   
- manifest                   C<undef>  
- manuals                    []        
- workdir                    <required>
+ Option          Defined in       Default   
+ append                           C<undef>  
+ format_options                   []        
+ manifest                         C<undef>  
+ manual                           <required>
+ workdir                          <required>
+
+. append STRING|CODE
+
+. format_options ARRAY
+
+=over 4
+
+An ARRAY which contains a list of options which are the defaults
+for formatting a chapter.
+
+=back
 
 . manifest MANIFEST
 
-. manuals ARRAY
+. manual MANUAL
 
 =over 4
 
-All manuals which belong to the same package description.  This ARRAY is
-usually longer than one when the package uses autoloading to dynamically
-load code on demand.
+The manual to be formatted.
 
 =back
 
@@ -73,15 +84,19 @@ $obj-E<gt>B<showChapter>(OPTIONS)
 
 =over 4
 
-You can pass all options about formatting to this method.  They will passed
-to the related methods.
+You can pass all OPTIONS about formatting to this method.  They will passed
+to the related methods.  So: the list of options you can pass here is much
+longer: the combination of everything possible for all show* methods.
 
  Option                 Defined in       Default   
  chapter                                 <required>
+ manual                                  <required>
  output                                  <required>
  show_chapter_examples                   <true>    
 
 . chapter CHAPTER
+
+. manual MANUAL
 
 . output FILE
 
@@ -473,4 +488,19 @@ the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
 I<Warning:> unknown subroutine type $type for $name in $manual
+
+
+=head1 REFERENCES
+
+See the OODoc website at L<$website> for more details.
+
+=head1 COPYRIGHTS
+
+Module version $version.
+Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
 

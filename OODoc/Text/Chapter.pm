@@ -1,7 +1,7 @@
 
 package OODoc::Text::Chapter;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Text::Structure';
 
 use strict;

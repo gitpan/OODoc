@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Format';
 
 use strict;
@@ -37,33 +37,31 @@ sub link($$;$)
 #-------------------------------------------
 
 
-sub createPackageManual($@)
+sub createManual($@)
 {   my ($self, %args) = @_;
     my $verbose  = $args{verbose} || 0;
-
-    my $name     = $args{package}
-       or croak "ERROR: no package name for pod production";
-
-    my @manuals  = $args{manuals} ? @{$args{manuals}} : ();
+    my $manual   = $args{manual} or confess;
     my $manifest = $args{manifest} || OODoc::Manifest->new;
 
     my $workdir  = $args{workdir}
-       or die "ERROR: no directory to put pod manual for $name in";
+       or die "ERROR: no directory to put pod for $manual in";
 
-    foreach my $manual (@manuals)
-    {   print $manual->orderedChapters." chapters in $manual\n" if $verbose==3;
-        (my $podname = $manual->source) =~ s/\.pm$/.pod/;
-        $manifest->add($podname);
+    my $options  = $args{format_options} || [];
 
-        my $podfile  = File::Spec->catfile($workdir, $podname);
-        my $output  = IO::File->new($podfile, "w")
-           or die "ERROR: cannot write pod manual at $podfile: $!";
+    print $manual->orderedChapters." chapters in $manual\n" if $verbose==3;
+    (my $podname = $manual->source) =~ s/\.pm$/.pod/;
+    $manifest->add($podname);
 
-        $self->showChapters
-         ( manual => $manual
-         , output => $output
-         )
-    }
+    my $podfile  = File::Spec->catfile($workdir, $podname);
+    my $output  = IO::File->new($podfile, "w")
+    or die "ERROR: cannot write pod manual at $podfile: $!";
+
+    $self->showChapters
+      ( manual => $manual
+      , output => $output
+      , append => $args{append}
+      , @$options
+      );
 
     $self;
 }
@@ -84,6 +82,18 @@ sub showChapters($@)
     $self->chapterDetails(@_);
     $self->chapterReferences(@_);
     $self->chapterCopyrights(@_);
+
+    my %args   = @_;
+    my $append = $args{append};
+
+       if(!defined $append)      { ; }
+    elsif(ref $append eq 'CODE') { $append->(formatter => $self, %args) }
+    else
+    {   my $output = $args{output} or confess;
+        $output->print($append);
+    }
+
+    $self;
 }
 
 #-------------------------------------------
@@ -472,5 +482,8 @@ sub showSubroutineDescriptionRefer(@)
 #-------------------------------------------
 
 sub showSubsIndex() {;}
+
+#-------------------------------------------
+
 
 1;

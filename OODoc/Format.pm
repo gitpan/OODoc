@@ -1,7 +1,7 @@
 
 package OODoc::Format;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Object';
 
 use strict;
@@ -16,7 +16,7 @@ use Carp;
 #-------------------------------------------
 
 
-sub createPackageManual(@) { confess }
+sub createManual(@) { confess }
 
 #-------------------------------------------
 
@@ -273,6 +273,8 @@ sub showOptionUse(@) {shift}
 
 
 sub showOptionExpand(@) {shift}
+
+#-------------------------------------------
 
 1;
 

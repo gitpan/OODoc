@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars 'VERSION';
-$VERSION = '0.01';
+$VERSION = '0.02';
 use base 'OODoc::Parser';
 
 use strict;
@@ -590,7 +590,7 @@ sub decomposeLink($$)
     return $sub
         unless defined $option && length $option;
 
-    my $opt = $sub->option($option);
+    my $opt = $sub->findOption($option);
     unless(defined $opt)
     {   warn "WARNING: option \"$option\" is not defined for subroutine $subroutine in $package, but linked to in $manual\n";
         return "$package subroutine $subroutine option $option";
