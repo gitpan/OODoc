@@ -17,7 +17,7 @@ OODoc::Text::Default - one default for an option in one subroutine
 
 =head1 DESCRIPTION
 
-Each OODoc::Text::Subroutine can have a list of options, which have
+Each L<OODoc::Text::Subroutine|OODoc::Text::Subroutine> can have a list of options, which have
 default values which are each captured in a separate object as described
 in this manual page.
 
@@ -53,37 +53,21 @@ See L<OODoc::Text/"OVERLOADED">
 =head1 METHODS
 
 
-$obj-E<gt>B<subroutine>
-
-=over 4
-
-Returns the subroutine object for this option.
-
-=back
-
-$obj-E<gt>B<value>
-
-=over 4
-
-The value of this default.
-
-=back
-
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Text::Default-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option       Defined in       Default     
- container    OODoc::Text      <subroutine>
- description  OODoc::Text      ''          
- linenr       OODoc::Text      <required>  
- name         OODoc::Text      C<undef>    
- subroutine                    <required>  
- type         OODoc::Text      <required>  
- value                         <required>  
+ Option       Defined in       Default                     
+ container    L<OODoc::Text>   L<new(subroutine)|"METHODS">
+ description  L<OODoc::Text>   C<''>                       
+ linenr       L<OODoc::Text>   <required>                  
+ name         L<OODoc::Text>   undef                       
+ subroutine                    <required>                  
+ type         L<OODoc::Text>   C<'Default'>                
+ value                         <required>                  
 
 . container OBJECT
 
@@ -110,6 +94,17 @@ The subroutine in which this option lives.
 The value which is related to this default.
 
 =back
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
 
 =back
 
@@ -140,6 +135,14 @@ See L<OODoc::Text/"Attributes">
 
 =back
 
+$obj-E<gt>B<subroutine>
+
+=over 4
+
+Returns the subroutine object for this option.
+
+=back
+
 $obj-E<gt>B<type>
 
 =over 4
@@ -148,10 +151,18 @@ See L<OODoc::Text/"Attributes">
 
 =back
 
+$obj-E<gt>B<value>
+
+=over 4
+
+The value of this default.
+
+=back
+
 =head2 Location
 
 
-$obj-E<gt>B<manual>
+$obj-E<gt>B<manual>([NAME])
 
 =over 4
 
@@ -191,14 +202,6 @@ $obj-E<gt>B<examples>
 =over 4
 
 See L<OODoc::Text/"Collected">
-
-=back
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Collected">
 
 =back
 
@@ -290,9 +293,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 
 
@@ -305,7 +308,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

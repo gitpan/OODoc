@@ -1,19 +1,13 @@
 
 package OODoc::Text::SubSection;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text::Structure';
 
 use strict;
 use warnings;
 
 use Carp;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -29,16 +23,6 @@ sub init($)
 
 #-------------------------------------------
 
-sub path()
-{   my $self = shift;
-    $self->section->path . '/' . $self->name;
-}
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
 
 sub section() { shift->container }
 
@@ -46,6 +30,13 @@ sub section() { shift->container }
 
 
 sub chapter() { shift->section->chapter }
+
+#-------------------------------------------
+
+sub path()
+{   my $self = shift;
+    $self->section->path . '/' . $self->name;
+}
 
 #-------------------------------------------
 

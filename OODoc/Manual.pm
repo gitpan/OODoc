@@ -1,7 +1,7 @@
 
 package OODoc::Manual;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Object';
 
 use strict;
@@ -9,12 +9,6 @@ use warnings;
 
 use Carp;
 use List::Util 'first';
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 use overload '""' => sub { shift->name };
@@ -135,13 +129,6 @@ sub name()
    
 }
 
-#-------------------------------------------
-
-
-sub all($@)
-{   my $self = shift;
-    map { $_->all(@_) } $self->chapters;
-}
 
 #-------------------------------------------
 
@@ -154,25 +141,18 @@ sub subroutines() { shift->all('subroutines') }
 sub subroutine($)
 {   my ($self, $name) = @_;
     my $sub;
-    foreach my $chapter ($self->chapters)
-    {   $sub = first {defined $_} $chapter->all(subroutine => $name);
-        last if defined $sub;
+
+    my $package = $self->package;
+    my @parts   = defined $package ? $self->manualsForPackage($package) : $self;
+
+    foreach my $part (@parts)
+    {   foreach my $chapter ($part->chapters)
+        {   $sub = first {defined $_} $chapter->all(subroutine => $name);
+            return $sub if defined $sub;
+        }
     }
-    $sub;
-}
 
-#-------------------------------------------
-
-
-sub inherited($) {$_[0]->name ne $_[1]->manual->name}
-
-#-------------------------------------------
-
-
-sub ownSubroutines
-{   my $self = shift;
-    my $me   = $self->name;
-    grep {not $self->inherited($_)} $self->subroutines;
+    ();
 }
 
 #-------------------------------------------
@@ -203,26 +183,6 @@ sub diagnostics(@)
     grep {$_->type =~ $select} @diag;
 }
 
-#-------------------------------------------
-
-
-sub collectPackageRelations()
-{   my $self = shift;
-    return $self if $self->isPurePod;
-
-    my $name = $self->package;
-    my %return;
-
-    # The @ISA / use base
-    {  no strict 'refs';
-       $return{isa} = [ @{"${name}::ISA"} ];
-    }
-
-    # Support for Object::Realize::Later
-    $return{realizes} = $name->willRealize if $name->can('willRealize');
-
-    %return;
-}
 
 #-------------------------------------------
 
@@ -262,12 +222,57 @@ sub realizers(;@)
 #-------------------------------------------
 
 
-sub extraCode(;@)
+sub extraCode()
 {   my $self = shift;
-    push @{$self->{OP_extra_code}}, @_;
-    @{$self->{OP_extra_code}};
+    my $name = $self->name;
+
+    $self->package eq $name
+    ? grep {$_->name ne $name} $self->manualsForPackage($name)
+    : ();
 }
 
+#-------------------------------------------
+
+
+sub all($@)
+{   my $self = shift;
+    map { $_->all(@_) } $self->chapters;
+}
+
+#-------------------------------------------
+
+
+sub inherited($) {$_[0]->name ne $_[1]->manual->name}
+
+#-------------------------------------------
+
+
+sub ownSubroutines
+{   my $self = shift;
+    my $me   = $self->name;
+    grep {not $self->inherited($_)} $self->subroutines;
+}
+
+#-------------------------------------------
+
+
+sub collectPackageRelations()
+{   my $self = shift;
+    return () if $self->isPurePod;
+
+    my $name = $self->package;
+    my %return;
+
+    # The @ISA / use base
+    {  no strict 'refs';
+       $return{isa} = [ @{"${name}::ISA"} ];
+    }
+
+    # Support for Object::Realize::Later
+    $return{realizes} = $name->willRealize if $name->can('willRealize');
+
+    %return;
+}
 #-------------------------------------------
 
 
@@ -281,10 +286,9 @@ sub expand()
     # classes which are external are ignored.
     #
 
-    my @supers  = map { ($_, $_->extraCode) }
-                     reverse     # multiple inheritance, first isa wins
-                         grep { ref $_ }
-                            $self->superClasses;
+    my @supers  = reverse     # multiple inheritance, first isa wins
+                      grep { ref $_ }
+                          $self->superClasses;
 
     $_->expand for @supers;
 
@@ -332,7 +336,10 @@ sub expand()
     # Give all the inherited subroutines a new location in this manual.
     #
 
-    my %extended  = map { ($_->name => $_) } $self->subroutines;
+    my %extended  = map { ($_->name => $_) }
+                       map { $_->subroutines }
+                          ($self, $self->extraCode);
+
     my @inherited = map { $_->subroutines  } @supers;
     my %location;
 
@@ -344,7 +351,8 @@ sub expand()
             push @{$location{$path}}, $extended;
         }
         else
-        {   push @{$location{$inherited->path}}, $inherited;
+        {   my $path = $self->mostDetailedLocation($inherited);
+            push @{$location{$path}}, $inherited;
         }
     }
 
@@ -360,7 +368,8 @@ sub expand()
         }
     }
 
-    confess "Huh? $_\n" for keys %location;
+    warn "ERROR: Section without location in $self: $_\n"
+        for keys %location;
 
     $self->{OP_is_expanded} = 1;
     $self;
@@ -464,5 +473,6 @@ STATS
 }
 
 #-------------------------------------------
+
 
 1;

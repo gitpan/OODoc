@@ -36,11 +36,14 @@ Please contribute ideas.  Have a look at the main website of this
 project at C<http://perl.overmeer.net/oodoc/>.
 
 
+=head1 OVERLOADED
+
+
 
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc-E<gt>B<new>(OPTIONS)
@@ -82,80 +85,14 @@ each package statement and on many places in the documentation.
 
 =back
 
-=head2 Collected
+=head2 Inheritance knowledge
 
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Collected">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-=head2 Manual Repository
-
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
+See L<OODoc::Object/"Inheritance knowledge">
 
 =back
 
@@ -313,7 +250,7 @@ or an instantiated formatter.
 
 =over 4
 
-The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"Attributes">,
+The value is passed on to L<OODoc::Format::createManual(append)|"Page generation">,
 but the behavior is formatter dependent.
 
 =back
@@ -340,7 +277,7 @@ is given, no file will be written for this.
 
 =over 4
 
-Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"Attributes"> when
+Options passed to L<OODoc::Format::createManual(format_options)|"Page generation"> when
 a manual page has to be produced.  See the applicable formatter
 manual page for the possible flags and values.
 
@@ -350,7 +287,7 @@ manual page for the possible flags and values.
 
 =over 4
 
-Passed to L<OODoc::Format::createManual(template)|OODoc::Format/"Attributes">, and defines the
+Passed to L<OODoc::Format::createManual(template)|"Page generation">, and defines the
 location of the set of pages which has to be created for each manual
 page.  Some formatters do not support templates and the valid values
 are formatter dependent.
@@ -362,7 +299,7 @@ are formatter dependent.
 =over 4
 
 Other files which have to be copied
-passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Attributes">.
+passed to L<OODoc::Format::createOtherPages(source)|"Page generation">.
 
 =back
 
@@ -372,7 +309,7 @@ passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Attributes">.
 
 Selects the files which are to be processed for special markup information.
 Other files, like image files, will be simply copied.  The value will be
-passed to L<OODoc::Format::createOtherPages(process)|OODoc::Format/"Attributes">.
+passed to L<OODoc::Format::createOtherPages(process)|"Page generation">.
 
 =back
 
@@ -404,6 +341,80 @@ document set.
 
 =back
 
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 
 
 =head1 DIAGNOSTICS
@@ -422,20 +433,15 @@ I<Error:> cannot copy distribution file $fn to $dest: $!
 For some reason, a plain file from can not be copied from your source
 tree to the location where the distribution is made.
 
-I<Error:> do not understand your file selection
-
-The C<files> option is not understood.  You may specify an ARRAY, regular
-expression, or a code reference.
-
 I<Error:> formatter $name has compilation errors: $@
 
 The formatter which is specified does not compile, so can not be used.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 I<Warning:> no file $fn to include in the distribution
 
@@ -473,6 +479,11 @@ I<Error:> the produced module needs a descriptive name
 
 Every module needs a name, which will be used on many places in the
 documentation.
+
+I<Error:> use regex, code reference or array for file selection
+
+The L<processFiles(select)|"Parser"> option is not understood.  You may specify
+an ARRAY, regular expression, or a code reference.
 
 
 =head1 DETAILS
@@ -568,7 +579,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

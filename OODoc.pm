@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Object';
 
 use strict;
@@ -67,7 +67,7 @@ sub selectFiles($@)
       = ref $files eq 'Regexp' ? sub { $_[0] =~ $files }
       : ref $files eq 'CODE'   ? $files
       : ref $files eq 'ARRAY'  ? $files
-      : croak "ERROR: do not understand your file selection";
+      : croak "ERROR: use regex, code reference or array for file selection";
 
     return ($select, []) if ref $select eq 'ARRAY';
 
@@ -197,13 +197,15 @@ sub getPackageRelations()
     my @sources  = map {$_->source} @manuals;
 
     foreach my $fn (@sources)
-    {    eval { require $fn };
+    {    next unless $fn =~ m/\.pm$/;
+         eval { require $fn };
          die "ERROR: problems compiling $fn:\n$@"
            if $@;
     }
 
     foreach my $manual (@manuals)
-    {   if($manual->name ne $manual->package)     # autoloaded code
+    {
+        if($manual->name ne $manual->package)  # autoloaded code
         {   my $main = $self->mainManual("$manual");
             $main->extraCode($manual) if defined $main;
             next;

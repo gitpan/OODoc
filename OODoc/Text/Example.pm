@@ -1,19 +1,13 @@
 
 package OODoc::Text::Example;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text';
 
 use strict;
 use warnings;
 
 use Carp;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)

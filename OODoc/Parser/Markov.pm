@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Parser';
 
 use strict;
@@ -400,7 +400,7 @@ sub closeSubroutine()
 sub docOption($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
 
-    unless($line =~ m/^\=option\s+(\w+)\s*(.+?)\s*$/ )
+    unless($line =~ m/^\=option\s+(\S+)\s*(.+?)\s*$/ )
     {   warn "WARNING: option line incorrect in $fn line $ln:\n$line";
         return;
     }
@@ -428,7 +428,7 @@ sub docOption($$$$)
 sub docDefault($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
 
-    unless($line =~ m/^\=default\s+(\w+)\s*(.+?)\s*$/ )
+    unless($line =~ m/^\=default\s+(\S+)\s*(.+?)\s*$/ )
     {   warn "WARNING: default line incorrect in $fn line $ln:\n$line";
         return;
     }
@@ -563,46 +563,46 @@ sub decomposeLink($$)
       = $link =~ s/(?:^|\:\:) (\w+) \( (.*?) \)$//x ? ($1, $2)
       :                                               ('', '');
 
-    my $package;
-
-       if(not length($link)) { $package = $manual }
-    elsif($package = $self->mainManual($link)) {;}
+    my $man;
+       if(not length($link)) { $man = $manual }
+    elsif($man = $self->manual($link)) { ; }
     else
     {   eval "require $link";
         warn "WARNING: package $link is not on your system, but linked to in $manual\n"
            if $@;
-        $package = $link;
+        $man = $link;
     }
 
-    unless(ref $package)
-    {   return $package
-              . (defined $subroutine ? " subroutine $subroutine" : '')
-              . (length($option)     ? " option $option" : '');
+    unless(ref $man)
+    {   return ( $manual
+               , $man
+                 . (length($subroutine) ? " subroutine $subroutine" : '')
+                 . (length($option)     ? " option $option" : '')
+               );
     }
 
-    return $package
+    return (undef, $man)
         unless defined $subroutine && length $subroutine;
 
-    my $sub = $package->subroutine($subroutine);
+    my $package = $self->manual($man->package);
+    my $sub     = $package->subroutine($subroutine);
     unless(defined $sub)
     {   warn "WARNING: subroutine $subroutine() is not defined by $package, but linked to in $manual\n";
-        return "$package subroutine $subroutine";
+        return ($package, "$package subroutine $subroutine");
     }
 
-    return $sub
+    my $location = $sub->manual;
+    return ($location, $sub)
         unless defined $option && length $option;
 
     my $opt = $sub->findOption($option);
     unless(defined $opt)
-    {   warn "WARNING: option \"$option\" is not defined for subroutine $subroutine in $package, but linked to in $manual\n";
-        return "$package subroutine $subroutine option $option";
+    {   warn "WARNING: option \"$option\" is not defined for subroutine $subroutine in $location, but linked to in $manual\n";
+        return ($location, "$package subroutine $subroutine option $option");
     }
 
-    $opt;
+    ($location, $opt);
 }
-
-#-------------------------------------------
-
 
 #-------------------------------------------
 
@@ -618,8 +618,8 @@ sub cleanupPod($$$)
 
 sub cleanupPodLink($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
-    my $to = $self->decomposeLink($manual, $link);
-    ref $to ? $formatter->link($manual, $to, $link) : $to;
+    my ($toman, $to) = $self->decomposeLink($manual, $link);
+    ref $to ? $formatter->link($toman, $to, $link) : $to;
 }
 
 #-------------------------------------------
@@ -630,20 +630,22 @@ my $url_coderoot  = 'CODE';
 
 sub cleanupHtml($$$)
 {   my ($self, $formatter, $manual, $string) = @_;
+    return '' unless defined $string && length $string;
+
     for($string)
     {   s#\&#\amp;#g;
-        s#(?<![LFCIBEM])\<#&lt;#g;
-        s/M\<([^>]*)\>/$self->cleanupHtmlLink($formatter, $manual, $1)/ge;
-        s#L\<([^>]*)\>#<a href="$url_modsearch$1>$1</a>#g;
-        s#F\<([^>]*)\>#<a href="$url_coderoot"/$1>$1</a>#g;
-        s#C\<([^>]*)\>#<code>$1</code>#g;
-        s#I\<([^>]*)\>#<em>$1</em>#g;
-        s#B\<([^>]*)\>#<b>$1</b>#g;
-        s#E\<([^>]*)\>#\&$1;#g;
+        s#(?<!\b[LFCIBEM])\<#&lt;#g;
+        s/\bM\<([^>]*)\>/$self->cleanupHtmlLink($formatter, $manual, $1)/ge;
+        s#\bL\<([^>]*)\>#<a href="$url_modsearch$1">$1</a>#g;
+        s#\bF\<([^>]*)\>#<a href="$url_coderoot"/$1>$1</a>#g;
+        s#\bC\<([^>]*)\>#<code>$1</code>#g;
+        s#\bI\<([^>]*)\>#<em>$1</em>#g;
+        s#\bB\<([^>]*)\>#<b>$1</b>#g;
+        s#\bE\<([^>]*)\>#\&$1;#g;
         s#\-\>#-\&gt;#g;
-        s#^\=over\s+\d+\s*#\n<ul>#gms;
-        s#^\=item\s*(?:\*\s*)?([^\n]*)\s*#\n<li><b>$1</b><br />\n#gs;
-        s#^\=back\s+#</ul>\n#gms;
+        s#^\=over\s+\d+\s*#\n<ul>\n#gms;
+        s#(?:\A|\s*\n)\=item\s*(?:\*\s*)?([^\n]*)\s*#\n<li><b>$1</b><br />\n#gms;
+        s#(?:\A|\s*)\=back\b#\n</ul>\n#gms;
  
         my ($label, $level, $title);
         s#^\=head([1-6])\s*([^\n]*)#
@@ -675,8 +677,8 @@ sub cleanupHtml($$$)
 
 sub cleanupHtmlLink($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
-    my $to = $self->decomposeLink($manual, $link);
-    ref $to ? $formatter->link($manual, $to, $link) : $to;
+    my ($toman, $to) = $self->decomposeLink($manual, $link);
+    ref $to ? $formatter->link($toman, $to, $link) : $to;
 }
 
 #-------------------------------------------

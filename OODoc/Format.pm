@@ -1,7 +1,7 @@
 
 package OODoc::Format;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Object';
 
 use strict;
@@ -54,6 +54,9 @@ sub workdir() {shift->{OF_workdir}}
 
 
 sub manifest() {shift->{OF_manifest}}
+
+#-------------------------------------------
+
 
 #-------------------------------------------
 
@@ -335,8 +338,12 @@ sub showOptionTable(@)
     my @rows;
     foreach (@$options)
     {   my ($option, $default) = @$_;
+        my $optman = $option->manual;
+        my $link   = $manual->inherited($option)
+                   ? $self->link(undef, $optman)
+                   : '';
         push @rows, [ $self->cleanup($manual, $option->name)
-                    , ($manual->inherited($option) ? $option->manual : '')
+                    , $link
                     , $self->cleanup($manual, $default->value)
                     ];
     }
@@ -392,6 +399,13 @@ sub showOptionExpand(@) {shift}
 
 sub createInheritance($)
 {   my ($self, $package) = @_;
+
+    if($package->name ne $package->package)
+    {   # This is extra code....
+        my $from = $package->package;
+        return "\n $package\n    contains extra code for\n    M<$from>\n";
+    }
+
     my $output;
     my @supers  = $package->superClasses;
 
@@ -402,7 +416,7 @@ sub createInheritance($)
 
     if(my @extras = $package->extraCode)
     {   $output .= "\n $package has extra code in\n";
-        $output .= "   M<$_>\n" foreach @extras;
+        $output .= "   M<$_>\n" foreach sort @extras;
     }
 
     foreach (@supers)
@@ -444,6 +458,9 @@ sub showSuperSupers($)
 
     $output;
 }
+
+#-------------------------------------------
+
 
 1;
 

@@ -1,7 +1,7 @@
 
 package OODoc::Text::Structure;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text';
 
 use strict;
@@ -9,9 +9,6 @@ use warnings;
 
 use Carp;
 use List::Util 'first';
-
-
-#-------------------------------------------
 
 
 #-------------------------------------------
@@ -46,9 +43,6 @@ sub emptyExtension($)
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 sub level() {shift->{OTS_level}}
 
 #-------------------------------------------
@@ -70,6 +64,21 @@ sub path() { confess "Not implemented" }
 sub all($@)
 {   my ($self, $method) = (shift, shift);
     $self->$method(@_);
+}
+
+#-------------------------------------------
+
+
+sub isEmpty()
+{   my $self = shift;
+
+    return 1 if $self->description =~ m/^\s*$/;
+    return 0 if $self->examples || $self->subroutines;
+
+    my @nested = $self->isa('OODoc::Text::Capter')  ? $self->sections
+               : $self->isa('OODoc::Text::Section') ? $self->subsections
+               :                                      ();
+    first { ! $_->isEmpty } @nested;
 }
 
 #-------------------------------------------

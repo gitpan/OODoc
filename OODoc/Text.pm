@@ -1,7 +1,7 @@
 
 package OODoc::Text;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Object';
 
 use strict;
@@ -13,17 +13,11 @@ use Carp;
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 use overload '=='   => sub {$_[0]->unique == $_[1]->unique}
            , '!='   => sub {$_[0]->unique != $_[1]->unique}
            , '""'   => sub {$_[0]->name}
            , 'cmp'  => sub {$_[0]->name cmp "$_[1]"}
            , 'bool' => sub {1};
-
-#-------------------------------------------
-
 
 #-------------------------------------------
 
@@ -85,7 +79,11 @@ sub container(;$)
 #-------------------------------------------
 
 
-sub manual() { shift->container->manual }
+sub manual(;$)
+{   my $self = shift;
+    @_ ? $self->SUPER::manual(@_)
+       : $self->container->manual;
+}
 
 #-------------------------------------------
 

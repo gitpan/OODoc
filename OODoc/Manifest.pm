@@ -1,7 +1,7 @@
 
 package OODoc::Manifest;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Object';
 
 use strict;
@@ -11,8 +11,8 @@ use Carp;
 use IO::File;
 
 
-#-------------------------------------------
-
+use overload '@{}' => sub { [ shift->files ] };
+use overload bool  => sub {1};
 
 #-------------------------------------------
 
@@ -32,13 +32,25 @@ sub init($)
 #-------------------------------------------
 
 
-use overload '@{}' => sub { [ shift->files ] };
-use overload bool  => sub {1};
+sub filename() {shift->{OM_filename}}
 
 #-------------------------------------------
 
 
-sub filename() {shift->{OM_filename}}
+sub files() { keys %{shift->{O_files}} }
+
+#-------------------------------------------
+
+
+sub add($)
+{   my $self = shift;
+    while(@_)
+    {   my $filename = shift;
+        $self->modified(1) unless exists $self->{O_file}{$filename};
+        $self->{O_files}{$filename}++;
+    }
+    $self;
+}
 
 #-------------------------------------------
 
@@ -68,24 +80,6 @@ sub modified(;$)
 #-------------------------------------------
 
 
-sub files() { keys %{shift->{O_files}} }
-
-#-------------------------------------------
-
-
-sub add($)
-{   my $self = shift;
-    while(@_)
-    {   my $filename = shift;
-        $self->modified(1) unless exists $self->{O_file}{$filename};
-        $self->{O_files}{$filename}++;
-    }
-    $self;
-}
-
-#-------------------------------------------
-
-
 sub write()
 {   my $self = shift;
     return unless $self->modified;
@@ -104,5 +98,6 @@ sub write()
 sub DESTROY() { shift->write }
 
 #-------------------------------------------
+
 
 1;

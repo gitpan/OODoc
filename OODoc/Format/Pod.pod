@@ -31,8 +31,71 @@ description syntax for Perl.  POD can be translated to many different
 operating system specific manual systems, like the Unix C<man> system.
 
 
+=head1 OVERLOADED
+
+
 
 =head1 METHODS
+
+
+=head2 Constructors
+
+
+OODoc::Format::Pod-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"METHODS">
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<manifest>
+
+=over 4
+
+See L<OODoc::Format/"Attributes">
+
+=back
+
+$obj-E<gt>B<project>
+
+=over 4
+
+See L<OODoc::Format/"Attributes">
+
+=back
+
+$obj-E<gt>B<version>
+
+=over 4
+
+See L<OODoc::Format/"Attributes">
+
+=back
+
+$obj-E<gt>B<workdir>
+
+=over 4
+
+See L<OODoc::Format/"Attributes">
+
+=back
+
+=head2 Page generation
 
 
 $obj-E<gt>B<chapterInheritance>(OPTIONS)
@@ -51,12 +114,66 @@ Produces the chapter which shows inheritance relationships.
 
 =back
 
+$obj-E<gt>B<cleanup>(MANUAL, STRING)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<createInheritance>(MANUAL)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<createManual>(OPTIONS)
+
+=over 4
+
+ Option          Defined in       Default   
+ append                           ''        
+ format_options  L<OODoc::Format>  []        
+ manual          L<OODoc::Format>  <required>
+ project         L<OODoc::Format>  <required>
+ template        L<OODoc::Format>  C<undef>  
+
+. append STRING|CODE
+
+=over 4
+
+Text to be added at the end of each manual page.
+See L<formatManual(append)|"Page generation"> for an explanation.
+
+=back
+
+. format_options ARRAY
+
+. manual MANUAL
+
+. project STRING
+
+. template LOCATION
+
+=back
+
+$obj-E<gt>B<createOtherPages>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
 $obj-E<gt>B<formatManual>(OPTIONS)
 
 =over 4
 
 The OPTIONS are a collection of all options available to show* methods.
-They are completed with the defaults set by L<createManual(format_options)|OODoc::Format/"Attributes">.
+They are completed with the defaults set by L<createManual(format_options)|OODoc::Format/"Page generation">.
 
  Option  Defined in       Default   
  append                   ''        
@@ -70,7 +187,7 @@ They are completed with the defaults set by L<createManual(format_options)|OODoc
 Used after each manual page has been formatting according to the
 standard rules.  When a STRING is specified, it will be appended to
 the manual page.  When a CODE reference is given, that function is
-called with all the options that L<showChapter()|OODoc::Format/"Attributes"> usually gets.
+called with all the options that L<showChapter()|"Page generation"> usually gets.
 
 Using C<append> is one of the alternatives to create the correct
 Reference, Copyrights, etc chapters at the end of each manual
@@ -94,17 +211,129 @@ of the link path, when specified.
 
 =back
 
-OODoc::Format::Pod-E<gt>B<new>(OPTIONS)
+$obj-E<gt>B<showChapter>(OPTIONS)
 
 =over 4
 
-See L<OODoc::Format/"METHODS">
+See L<OODoc::Format/"Page generation">
 
 =back
 
 $obj-E<gt>B<showChapterIndex>(FILE, CHAPTER, INDENT)
 
 =over 4
+
+=back
+
+$obj-E<gt>B<showExamples>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showOptionExpand>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showOptionTable>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showOptionUse>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showOptions>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showStructureExpanded>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showStructureRefer>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showSubroutine>((@))
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showSubroutineDescription>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showSubroutineName>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showSubroutineUse>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<showSubroutines>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Format/"Page generation">
 
 =back
 
@@ -132,20 +361,6 @@ is the header.
 . output FILE
 
 . widths ARRAY
-
-=back
-
-=head2 Initiation
-
-
-=head2 Collected
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Collected">
 
 =back
 
@@ -191,6 +406,14 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 $obj-E<gt>B<manuals>
 
 =over 4
@@ -215,215 +438,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-=head2 Attributes
-
-
-$obj-E<gt>B<cleanup>(MANUAL, STRING)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<createInheritance>(MANUAL)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<createManual>(OPTIONS)
-
-=over 4
-
- Option          Defined in       Default   
- append                           ''        
- format_options  OODoc::Format    []        
- manual          OODoc::Format    <required>
- project         OODoc::Format    <required>
- template        OODoc::Format    C<undef>  
-
-. append STRING|CODE
-
-=over 4
-
-Text to be added at the end of each manual page.
-See L<formatManual(append)|"METHODS"> for an explanation.
-
-=back
-
-. format_options ARRAY
-
-. manual MANUAL
-
-. project STRING
-
-. template LOCATION
-
-=back
-
-$obj-E<gt>B<createOtherPages>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<manifest>
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<project>
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showChapter>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showExamples>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showOptionExpand>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showOptionTable>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showOptionUse>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showOptions>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showStructureExpanded>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showStructureRefer>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showSubroutine>((@))
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showSubroutineDescription>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showSubroutineName>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showSubroutineUse>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<showSubroutines>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
-$obj-E<gt>B<workdir>
-
-=over 4
-
-See L<OODoc::Format/"Attributes">
-
-=back
-
 
 
 =head1 DIAGNOSTICS
@@ -437,13 +451,13 @@ I<Error:> formatter does not know the version.
 I<Error:> formatter has no project name.
 
 A formatter was created without a name specified for the project at
-hand.  This should be passed with L<new(project)|OODoc::Format/"METHODS">.
+hand.  This should be passed with L<new(project)|"METHODS">.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 I<Warning:> missing required chapter $name in $manual
 
@@ -460,7 +474,7 @@ I<Error:> no package name for pod production
 I<Error:> no working directory specified.
 
 The formatter has to know where the output can be written.  This
-directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was not specified.
+directory must be provided via L<new(workdir)|"METHODS">, but was not specified.
 
 I<Warning:> unknown subroutine type $type for $name in $manual
 
@@ -477,9 +491,9 @@ Therefore, there are a few ways to adapt the output.
 
 =head3 Configuring with format options
 
-L<createManual(format_options)|OODoc::Format/"Attributes"> or L<OODoc::create(format_options)|OODoc/"Formatter">
+L<createManual(format_options)|OODoc::Format/"Page generation"> or L<OODoc::create(format_options)|"Formatter">
 can be used with a list of formatting options which are passed to
-L<showChapter()|OODoc::Format/"Attributes">.  This will help you to produce pages which have
+L<showChapter()|"Page generation">.  This will help you to produce pages which have
 pre-planned changes in layout.
 
 I<Example:> format options
@@ -502,7 +516,7 @@ I<Example:> format options
 By default, the last chapters are not filled in: the C<REFERENCES> and
 C<COPYRIGHTS> chapters are very personal.  You can fill these in by
 extending the POD generator, as described in the next section, or take
-a very simple approach simply using L<createManual(append)|"METHODS">.
+a very simple approach simply using L<createManual(append)|"Page generation">.
 
 I<Example:> appending text to a page
 
@@ -534,7 +548,7 @@ I<Example:> remove chapter inheritance
  sub chapterInheritance(@) {shift};
 
 The C<MyPod> package is extending the standard POD generator, by overruling
-the default behavior of L<chapterInheritance()|"METHODS"> by producing nothing.
+the default behavior of L<chapterInheritance()|"Page generation"> by producing nothing.
 
 I<Example:> changing the chapter's output
 
@@ -581,13 +595,13 @@ I<Example:> adding to a chapter's output
 
 =head3 Configuring with Text::MagicTemplate
 
-When using 'pod2' in stead of 'pod' when L<OODoc::create()|OODoc/"Formatter"> is called,
+When using 'pod2' in stead of 'pod' when L<OODoc::create()|"Formatter"> is called,
 the L<OODoc::Format::Pod2|OODoc::Format::Pod2> will be used.   It's nearly a drop-in
 replacement by its default behavior.  When you specify
 your own template file, every thing can be made.
 
-See the manual page of Text::MagicTemplate subroutine .  You have to install
-Bundle::Text::MagicTemplate subroutine  to get it to work.
+See the manual page of Text::MagicTemplate.  You have to install
+Bundle::Text::MagicTemplate to get it to work.
 
 I<Example:> formatting with template
 
@@ -625,7 +639,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

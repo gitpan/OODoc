@@ -1,19 +1,13 @@
 
 package OODoc::Text::Subroutine;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text';
 
 use strict;
 use warnings;
 
 use Carp;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -34,74 +28,30 @@ sub init($)
 #-------------------------------------------
 
 
+sub extends($)
+{   my $self  = shift;
+    return $self->SUPER::extends unless @_;
+
+    my $super = shift;
+    if($self->type ne $super->type)
+    {   my ($fn1, $ln1) = $self->where;
+        my ($fn2, $ln2) = $super->where;
+        my ($t1,  $t2 ) = ($self->type, $super->type);
+
+        warn <<WARN;
+WARNING: subroutine $self() extended by different type:
+   $t1 in $fn1 line $ln1
+   $t2 in $fn2 line $ln2
+WARN
+    }
+
+    $self->SUPER::extends($super);
+}
+
 #-------------------------------------------
 
 
 sub parameters() {shift->{OTS_param}}
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
-
-sub default($)
-{   my ($self, $it) = @_;
-    return $self->{OTS_defaults}{$it} unless ref $it;
-
-    my $name = $it->name;
-    $self->{OTS_defaults}{$name} = $it;
-    $it;
-}
-
-#-------------------------------------------
-
-
-sub defaults() { values %{shift->{OTS_defaults}} }
-
-#-------------------------------------------
-
-
-sub option($)
-{   my ($self, $it) = @_;
-    return $self->{OTS_options}{$it} unless ref $it;
-
-    my $name = $it->name;
-    $self->{OTS_options}{$name} = $it;
-    $it;
-}
-
-#-------------------------------------------
-
-
-sub findOption($)
-{   my ($self, $name) = @_;
-    my $option = $self->option($name);
-    return $option if $option;
-
-    my $extends = $self->extends or return;
-    $extends->option($name);
-}
-
-#-------------------------------------------
-
-
-
-sub options() { values %{shift->{OTS_options}} }
-
-#-------------------------------------------
-
-
-sub diagnostic($)
-{   my ($self, $diag) = @_;
-    push @{$self->{OTS_diags}}, $diag;
-    $diag;
-}
-
-#-------------------------------------------
-
-
-sub diagnostics() { @{shift->{OTS_diags}} }
 
 #-------------------------------------------
 
@@ -145,13 +95,78 @@ sub location($)
 
        warn <<WARN
 WARNING: Subroutine $self() location conflict:
-   $mypath ($myfn line $myln)
-   $superpath ($superfn line $superln)
+   $mypath in $myfn line $myln
+   $superpath in $superfn line $superln
 WARN
    }
 
    $container;
 }
+
+#-------------------------------------------
+
+
+sub path() { shift->container->path }
+
+#-------------------------------------------
+
+
+sub default($)
+{   my ($self, $it) = @_;
+    return $self->{OTS_defaults}{$it} unless ref $it;
+
+    my $name = $it->name;
+    $self->{OTS_defaults}{$name} = $it;
+    $it;
+}
+
+#-------------------------------------------
+
+
+sub defaults() { values %{shift->{OTS_defaults}} }
+
+#-------------------------------------------
+
+
+sub option($)
+{   my ($self, $it) = @_;
+    return $self->{OTS_options}{$it} unless ref $it;
+
+    my $name = $it->name;
+    $self->{OTS_options}{$name} = $it;
+    $it;
+}
+
+#-------------------------------------------
+
+
+sub findOption($)
+{   my ($self, $name) = @_;
+    my $option = $self->option($name);
+    return $option if $option;
+
+    my $extends = $self->extends or return;
+    $extends->findOption($name);
+}
+
+#-------------------------------------------
+
+
+sub options() { values %{shift->{OTS_options}} }
+
+#-------------------------------------------
+
+
+sub diagnostic($)
+{   my ($self, $diag) = @_;
+    push @{$self->{OTS_diags}}, $diag;
+    $diag;
+}
+
+#-------------------------------------------
+
+
+sub diagnostics() { @{shift->{OTS_diags}} }
 
 #-------------------------------------------
 
@@ -191,10 +206,5 @@ sub collectedOptions(@)
 
     $options;
 }
-
-#-------------------------------------------
-
-
-sub path() { shift->container->path }
 
 1;

@@ -1,7 +1,7 @@
 
 package OODoc::Text::Section;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -9,12 +9,6 @@ use warnings;
 
 use Carp;
 use List::Util 'first';
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -28,6 +22,11 @@ sub init($)
     $self->{OTS_subsections} = [];
     $self;
 }
+
+#-------------------------------------------
+
+
+sub chapter() { shift->container }
 
 #-------------------------------------------
 
@@ -61,9 +60,6 @@ sub all($@)
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 sub subsection($)
 {   my ($self, $thing) = @_;
 
@@ -90,24 +86,5 @@ sub subsections(;@)
 
 #-------------------------------------------
 
-
-#-------------------------------------------
-
-
-sub chapter() { shift->container }
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
-
-sub allExamples()
-{   my $self = shift;
-
-    ( $self->examples
-    , map {$_->examples} $self->subsections
-    );
-}
 
 1;

@@ -22,22 +22,36 @@ OODoc::Object - base class for all OODoc classes.
 
 =head1 DESCRIPTION
 
+Any object used in the OODoc module is derived from this OODoc::Object
+class.  This means that all functionality in this class is provided
+for all of the other classes.
+
+
+=head1 OVERLOADED
 
 
 
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Object-E<gt>B<new>(OPTIONS)
 
 =over 4
 
+Create a new object (instantiation).  All objects in OODoc are created
+the same way: they carry a list of key-value pairs as option.  For
+examples, see the description of this method in the manual page of
+the specific object.
+
+The validity of the options for C<new> is checked, in contrary to the
+options when used with many other method defined by OODoc.
+
 =back
 
-=head2 Collected
+=head2 Inheritance knowledge
 
 
 $obj-E<gt>B<extends>([OBJECT])
@@ -99,6 +113,14 @@ documentation for the code of the package NAME.
 
 =back
 
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+Returns the manual with the specified name, or else C<undef>.
+
+=back
+
 $obj-E<gt>B<manuals>
 
 =over 4
@@ -132,7 +154,7 @@ Returns the names of all defined packages.
 I<Warning:> Unknown option $name
 
 You have used the option with $name, which is not defined with the
-instantiation of this object.
+instantiation (the C<new> method) of this object.
 
 I<Warning:> Unknown options @names
 
@@ -156,7 +178,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

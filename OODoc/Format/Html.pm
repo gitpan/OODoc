@@ -1,7 +1,7 @@
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Format';
 
 use strict;
@@ -45,6 +45,7 @@ sub init($)
 sub cleanupString($$)
 {   my $self = shift;
     my $text = $self->cleanup(@_);
+    $text =~ s!</p>\s*<p>!<br />!gs;
     $text =~ s!\</?p\>!!g;
     $text;
 }
@@ -227,6 +228,350 @@ sub expandTemplate($$)
 
 #-------------------------------------------
 
+sub showStructureExpand(@)
+{   my ($self, %args) = @_;
+
+    my $examples = $args{show_chapter_examples} || 'EXPAND';
+    my $text     = $args{structure} or confess;
+
+    my $name     = $text->name;
+    my $level    = $text->level;
+    my $output   = $args{output}  or confess;
+    my $manual   = $args{manual}  or confess;
+
+    # Produce own chapter description
+
+    my $descr   = $self->cleanup($manual, $text->description);
+    my $unique  = $text->unique;
+    (my $id     = $name) =~ s/\W+/_/g;
+
+    $output->print(
+        qq[\n<h$level id="$id"><a name="$unique">$name</a></h$level>\n$descr]
+                  );
+
+    $self->mark($manual, $unique);
+
+    # Link to inherited documentation.
+
+    my $super = $text;
+    while($super = $super->extends)
+    {   last if $super->description !~ m/^\s*$/;
+    }
+
+    if(defined $super)
+    {   my $superman = $super->manual;   #  :-)
+        $output->print( "<p>See ", $self->link($superman, $super), " in "
+                      , $self->link(undef, $superman), "</p>\n");
+    }
+
+    # Show the subroutines and examples.
+
+    $self->showSubroutines(%args, subroutines => [$text->subroutines]);
+    $self->showExamples(%args, examples => [$text->examples])
+         if $examples eq 'EXPAND';
+
+    return $self;
+}
+
+#-------------------------------------------
+
+sub showStructureRefer(@)
+{   my ($self, %args) = @_;
+
+    my $text     = $args{structure} or confess;
+
+    my $name     = $text->name;
+    my $level    = $text->level;
+    my $output   = $args{output}  or confess;
+    my $manual   = $args{manual}  or confess;
+
+    my $link     = $self->link($manual, $text);
+    $output->print(
+       qq[\n<h$level id="$name"><a href="$link">$name</a><h$level>\n]);
+    $self;
+}
+
+#-------------------------------------------
+
+sub chapterDiagnostics(@)
+{   my ($self, %args) = @_;
+
+    my $manual  = $args{manual} or confess;
+    my $diags   = $manual->chapter('DIAGNOSTICS');
+
+    my @diags   = map {$_->diagnostics} $manual->subroutines;
+    $diags      = OODoc::Text::Chapter->new(name => 'DIAGNOSTICS')
+        if !$diags && @diags;
+
+    return unless $diags;
+
+    $self->showChapter(chapter => $diags, %args)
+        if defined $diags;
+
+    $self->showDiagnostics(%args, diagnostics => \@diags);
+    $self;
+}
+
+#-------------------------------------------
+
+sub showExamples(@)
+{   my ($self, %args) = @_;
+    my $examples = $args{examples} or confess;
+    return unless @$examples;
+
+    my $manual    = $args{manual}  or confess;
+    my $output    = $args{output}  or confess;
+
+    $output->print( qq[<dl class="example">\n] );
+
+    foreach my $example (@$examples)
+    {   my $name   = $example->name;
+        my $descr  = $self->cleanup($manual, $example->description);
+        my $unique = $example->unique;
+        $output->print( <<EXAMPLE );
+<dt>&raquo;&nbsp;<a name="$unique">Example</a>: $name</dt>
+<dd>$descr</dd>
+EXAMPLE
+
+         $self->mark($manual, $unique);
+    }
+    $output->print( qq[</dl>\n] );
+
+    $self;
+}
+
+#-------------------------------------------
+
+sub showDiagnostics(@)
+{   my ($self, %args) = @_;
+    my $diagnostics = $args{diagnostics} or confess;
+    return unless @$diagnostics;
+
+    my $manual    = $args{manual}  or confess;
+    my $output    = $args{output}  or confess;
+
+    $output->print( qq[<dl class="diagnostics">\n] );
+
+    foreach my $diag (sort @$diagnostics)
+    {   my $name    = $diag->name;
+        my $type    = $diag->type;
+        my $text    = $self->cleanup($manual, $diag->description);
+        my $unique  = $diag->unique;
+
+        $output->print( <<DIAG );
+<dt class="type">&raquo;&nbsp;$type: <a name="$unique">$name</a></dt>
+<dd>$text</dd>
+DIAG
+
+         $self->mark($manual, $unique);
+    }
+
+    $output->print( qq[</dl>\n] );
+    $self;
+}
+
+
+sub showSubroutine(@)
+{   my $self = shift;
+    my %args   = @_;
+    my $output = $args{output}     or confess;
+    my $sub    = $args{subroutine} or confess;
+    my $type   = $sub->type;
+    my $name   = $sub->name;
+
+    $self->SUPER::showSubroutine(@_);
+
+    $output->print( qq[</dd>\n</dl>\n</div>\n] );
+    $self;
+}
+
+#-------------------------------------------
+
+sub showSubroutineUse(@)
+{   my ($self, %args) = @_;
+    my $subroutine = $args{subroutine} or confess;
+    my $manual     = $args{manual}     or confess;
+    my $output     = $args{output}     or confess;
+
+    my $type       = $subroutine->type;
+    my $name       = $self->cleanupString($manual, $subroutine->name);
+    my $paramlist  = $self->cleanupString($manual, $subroutine->parameters);
+    my $unique     = $subroutine->unique;
+
+    my $class      = $manual->package;
+
+    my $call       = qq[<b><a name="$unique">$name</a></b>];
+    $call         .= "(&nbsp;$paramlist&nbsp;)" if length $paramlist;
+    $self->mark($manual, $unique);
+
+    my $use
+      = $type eq 'i_method' ? qq[\$obj-&gt;$call]
+      : $type eq 'c_method' ? qq[\$class-&gt;$call]
+      : $type eq 'ci_method'? qq[\$obj-&gt;$call<br />\$class-&gt;$call]
+      : $type eq 'overload' ? qq[overload: $call]
+      : $type eq 'function' ? qq[$call]
+      : $type eq 'tie'      ? $call
+      :                       '';
+
+    warn "WARNING: unknown subroutine type $type for $name in $manual"
+        unless length $use;
+
+    $output->print( <<SUBROUTINE );
+<div class="$type" id="$name">
+<dl>
+<dt class="sub_use">$use</dt>
+<dd class="sub_body">
+SUBROUTINE
+
+    if($manual->inherited($subroutine))
+    {   my $defd    = $subroutine->manual;
+        my $sublink = $self->link($defd, $subroutine, $name);
+        my $manlink = $self->link($manual, $defd);
+        $output->print( qq[See $sublink in $manlink.<br />\n] );
+    }
+
+    $self;
+}
+
+#-------------------------------------------
+
+sub showSubsIndex(@)
+{   my ($self, %args) = @_;
+    my $output     = $args{output}     or confess;
+}
+
+#-------------------------------------------
+
+sub showSubroutineName(@)
+{   my ($self, %args) = @_;
+    my $subroutine = $args{subroutine} or confess;
+    my $manual     = $args{manual}     or confess;
+    my $output     = $args{output}     or confess;
+    my $name       = $subroutine->name;
+
+    my $url
+     = $manual->inherited($subroutine)
+     ? "M<".$subroutine->manual."::$name>"
+     : "M<$name>";
+
+    $output->print
+     ( $self->cleanupString($manual, $url)
+     , ($args{last} ? ".\n" : ",\n")
+     );
+}
+
+#-------------------------------------------
+
+sub showOptions(@)
+{   my $self   = shift;
+    my %args   = @_;
+    my $output = $args{output} or confess;
+    $output->print( qq[<dl class="options">\n] );
+
+    $self->SUPER::showOptions(@_);
+
+    $output->print( qq[</dl>\n] );
+    $self;
+}
+
+#-------------------------------------------
+
+sub showOptionUse(@)
+{   my ($self, %args) = @_;
+    my $output = $args{output} or confess;
+    my $option = $args{option} or confess;
+    my $manual = $args{manual} or confess;
+
+    my $params = $self->cleanupString($manual, $option->parameters);
+    $params    =~ s/\s+$//;
+    $params    =~ s/^\s+//;
+    $params    = qq[ =&gt; <span class="params">$params</span>]
+        if length $params;
+ 
+    my $use    = qq[<span class="option">$option</span>];
+    $output->print( qq[<dt class="option_use">$use$params</dt>\n] );
+    $self;
+}
+
+#-------------------------------------------
+
+sub showOptionExpand(@)
+{   my ($self, %args) = @_;
+    my $output = $args{output} or confess;
+    my $option = $args{option} or confess;
+    my $manual = $args{manual}  or confess;
+
+    $self->showOptionUse(%args);
+
+    my $where = $option->findDescriptionObject or return $self;
+    my $descr = $self->cleanupString($manual, $where->description);
+
+    $output->print( qq[<dd>$descr</dd>\n] )
+        if length $descr;
+
+    $self;
+}
+
+#-------------------------------------------
+
+
+sub writeTable($@)
+{   my ($self, %args) = @_;
+
+    my $rows   = $args{rows}   or confess;
+    return unless @$rows;
+
+    my $head   = $args{header} or confess;
+    my $output = $args{output} or confess;
+
+    $output->print( qq[<table cellspacing="3" cellpadding="0">\n] );
+
+    local $"   = qq[</th>    <th align="left">];
+    $output->print( qq[<tr><th align="left">@$head</th></tr>\n] );
+
+    local $"   = qq[</td>    <td valign="top">];
+    $output->print( qq[<tr><td align="left">@$_</td></tr>\n] )
+        foreach @$rows;
+
+    $output->print( qq[</table>\n] );
+    $self;
+}
+
+#-------------------------------------------
+
+sub showSubroutineDescription(@)
+{   my ($self, %args) = @_;
+    my $manual  = $args{manual}                   or confess;
+    my $subroutine = $args{subroutine}            or confess;
+
+    my $text    = $self->cleanup($manual, $subroutine->description);
+    return $self unless length $text;
+
+    my $output  = $args{output}                   or confess;
+    $output->print($text);
+
+    my $extends = $self->extends                  or return $self;
+    my $refer   = $extends->findDescriptionObject or return $self;
+
+    $output->print("<br />\n");
+    $self->showSubroutineDescriptionRefer(%args, subroutine => $refer);
+}
+
+#-------------------------------------------
+
+sub showSubroutineDescriptionRefer(@)
+{   my ($self, %args) = @_;
+    my $manual  = $args{manual}                   or confess;
+    my $subroutine = $args{subroutine}            or confess;
+    my $output  = $args{output}                   or confess;
+    $output->print("\nSee ", $self->link($manual, $subroutine), "\n");
+}
+
+#-------------------------------------------
+
+
+#-------------------------------------------
+
 
 our %producers =
  ( a           => 'templateHref'
@@ -265,6 +610,7 @@ sub format(@)
 
 #-------------------------------------------
 
+
 sub templateProject($$)
 {   my ($self, $attr, $args) = @_;
     $self->project;
@@ -298,9 +644,6 @@ sub templateManual($$)
 
 #-------------------------------------------
 
-# The version is taken from the manual (which means that you may have
-# a different version number per manual) when a manual is being formatted,
-# and otherwise the project total version.
 
 sub templateVersion($$)
 {   my ($self, $attr, $args) = @_;
@@ -309,6 +652,7 @@ sub templateVersion($$)
 }
 
 #-------------------------------------------
+
 
 sub templateDate($$)
 {   my ($self, $attr, $args) = @_;
@@ -335,6 +679,7 @@ sub templateName($$)
 }
 
 #-------------------------------------------
+
 
 our %path_lookup =
  ( front       => "index.html"
@@ -370,6 +715,8 @@ sub templateInheritance(@)
 
     my $manual  = $args->{manual} or confess;
     my $output  = $self->cleanup($manual, $self->createInheritance($manual));
+    return unless length $output;
+
     for($output)
     {   s#<pre>\n*(.*)</pre>\n*#$1#s;            # over-eager cleanup
         s#^( +)#'&nbsp;' x length($1)#gme;
@@ -574,10 +921,10 @@ sub templateList($$)
                 $output .= qq[<li>$link$count\n];
             }
             elsif($show_sec eq 'NAME')
-            {   $output .= qq[<li>unsorted$count\n];
+            {   $output .= qq[<li>];
             }
 
-            $output .= qq[<br />\n] . $self->indexListSubroutines($manual,@subs)
+            $output .= $self->indexListSubroutines($manual,@subs)
                 if @subs && $show_sub eq 'LIST';
         }
         else
@@ -589,7 +936,10 @@ sub templateList($$)
         foreach my $section (@sections)
         {   my @subs  = $sorted->($selected->($section->all('subroutines')));
 
-            my $count = $show_sub eq 'COUNT' && @subs ? ' ('.@subs.')' : '';
+            my $count = ! @subs              ? ''
+                      : $show_sub eq 'COUNT' ? ' ('.@subs.')'
+                      :                        ': ';
+
             if($show_sec eq 'LINK')
             {   my $link = $self->link($manual, $section, $section->niceName);
                 $output .= qq[<li>$link$count\n];
@@ -598,7 +948,7 @@ sub templateList($$)
             {   $output .= qq[<li>$section$count\n];
             }
 
-            $output .= qq[<br />\n] . $self->indexListSubroutines($manual,@subs)
+            $output .= $self->indexListSubroutines($manual,@subs)
                 if $show_sub eq 'LIST' && @subs;
 
             $output .= qq[</li>\n];
@@ -617,332 +967,9 @@ sub indexListSubroutines(@)
 {   my $self   = shift;
     my $manual = shift;
     
-    join ",\n    "
+    join ",\n"
        , map { $self->link($manual, $_, $_) }
             @_;
-}
-
-#-------------------------------------------
-
-sub showStructureExpand(@)
-{   my ($self, %args) = @_;
-
-    my $examples = $args{show_chapter_examples} || 'EXPAND';
-    my $text     = $args{structure} or confess;
-
-    my $name     = $text->name;
-    my $level    = $text->level;
-    my $output   = $args{output}  or confess;
-    my $manual   = $args{manual}  or confess;
-
-    my $descr   = $self->cleanup($manual, $text->description);
-    (my $id     = $text->name) =~ s/\W+/_/g;
-    my $unique  = $text->unique;
-
-    $output->print(
-        qq[\n<h$level id="$id"><a name="$unique">$name</a></h$level>\n$descr]
-                  );
-    $self->mark($manual, $unique);
-
-    $self->showSubroutines(%args, subroutines => [$text->subroutines]);
-    $self->showExamples(%args, examples => [$text->examples])
-         if $examples eq 'EXPAND';
-
-    return $self;
-}
-
-#-------------------------------------------
-
-sub showStructureRefer(@)
-{   my ($self, %args) = @_;
-
-    my $text     = $args{structure} or confess;
-
-    my $name     = $text->name;
-    my $level    = $text->level;
-    my $output   = $args{output}  or confess;
-    my $manual   = $args{manual}  or confess;
-
-    my $link     = $self->link($manual, $text);
-    $output->print(
-       qq[\n<h$level id="$name"><a href="$link">$name</a><h$level>\n]);
-    $self;
-}
-
-#-------------------------------------------
-
-sub chapterDiagnostics(@)
-{   my ($self, %args) = @_;
-
-    my $manual  = $args{manual} or confess;
-    my $diags   = $manual->chapter('DIAGNOSTICS');
-
-    my @diags   = map {$_->diagnostics} $manual->subroutines;
-    $diags      = OODoc::Text::Chapter->new(name => 'DIAGNOSTICS')
-        if !$diags && @diags;
-
-    return unless $diags;
-
-    $self->showChapter(chapter => $diags, %args)
-        if defined $diags;
-
-    $self->showDiagnostics(%args, diagnostics => \@diags);
-    $self;
-}
-
-#-------------------------------------------
-
-sub showExamples(@)
-{   my ($self, %args) = @_;
-    my $examples = $args{examples} or confess;
-    return unless @$examples;
-
-    my $manual    = $args{manual}  or confess;
-    my $output    = $args{output}  or confess;
-
-    $output->print( qq[<dl class="example">\n] );
-
-    foreach my $example (@$examples)
-    {   my $name   = $example->name;
-        my $descr  = $self->cleanup($manual, $example->description);
-        my $unique = $example->unique;
-        $output->print( <<EXAMPLE );
-<dt>&raquo;&nbsp;<a name="$unique">Example</a>: $name</dt>
-<dd>$descr</dd>
-EXAMPLE
-
-         $self->mark($manual, $unique);
-    }
-    $output->print( qq[</dl>\n] );
-
-    $self;
-}
-
-#-------------------------------------------
-
-sub showDiagnostics(@)
-{   my ($self, %args) = @_;
-    my $diagnostics = $args{diagnostics} or confess;
-    return unless @$diagnostics;
-
-    my $manual    = $args{manual}  or confess;
-    my $output    = $args{output}  or confess;
-
-    $output->print( qq[<dl class="diagnostics">\n] );
-
-    foreach my $diag (sort @$diagnostics)
-    {   my $name    = $diag->name;
-        my $type    = $diag->type;
-        my $text    = $self->cleanup($manual, $diag->description);
-        my $unique  = $diag->unique;
-
-        $output->print( <<DIAG );
-<dt class="type">&raquo;&nbsp;$type: <a name="$unique">$name</a></dt>
-<dd>$text</dd>
-DIAG
-
-         $self->mark($manual, $unique);
-    }
-
-    $output->print( qq[</dl>\n] );
-    $self;
-}
-
-
-sub showSubroutine(@)
-{   my $self = shift;
-    my %args   = @_;
-    my $output = $args{output}     or confess;
-    my $sub    = $args{subroutine} or confess;
-    my $type   = $sub->type;
-    my $name   = $sub->name;
-
-    $self->SUPER::showSubroutine(@_);
-
-    $output->print( qq[</dd>\n</dl>\n</div>\n] );
-    $self;
-}
-
-#-------------------------------------------
-
-sub showSubroutineUse(@)
-{   my ($self, %args) = @_;
-    my $subroutine = $args{subroutine} or confess;
-    my $manual     = $args{manual}     or confess;
-    my $output     = $args{output}     or confess;
-
-    my $type       = $subroutine->type;
-    my $name       = $self->cleanupString($manual, $subroutine->name);
-    my $paramlist  = $self->cleanupString($manual, $subroutine->parameters);
-    my $unique     = $subroutine->unique;
-
-    my $class      = $manual->package;
-
-    my $call       = qq[<b><a name="$unique">$name</a></b>];
-    $call         .= "($paramlist)" if length $paramlist;
-    $self->mark($manual, $unique);
-
-    my $use
-      = $type eq 'i_method' ? qq[\$obj-&gt;$call]
-      : $type eq 'c_method' ? qq[\$class-&gt;$call]
-      : $type eq 'ci_method'? qq[\$obj-&gt;$call<br />\$class-&gt;$call]
-      : $type eq 'overload' ? qq[overload: $call]
-      : $type eq 'tie'      ? $call
-      :                       '';
-
-    warn "WARNING: unknown subroutine type $type for $name in $manual"
-        unless length $use;
-
-    $output->print( <<SUBROUTINE );
-<div class="$type" id="$name">
-<dl>
-<dt class="sub_use">$use</dt>
-<dd class="sub_body">
-SUBROUTINE
-
-    if($manual->inherited($subroutine))
-    {   my $defd    = $subroutine->manual;
-        my $sublink = $self->link($defd, $subroutine, $name);
-        my $manlink = $self->link($manual, $defd);
-        $output->print( qq[See $sublink in $manlink.<br />\n] );
-    }
-
-    $self;
-}
-
-#-------------------------------------------
-
-sub showSubsIndex(@)
-{   my ($self, %args) = @_;
-    my $output     = $args{output}     or confess;
-    $output->print("Subs index here\n");
-}
-
-#-------------------------------------------
-
-sub showSubroutineName(@)
-{   my ($self, %args) = @_;
-    my $subroutine = $args{subroutine} or confess;
-    my $manual     = $args{manual}     or confess;
-    my $output     = $args{output}     or confess;
-    my $name       = $subroutine->name;
-
-    my $url
-     = $manual->inherited($subroutine)
-     ? "M<".$subroutine->manual."::$name>"
-     : "M<$name>";
-
-    $output->print
-     ( $self->cleanupString($manual, $url)
-     , ($args{last} ? ".\n" : ",\n")
-     );
-}
-
-#-------------------------------------------
-
-sub showOptions(@)
-{   my $self   = shift;
-    my %args   = @_;
-    my $output = $args{output} or confess;
-    $output->print( qq[<dl class="options">\n] );
-
-    $self->SUPER::showOptions(@_);
-
-    $output->print( qq[</dl>\n] );
-    $self;
-}
-
-#-------------------------------------------
-
-sub showOptionUse(@)
-{   my ($self, %args) = @_;
-    my $output = $args{output} or confess;
-    my $option = $args{option} or confess;
-    my $manual = $args{manual} or confess;
-
-    my $params = $self->cleanupString($manual, $option->parameters);
-    $params    =~ s/\s+$//;
-    $params    =~ s/^\s+//;
-    $params    = qq[ =&gt; <span class="params">$params</span>]
-        if length $params;
- 
-    my $use    = qq[<span class="option">$option</span>];
-    $output->print( qq[<dt class="option_use">$use$params</dt>\n] );
-    $self;
-}
-
-#-------------------------------------------
-
-sub showOptionExpand(@)
-{   my ($self, %args) = @_;
-    my $output = $args{output} or confess;
-    my $option = $args{option} or confess;
-    my $manual = $args{manual}  or confess;
-
-    $self->showOptionUse(%args);
-
-    my $where = $option->findDescriptionObject or return $self;
-    my $descr = $self->cleanup($manual, $where->description);
-
-    $output->print( qq[<dd>$descr</dd>\n] )
-        if length $descr;
-
-    $self;
-}
-
-#-------------------------------------------
-
-
-sub writeTable($@)
-{   my ($self, %args) = @_;
-
-    my $rows   = $args{rows}   or confess;
-    return unless @$rows;
-
-    my $head   = $args{header} or confess;
-    my $output = $args{output} or confess;
-
-    $output->print( qq[<table cellspacing="3" cellpadding="0">\n] );
-
-    local $"   = qq[</th>    <th align="left">];
-    $output->print( qq[<tr><th align="left">@$head</th></tr>\n] );
-
-    local $"   = qq[</td>    <td valign="top">];
-    $output->print( qq[<tr><td align="left">@$_</td></tr>\n] )
-        foreach @$rows;
-
-    $output->print( qq[</table>\n] );
-    $self;
-}
-
-#-------------------------------------------
-
-sub showSubroutineDescription(@)
-{   my ($self, %args) = @_;
-    my $manual  = $args{manual}                   or confess;
-    my $subroutine = $args{subroutine}            or confess;
-
-    my $text    = $self->cleanup($manual, $subroutine->description);
-    return $self unless length $text;
-
-    my $output  = $args{output}                   or confess;
-    $output->print($text);
-
-    my $extends = $self->extends                  or return $self;
-    my $refer   = $extends->findDescriptionObject or return $self;
-
-    $output->print("<br />\n");
-    $self->showSubroutineDescriptionRefer(%args, subroutine => $refer);
-}
-
-#-------------------------------------------
-
-sub showSubroutineDescriptionRefer(@)
-{   my ($self, %args) = @_;
-    my $manual  = $args{manual}                   or confess;
-    my $subroutine = $args{subroutine}            or confess;
-    my $output  = $args{output}                   or confess;
-    $output->print("\nSee ", $self->link($manual, $subroutine), "\n");
 }
 
 #-------------------------------------------

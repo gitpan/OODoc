@@ -51,14 +51,14 @@ See L<OODoc::Text/"OVERLOADED">
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 $obj-E<gt>B<emptyExtension>(CONTAINER)
 
 =over 4
 
-See L<OODoc::Text::Structure/"Initiation">
+See L<OODoc::Text::Structure/"Constructors">
 
 =back
 
@@ -66,14 +66,14 @@ OODoc::Text::Chapter-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option       Defined in       Default   
- container    OODoc::Text      C<manual> 
- description  OODoc::Text      ''        
- level        OODoc::Text::Structure  1         
- linenr       OODoc::Text      <required>
- manual                        C<undef>  
- name         OODoc::Text      C<undef>  
- type         OODoc::Text      <required>
+ Option       Defined in       Default                 
+ container    L<OODoc::Text>   L<new(manual)|"METHODS">
+ description  L<OODoc::Text>   C<''>                   
+ level        L<OODoc::Text::Structure>  C<1>                    
+ linenr       L<OODoc::Text>   <required>              
+ manual                        undef                   
+ name         L<OODoc::Text>   undef                   
+ type         L<OODoc::Text>   C<'Chapter'>            
 
 . container OBJECT
 
@@ -94,6 +94,17 @@ The manual in which this chapter is described.
 . name STRING
 
 . type STRING
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
 
 =back
 
@@ -151,7 +162,7 @@ See L<OODoc::Text/"Attributes">
 =head2 Location
 
 
-$obj-E<gt>B<manual>
+$obj-E<gt>B<manual>([NAME])
 
 =over 4
 
@@ -210,19 +221,19 @@ See L<OODoc::Text/"Collected">
 
 =back
 
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Collected">
-
-=back
-
 $obj-E<gt>B<findDescriptionObject>
 
 =over 4
 
 See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<isEmpty>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
 
 =back
 
@@ -344,7 +355,7 @@ $obj-E<gt>B<section>(NAME|OBJECT)
 =over 4
 
 With a NAME, the section within this chapter with that name is
-returned.  With an OBJECT (which must be a OODoc::Text::Section),
+returned.  With an OBJECT (which must be a L<OODoc::Text::Section|OODoc::Text::Section>),
 a new section is added to the end of the list.
 
 =back
@@ -357,18 +368,15 @@ Returns a list of all sections in this chapter.
 
 =back
 
-=head2 Collecting information
-
-
 
 
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 
 
@@ -381,7 +389,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

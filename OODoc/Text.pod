@@ -65,7 +65,7 @@ Names are compared.
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Text-E<gt>B<new>(OPTIONS)
@@ -74,9 +74,9 @@ OODoc::Text-E<gt>B<new>(OPTIONS)
 
  Option       Defined in       Default   
  container                     <required>
- description                   ''        
+ description                   C<''>     
  linenr                        <required>
- name                          C<undef>  
+ name                          undef     
  type                          <required>
 
 . container OBJECT
@@ -116,6 +116,17 @@ The type of this text element.  This is used for debugging only.
 
 =back
 
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
 =head2 Attributes
 
 
@@ -123,7 +134,7 @@ $obj-E<gt>B<container>([OBJECT])
 
 =over 4
 
-The text element which encapsulaters the text element at hand.  This
+The text element which encapsulates the text element at hand.  This
 defines the structure of the documentation.
 Only for chapters, this value will be undefined.
 
@@ -163,11 +174,13 @@ Returns the type name of this data object.
 =head2 Location
 
 
-$obj-E<gt>B<manual>
+$obj-E<gt>B<manual>([NAME])
 
 =over 4
 
-Returns the manual object which contains this text element.
+Without a NAME, the manual of the text object is returned. With a NAME,
+the manual with that name is returned, even when that does not have a
+relation to the object: it calls L<OODoc::Object::manual()|"Manual Repository">.
 
 =back
 
@@ -213,14 +226,6 @@ $obj-E<gt>B<examples>
 =over 4
 
 Returns a list of all examples contained in this text element.
-
-=back
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Collected">
 
 =back
 
@@ -319,9 +324,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 I<Error:> no text container specified for the $type object
 
@@ -340,7 +345,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

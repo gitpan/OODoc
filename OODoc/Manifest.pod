@@ -19,8 +19,7 @@ OODoc::Manifest - maintain the information inside a manifest file.
 
 
 
-
-=head1 METHODS
+=head1 OVERLOADED
 
 
 overload: B<@{}>
@@ -32,19 +31,61 @@ manifest.
 
 =back
 
-$obj-E<gt>B<add>(FILENAMES)
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+OODoc::Manifest-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-Adds the FILENAMES to the manifest, doubles are ignored.
+ Option    Defined in  Default
+ filename              undef  
+
+. filename FILENAME
+
+=over 4
+
+The filename where the manifest is in.  When the name is not defined,
+the data will not be written.
 
 =back
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
+=head2 Attributes
+
 
 $obj-E<gt>B<filename>
 
 =over 4
 
 The name of the file which is read or will be written.
+
+=back
+
+=head2 The manifest list
+
+
+$obj-E<gt>B<add>(FILENAMES)
+
+=over 4
+
+Adds the FILENAMES to the manifest, doubles are ignored.
 
 =back
 
@@ -55,6 +96,9 @@ $obj-E<gt>B<files>
 Returns an unsorted list with all filenames in this manifest.
 
 =back
+
+=head2 Internals
+
 
 $obj-E<gt>B<modified>([BOOLEAN])
 
@@ -78,38 +122,6 @@ $obj-E<gt>B<write>
 
 Write the MANIFEST file if it has changed.  The file will automatically
 be written when the object leaves scope.
-
-=back
-
-=head2 Initiation
-
-
-OODoc::Manifest-E<gt>B<new>(OPTIONS)
-
-=over 4
-
- Option    Defined in  Default 
- filename              C<undef>
-
-. filename FILENAME
-
-=over 4
-
-The filename where the manifest is in.  When the name is not defined,
-the data will not be written.
-
-=back
-
-=back
-
-=head2 Collected
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Collected">
 
 =back
 
@@ -155,6 +167,14 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 $obj-E<gt>B<manuals>
 
 =over 4
@@ -189,9 +209,9 @@ The manifest file could not be opened for reading.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 
 
@@ -204,7 +224,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

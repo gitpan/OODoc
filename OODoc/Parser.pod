@@ -22,95 +22,32 @@ OODoc::Parser - base class for all OODoc parsers.
 
 
 
+=head1 OVERLOADED
+
+
 
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Parser-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-See L<OODoc::Object/"Initiation">
+See L<OODoc::Object/"Constructors">
 
 =back
 
-=head2 Collected
+=head2 Inheritance knowledge
 
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Collected">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc::Parser-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc::Parser-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-=head2 Manual Repository
-
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
+See L<OODoc::Object/"Inheritance knowledge">
 
 =back
 
@@ -163,6 +100,80 @@ $obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
 
 =back
 
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Parser-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Parser-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 
 
 =head1 DIAGNOSTICS
@@ -176,7 +187,7 @@ formatter dependent output.  Only a few formatters are predefined.
 I<Warning:> Unknown option $name
 
 You have used the option with $name, which is not defined with the
-instantiation of this object.
+instantiation (the C<new> method) of this object.
 
 I<Warning:> Unknown options @names
 
@@ -185,9 +196,9 @@ the object.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 
 
@@ -200,7 +211,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -24,43 +24,12 @@ OODoc::Manual - one manual about a package
 
 =head1 DESCRIPTION
 
+The C<OODoc::Manual> object contains information of a singel manual page.
+More than one manual can be related to a single package.
 
 
+=head1 OVERLOADED
 
-=head1 METHODS
-
-
-$obj-E<gt>B<all>(METHOD, PARAMETERS)
-
-=over 4
-
-Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Collected"> on all chapters, passing the METHOD
-and PARAMETERS.  In practice, this means that you can simply collect
-kinds of information from various parts within the manual page.
-
-I<Example:> 
-
- my @diags = $manual->all('diagnostics');
-
-=back
-
-$obj-E<gt>B<chapter>(NAME|OBJECT)
-
-=over 4
-
-When a NAME (a string) given, the chapter with that name is returned, or
-C<undef> when it is not known.  With an OBJECT, that object is added to
-the list of chapters.
-
-=back
-
-$obj-E<gt>B<chapters>([CHAPTERS])
-
-=over 4
-
-Returns the ordered list of chapter object for this manual.
-
-=back
 
 overload: B<cmp>
 
@@ -78,205 +47,6 @@ I<Example:>
 
 =back
 
-$obj-E<gt>B<collectPackageRelations>
-
-=over 4
-
-=back
-
-$obj-E<gt>B<diagnostics>(OPTIONS)
-
-=over 4
-
-All diagnostic messages of all chapters for this manual together.
-
- Option  Defined in  Default
- select              []     
-
-. select ARRAY
-
-=over 4
-
-Select only the diagnostic message of the specified types (case
-insensitive).  Without any type, all are selected.
-
-=back
-
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
-
-All examples of all chapters within this manual together, especially
-useful for counting.
-
-I<Example:> 
-
- print scalar $manual->examples;
-
-=back
-
-$obj-E<gt>B<expand>
-
-=over 4
-
-Add the information of lower level manuals into this one.
-
-=back
-
-$obj-E<gt>B<extraCode>([PACKAGES])
-
-=over 4
-
-Returns a list of manuals which contain extra code for this package
-When PACKAGES (names or objects) are specified, they are added first.
-
-=back
-
-$obj-E<gt>B<inherited>(SUBROUTINE|OPTION)
-
-=over 4
-
-Returns whether the SUBROUTINE or OPTION was defined by this manual page,
-or inherited from it.
-
-=back
-
-$obj-E<gt>B<isPurePod>
-
-=over 4
-
-Returns whether this package has real code related to it.
-
-=back
-
-$obj-E<gt>B<mergeStructure>(OPTIONS)
-
-=over 4
-
-Merge two lists of structured text objects: "this" list and "super" list.
-The "this" objects are defined on this level of inheritance, where the
-"super" objects are from an inheritence level higher (super class).
-The combined list is returned, where the inherited objects are
-preferably included before the new ones.
-
-Merging is a complicated task, because the order of both lists should be
-kept as well as possible.
-
- Option     Defined in       Default                    
- container                   <required>                 
- equal                       C<sub {"$_[0]" eq "$_[1]"}>
- merge                       C<sub {$_[0]}>             
- super                       []                         
- this                        []                         
-
-. container OBJECT
-
-. equal CODE
-
-=over 4
-
-Define how can be determined that two objects are the same.  By default,
-the stringification of both objects are compared.
-
-=back
-
-. merge CODE
-
-=over 4
-
-What to call if both lists contain the same object.  These two objects
-will be passed as argument to the code reference.
-
-=back
-
-. super ARRAY
-
-. this ARRAY
-
-=back
-
-$obj-E<gt>B<mostDetailedLocation>(OBJECT)
-
-=over 4
-
-The OBJECT (a text element) is lccated in some subsection, section or
-chapter.  But the OBJECT may also be an extension to a piece of
-documentation which is described in a super class with a location in
-more detail.  The most detailed location for the description is returned.
-
-=back
-
-$obj-E<gt>B<name>
-
-=over 4
-
-Returns the name of the manual, which is found in the NAME chapter.
-
-=back
-
-$obj-E<gt>B<ownSubroutines>
-
-=over 4
-
-Returns only the subroutines which are described in this manual page
-itself.  L<subroutines()|"METHODS"> returns them all.
-
-=back
-
-$obj-E<gt>B<package>
-
-=over 4
-
-Returns the package of the manual.
-
-=back
-
-$obj-E<gt>B<parser>
-
-=over 4
-
-Returns the parser which has produced this manual object.
-
-=back
-
-$obj-E<gt>B<realizers>([PACKAGES])
-
-=over 4
-
-Returns a list of packages which can realize into this object
-using Object::Realize::Later magic.  When PACKAGES (names or objects)
-are specified, they are added first.
-
-=back
-
-$obj-E<gt>B<realizes>([PACKAGE])
-
-=over 4
-
-Returns the class into which this class can be realized.  This is
-a trick of the Object::Realize::Later module.  The PACKAGE (name or
-object) will be set first, if specified.
-
-=back
-
-$obj-E<gt>B<source>
-
-=over 4
-
-Returns the source of this manual information.
-
-=back
-
-$obj-E<gt>B<stats>
-
-=over 4
-
-Returns a string which displays some stats about the manual.
-
-=back
-
 overload: B<stringification>
 
 =over 4
@@ -285,63 +55,11 @@ Used in string context, a manual produces its name.
 
 =back
 
-$obj-E<gt>B<stripped>
 
-=over 4
+=head1 METHODS
 
-The name of the produced stripped package file.
 
-=back
-
-$obj-E<gt>B<subClasses>([PACKAGES])
-
-=over 4
-
-Returns the names of all sub-classes (extensions) of this package.
-When PACKAGES (names or objects) are specified, they are first added
-to the list.
-
-=back
-
-$obj-E<gt>B<subroutine>(NAME)
-
-=over 4
-
-Returns the subroutine with the specified NAME as object reference.
-
-=back
-
-$obj-E<gt>B<subroutines>
-
-=over 4
-
-All subroutines of all chapters within this manual together, especially
-useful for counting.
-
-I<Example:> 
-
- print scalar $manual->subroutines;
-
-=back
-
-$obj-E<gt>B<superClasses>([PACKAGES])
-
-=over 4
-
-Returns the super classes for this package.  PACKAGES (names or objects)
-will be added to the list of superclasses first.
-
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
-
-Returns the version of this manual information.
-
-=back
-
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Manual-E<gt>B<new>(OPTIONS)
@@ -351,9 +69,9 @@ OODoc::Manual-E<gt>B<new>(OPTIONS)
  Option    Defined in       Default   
  package                    <required>
  parser                     <required>
- pure_pod                   0         
+ pure_pod                   <false>   
  source                     <required>
- stripped                   C<undef>  
+ stripped                   undef     
  version                    <required>
 
 . package STRING
@@ -403,14 +121,314 @@ The file where the stripped code is written to.
 
 =back
 
+=head2 Attributes
+
+
+$obj-E<gt>B<isPurePod>
+
+=over 4
+
+Returns whether this package has real code related to it.
+
+=back
+
+$obj-E<gt>B<package>
+
+=over 4
+
+Returns the package of the manual.
+
+=back
+
+$obj-E<gt>B<parser>
+
+=over 4
+
+Returns the parser which has produced this manual object.
+
+=back
+
+$obj-E<gt>B<source>
+
+=over 4
+
+Returns the source of this manual information.
+
+=back
+
+$obj-E<gt>B<stripped>
+
+=over 4
+
+The name of the produced stripped package file.
+
+=back
+
+$obj-E<gt>B<version>
+
+=over 4
+
+Returns the version of this manual information.
+
+=back
+
 =head2 Collected
 
+
+$obj-E<gt>B<chapter>(NAME|OBJECT)
+
+=over 4
+
+When a NAME (a string) given, the chapter with that name is returned, or
+C<undef> when it is not known.  With an OBJECT, that object is added to
+the list of chapters.
+
+=back
+
+$obj-E<gt>B<chapters>([CHAPTERS])
+
+=over 4
+
+Returns the ordered list of chapter object for this manual.
+
+=back
+
+$obj-E<gt>B<diagnostics>(OPTIONS)
+
+=over 4
+
+All diagnostic messages of all chapters for this manual together.
+
+ Option  Defined in  Default
+ select              []     
+
+. select ARRAY
+
+=over 4
+
+Select only the diagnostic message of the specified types (case
+insensitive).  Without any type, all are selected.
+
+=back
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+All examples of all chapters within this manual together, especially
+useful for counting.
+
+I<Example:> 
+
+ print scalar $manual->examples;
+
+=back
+
+$obj-E<gt>B<name>
+
+=over 4
+
+Returns the name of the manual, which is found in the NAME chapter.
+
+=back
+
+$obj-E<gt>B<subroutine>(NAME)
+
+=over 4
+
+Returns the subroutine with the specified NAME as object reference.  When
+the manual is part of a package description which is spread over multiple
+manuals, then these other manuals will be searched as well.
+
+=back
+
+$obj-E<gt>B<subroutines>
+
+=over 4
+
+All subroutines of all chapters within this manual together, especially
+useful for counting.
+
+I<Example:> 
+
+ print scalar $manual->subroutines;
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<all>(METHOD, PARAMETERS)
+
+=over 4
+
+Call L<OODoc::Text::Structure::all()|"Collected"> on all chapters, passing the METHOD
+and PARAMETERS.  In practice, this means that you can simply collect
+kinds of information from various parts within the manual page.
+
+I<Example:> 
+
+ my @diags = $manual->all('diagnostics');
+
+=back
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Collected">
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
+$obj-E<gt>B<extraCode>
+
+=over 4
+
+Returns a list of manuals which contain extra code for this package.
+
+=back
+
+$obj-E<gt>B<inherited>(SUBROUTINE|OPTION)
+
+=over 4
+
+Returns whether the SUBROUTINE or OPTION was defined by this manual page,
+or inherited from it.
+
+=back
+
+$obj-E<gt>B<ownSubroutines>
+
+=over 4
+
+Returns only the subroutines which are described in this manual page
+itself.  L<subroutines()|"Collected"> returns them all.
+
+=back
+
+$obj-E<gt>B<realizers>([PACKAGES])
+
+=over 4
+
+Returns a list of packages which can realize into this object
+using Object::Realize::Later magic.  When PACKAGES (names or objects)
+are specified, they are added first.
+
+=back
+
+$obj-E<gt>B<realizes>([PACKAGE])
+
+=over 4
+
+Returns the class into which this class can be realized.  This is
+a trick of the Object::Realize::Later module.  The PACKAGE (name or
+object) will be set first, if specified.
+
+=back
+
+$obj-E<gt>B<subClasses>([PACKAGES])
+
+=over 4
+
+Returns the names of all sub-classes (extensions) of this package.
+When PACKAGES (names or objects) are specified, they are first added
+to the list.
+
+=back
+
+$obj-E<gt>B<superClasses>([PACKAGES])
+
+=over 4
+
+Returns the super classes for this package.  PACKAGES (names or objects)
+will be added to the list of superclasses first.
+
+=back
+
+=head2 Processing
+
+
+$obj-E<gt>B<collectPackageRelations>
+
+=over 4
+
+=back
+
+$obj-E<gt>B<expand>
+
+=over 4
+
+Add the information of lower level manuals into this one.
+
+=back
+
+$obj-E<gt>B<mergeStructure>(OPTIONS)
+
+=over 4
+
+Merge two lists of structured text objects: "this" list and "super" list.
+The "this" objects are defined on this level of inheritance, where the
+"super" objects are from an inheritence level higher (super class).
+The combined list is returned, where the inherited objects are
+preferably included before the new ones.
+
+Merging is a complicated task, because the order of both lists should be
+kept as well as possible.
+
+ Option     Defined in       Default                    
+ container                   <required>                 
+ equal                       C<sub {"$_[0]" eq "$_[1]"}>
+ merge                       C<sub {$_[0]}>             
+ super                       C<[]>                      
+ this                        C<[]>                      
+
+. container OBJECT
+
+. equal CODE
+
+=over 4
+
+Define how can be determined that two objects are the same.  By default,
+the stringification of both objects are compared.
+
+=back
+
+. merge CODE
+
+=over 4
+
+What to call if both lists contain the same object.  These two objects
+will be passed as argument to the code reference.
+
+=back
+
+. super ARRAY
+
+. this ARRAY
+
+=back
+
+$obj-E<gt>B<mostDetailedLocation>(OBJECT)
+
+=over 4
+
+The OBJECT (a text element) is lccated in some subsection, section or
+chapter.  But the OBJECT may also be an extension to a piece of
+documentation which is described in a super class with a location in
+more detail.  The most detailed location for the description is returned.
+
+=back
+
+=head2 Tracing
+
+
+$obj-E<gt>B<stats>
+
+=over 4
+
+Returns a string which displays some stats about the manual.
 
 =back
 
@@ -456,6 +474,14 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 $obj-E<gt>B<manuals>
 
 =over 4
@@ -486,9 +512,9 @@ See L<OODoc::Object/"Manual Repository">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 I<Error:> no name in manual in $source
 
@@ -545,7 +571,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

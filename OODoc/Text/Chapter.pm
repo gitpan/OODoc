@@ -1,7 +1,7 @@
 
 package OODoc::Text::Chapter;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -9,12 +9,6 @@ use warnings;
 
 use List::Util 'first';
 use Carp;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -87,20 +81,6 @@ sub sections()
        $_->container($self) for @_;
    }
    @{$self->{OTC_sections}};
-}
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
-sub allExamples()
-{   my $self = shift;
-
-    ( $self->examples
-    , map({$_->allExamples} $self->sections)
-    , map({$_->examples}    $self->subroutines)
-    );
 }
 
 #-------------------------------------------

@@ -22,14 +22,47 @@ OODoc::Format - base class for all OODoc formatters
 =head1 DESCRIPTION
 
 A formater produces manual pages in some way or an other which contain
-(parts of) the module documentation.
+(parts of) the module documentation.  Each formatter class is based on
+this OODoc::Format class, which should not be instantiated directly.
+By far most users will never explicitly create a formatter by themselves:
+it is created implicitly when L<OODoc::create()|"Formatter"> is called on a L<OODoc|OODoc>
+object.
+
+Currently available formatters:
+
+=over 4
+
+=item * L<OODoc::Format::Pod|OODoc::Format::Pod>
+
+Simple formatter, which has the layout of the produced POD manual pages
+hard-coded in it's body.  The only way to adapt the structure of the
+pages is by extending the class, and thereby overrule some of the
+methods which produce the text.  Not much of a problem for experienced
+Object Oriented programmers.
+
+=item * L<OODoc::Format::Pod2|OODoc::Format::Pod2>
+
+This formatter uses the same methods to generate the manual page as
+defined by L<OODoc::Format::Pod|OODoc::Format::Pod>, but the general layout of the page
+can be configured using templates.
+You have to install L<Bundle::Text::MagicTemplate> to use this feature.
+
+=item * L<OODoc::Format::Html|OODoc::Format::Html>
+
+Produce HTML by filling in templates. This module requires
+L<Bundle::Text::MagicTemplate> and the ability to run cgi scripts.
+
+=back
+
+
+=head1 OVERLOADED
 
 
 
 =head1 METHODS
 
 
-=head2 Initiation
+=head2 Constructors
 
 
 OODoc::Format-E<gt>B<new>(OPTIONS)
@@ -48,7 +81,7 @@ OODoc::Format-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-The short name of this project (module), set by L<OODoc::new(module)|OODoc/"METHODS">.
+The short name of this project (module), set by L<OODoc::new(module)|"METHODS">.
 
 =back
 
@@ -72,84 +105,56 @@ it will be created for you.
 
 =back
 
-=head2 Collected
+=head2 Inheritance knowledge
 
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Collected">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc::Format-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc::Format-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-=head2 Manual Repository
-
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
+See L<OODoc::Object/"Inheritance knowledge">
 
 =back
 
 =head2 Attributes
+
+
+$obj-E<gt>B<manifest>
+
+=over 4
+
+Returns the L<OODoc::Manifest|OODoc::Manifest> object which maintains the names
+of created files.
+
+=back
+
+$obj-E<gt>B<project>
+
+=over 4
+
+Returns the name of this project.
+
+=back
+
+$obj-E<gt>B<version>
+
+=over 4
+
+Returns the version string of this project.  This version may
+contains any character, so should be handled with care.
+
+=back
+
+$obj-E<gt>B<workdir>
+
+=over 4
+
+Returns the name of the work directory: the top location for all
+the output files.
+
+=back
+
+=head2 Page generation
 
 
 $obj-E<gt>B<cleanup>(MANUAL, STRING)
@@ -257,23 +262,6 @@ but only once.
 =back
 
 . verbose INTEGER
-
-=back
-
-$obj-E<gt>B<manifest>
-
-=over 4
-
-Returns the L<OODoc::Manifest|OODoc::Manifest> object which maintains the names
-of created files.
-
-=back
-
-$obj-E<gt>B<project>
-
-=over 4
-
-Returns the name of this project.
 
 =back
 
@@ -571,13 +559,13 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
  Option                  Defined in       Default              
  manual                                   <required>           
  output                                   <selected filehandle>
- show_described_options                   'EXPAND'             
- show_described_subs                      'EXPAND'             
- show_inherited_options                   'USE'                
- show_inherited_subs                      'USE'                
- show_option_table                        'ALL'                
- show_subs_index                          'NO'                 
- subroutines                              []                   
+ show_described_options                   C<'EXPAND'>          
+ show_described_subs                      C<'EXPAND'>          
+ show_inherited_options                   C<'USE'>             
+ show_inherited_subs                      C<'USE'>             
+ show_option_table                        C<'ALL'>             
+ show_subs_index                          C<'NO'>              
+ subroutines                              C<[]>                
 
 . manual MANUAL
 
@@ -599,21 +587,77 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 =back
 
-$obj-E<gt>B<version>
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Format-E<gt>B<filenameToPackage>(FILENAME)
 
 =over 4
 
-Returns the version string of this project.  This version may
-contains any character, so should be handled with care.
+See L<OODoc::Object/"Commonly used functions">
 
 =back
 
-$obj-E<gt>B<workdir>
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Format-E<gt>B<mkdirhier>(DIRECTORY)
 
 =over 4
 
-Returns the name of the work directory: the top location for all
-the output files.
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -631,9 +675,9 @@ hand.  This should be passed with L<new(project)|"METHODS">.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 I<Warning:> missing required chapter $name in $manual
 
@@ -657,7 +701,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.04.
+Module version 0.05.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -1,15 +1,12 @@
 
 package OODoc::Object;
 use vars '$VERSION';
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 use strict;
 use warnings;
 
 use Carp;
-
-
-#-------------------------------------------
 
 
 #-------------------------------------------
@@ -72,10 +69,8 @@ sub filenameToPackage($)
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 my %packages;
+my %manuals;
 
 sub addManual($)
 {   my ($self, $manual) = @_;
@@ -84,6 +79,7 @@ sub addManual($)
         unless ref $manual && $manual->isa('OODoc::Manual');
 
     push @{$packages{$manual->package}}, $manual;
+    $manuals{$manual->name} = $manual;
     $self;
 }
 
@@ -100,13 +96,19 @@ sub mainManual($)
 
 sub manualsForPackage($)
 {   my ($self,$name) = @_;
+    $name ||= 'doc';
     defined $packages{$name} ? @{$packages{$name}} : ();
 }
 
 #-------------------------------------------
 
 
-sub manuals() { map { @$_ } values %packages }
+sub manuals() { values %manuals }
+
+#-------------------------------------------
+
+
+sub manual($) { $manuals{ $_[1] } }
 
 #-------------------------------------------
 
