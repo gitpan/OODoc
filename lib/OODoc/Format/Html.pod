@@ -402,6 +402,17 @@ is the header.
 
 =back
 
+=head2 Text::MagicTemplate
+
+
+$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
+
+=over 4
+
+See L<OODoc::Format/"Text::MagicTemplate">
+
+=back
+
 =head2 Template processing
 
 
@@ -422,13 +433,13 @@ $obj-E<gt>B<templateChapter>
 
 =back
 
-$obj-E<gt>B<templateDate>(ATTRS, ARGS)
+$obj-E<gt>B<templateDate>(ZONE, ARGS)
 
 =over 4
 
 =back
 
-$obj-E<gt>B<templateDistribution>(ATTRS, ARGS)
+$obj-E<gt>B<templateDistribution>(ZONE, ARGS)
 
 =over 4
 
@@ -436,13 +447,13 @@ The name of the distribution which contains the manual page at hand.
 
 =back
 
-$obj-E<gt>B<templateHref>(ATTRS, ARGS)
+$obj-E<gt>B<templateHref>(ZONE, ARGS)
 
 =over 4
 
 =back
 
-$obj-E<gt>B<templateIndex>(ATTRS, ARGS)
+$obj-E<gt>B<templateIndex>(ZONE, ARGS)
 
 =over 4
 
@@ -481,10 +492,10 @@ Produce a table with that number of columns.
 
 =over 4
 
-The types of objects which are to be selected, which is not applicable
-to all kinds of indexes.  The STRING may contain an I<underscore> separated
-list of types, for instance C<method_tie> when subroutines are listed
-or C<error> for diagnostics.
+The types of objects which are to be selected, which is not applicable to
+all kinds of indexes.  The STRING may contain an I<underscore> or I<pipe>
+separated list of types, for instance C<method|tie> when subroutines
+are listed or C<error> for diagnostics.
 
 =back
 
@@ -497,18 +508,18 @@ I<Example:> use of the template tag "index"
 
 =back
 
-$obj-E<gt>B<templateInheritance>(ATTRS, ARGS)
+$obj-E<gt>B<templateInheritance>(ZONE, ARGS)
 
 =over 4
 
 =back
 
-$obj-E<gt>B<templateList>(ATTRS, ARGS)
+$obj-E<gt>B<templateList>(ZONE, ARGS)
 
 =over 4
 
-The ATTRS (which originate from the template file) start with the
-name of a chapter or C<'ALL'>.  The rest of the ATTRS
+The ZONE (which originate from the template file) start with the
+name of a chapter or C<'ALL'>.  The rest of the ZONE
 are interpreted as argument list which overrule the OPTIONS.
 
  Option            Defined in       Default   
@@ -544,34 +555,35 @@ in the tag parameter list, which is a pity.
 
 =back
 
-$obj-E<gt>B<templateManual>(ATTRS, ARGS)
+$obj-E<gt>B<templateManual>(ZONE, ARGS)
 
 =over 4
 
 =back
 
-$obj-E<gt>B<templateMeta>(ATTRS, ARGS)
+$obj-E<gt>B<templateMeta>(ZONE, ARGS)
 
 =over 4
 
-ARGS is a reference to a hash with options.  ATTR contains the attributes
-in the template.
+ARGS is a reference to a hash with options.  ZONE contains the attributes
+in the template.  Use L<new(html_meta_data)|OODoc::Format::Html/"METHODS"> to set the result of this
+method, or extend its implementation.
 
 =back
 
-$obj-E<gt>B<templateName>(ATTRS, ARGS)
-
-=over 4
-
-=back
-
-$obj-E<gt>B<templateTitle>(ATTRS, ARGS)
+$obj-E<gt>B<templateName>(ZONE, ARGS)
 
 =over 4
 
 =back
 
-$obj-E<gt>B<templateVersion>(ATTRS, ARGS)
+$obj-E<gt>B<templateTitle>(ZONE, ARGS)
+
+=over 4
+
+=back
+
+$obj-E<gt>B<templateVersion>(ZONE, ARGS)
 
 =over 4
 
@@ -751,7 +763,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.07.
+Module version 0.08.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

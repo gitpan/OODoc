@@ -1,7 +1,7 @@
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '0.07';
+$VERSION = '0.08';
 use base 'OODoc::Format';
 
 use strict;
@@ -272,7 +272,7 @@ sub showStructureExpand(@)
     $self->showExamples(%args, examples => [$text->examples])
          if $examples eq 'EXPAND';
 
-    return $self;
+    $self;
 }
 
 #-------------------------------------------
@@ -597,7 +597,10 @@ sub format(@)
 
     my %permitted;
     while(my ($tag, $method) = each %producers)
-    {   $permitted{$tag} = sub { $self->$method(\@_, \%args) };
+    {   $permitted{$tag}
+          = sub { my $zone = shift;
+                  $self->$method($zone, \%args);
+                };
     }
 
     my $template  = Text::MagicTemplate->new
@@ -615,7 +618,7 @@ sub format(@)
 
 
 sub templateProject($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
     $self->project;
 }
 
@@ -623,7 +626,7 @@ sub templateProject($$)
 
 
 sub templateTitle($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
 
     my $manual = $args->{manual}
        or die "ERROR: not a manual, so no automatic title in $args->{template}\n";
@@ -637,7 +640,7 @@ sub templateTitle($$)
 
 
 sub templateManual($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
 
     my $manual = $args->{manual}
        or confess "ERROR: not a manual, so no manual name for $args->{template}\n";
@@ -649,7 +652,7 @@ sub templateManual($$)
 
 
 sub templateDistribution($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
     my $manual  = $args->{manual};
     defined $manual ? $manual->distribution : '';
 }
@@ -658,7 +661,7 @@ sub templateDistribution($$)
 
 
 sub templateVersion($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
     my $manual  = $args->{manual};
     defined $manual ? $manual->version : $self->version;
 }
@@ -667,7 +670,7 @@ sub templateVersion($$)
 
 
 sub templateDate($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
     strftime "%Y/%m/%d", localtime;
 }
 
@@ -675,7 +678,7 @@ sub templateDate($$)
 
 
 sub templateName($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
 
     my $manual = $args->{manual}
        or die "ERROR: not a manual, so no name for $args->{template}\n";
@@ -702,10 +705,8 @@ our %path_lookup =
  );
 
 sub templateHref($$)
-{   my ($self, $attr, $args) = @_;
-    my ($capture, $flags) = @$attr;
-
-    my ($to, $window) = split " ", $flags;
+{   my ($self, $zone, $args) = @_;
+    my ($to, $window) = split " ", $zone->attributes;
     my $path   = $path_lookup{$to} || warn "missing path for $to";
 
     qq[<a href="$self->{OFH_html}/$path" target="_top">];
@@ -715,7 +716,7 @@ sub templateHref($$)
 
 
 sub templateMeta($$)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
     $self->{OFH_meta};
 }
 
@@ -723,11 +724,11 @@ sub templateMeta($$)
 
 
 sub templateInheritance(@)
-{   my ($self, $attr, $args) = @_;
+{   my ($self, $zone, $args) = @_;
 
     my $manual  = $args->{manual} or confess;
     my $output  = $self->cleanup($manual, $self->createInheritance($manual));
-    return unless length $output;
+    return '' unless length $output;
 
     for($output)
     {   s#<pre>\n*(.*)</pre>\n*#$1#s;            # over-eager cleanup
@@ -741,17 +742,17 @@ sub templateInheritance(@)
 
 
 sub templateChapter($$)
-{   my ($self, $attr, $args) = @_;
-    my ($contained, $attributes) = @$attr;
-    my $name = $attributes =~ s/^\s*(\w+)\b// ? $1 : undef;
-
-    croak "ERROR: chapter without name in template"
-       unless defined $name;
-
+{   my ($self, $zone, $args) = @_;
+    my $contained = $zone->content;
     warn "WARNING: no meaning for container $contained in chapter block\n"
         if defined $contained && length $contained;
 
-    my @attrs   = split " ", $attributes;
+    my $attr    = $zone->attributes;
+    my $name    = $attr =~ s/^\s*(\w+)\s*\,?\s*// ? $1 : undef;
+    my @attrs   = $self->zoneGetParameters($attr);
+
+    croak "ERROR: chapter without name in template"
+       unless defined $name;
 
     my $manual  = $args->{manual} or confess;
     my $chapter = $manual->chapter($name) or return '';
@@ -767,16 +768,18 @@ sub templateChapter($$)
 
 
 sub templateIndex($$)
-{   my ($self, $attr, $args) = @_;
-    my ($contained, $attributes) = @$attr;
-    my $group    = $attributes =~ s/^\s*(\w+)\b// ? $1 : undef;
-    my %opts     = split " ", $attributes;
+{   my ($self, $zone, $args) = @_;
 
+    my $contained = $zone->content;
+    warn "WARNING: no meaning for container $contained in list block\n"
+        if defined $contained && length $contained;
+
+    my $attrs  = $zone->attributes;
+    my $group  = $attrs =~ s/^\s*(\w+)\s*\,?\s*// ? $1 : undef;
     die "ERROR: no group named as attribute for list\n"
        unless defined $group;
 
-    warn "WARNING: no meaning for container $contained in list block\n"
-        if defined $contained && length $contained;
+    my %opts   = $self->zoneGetParameters($attrs);
 
     my $start  = $opts{starting_with} || $args->{starting_with} ||'ALL';
     my $types  = $opts{type}          || $args->{type}          ||'ALL';
@@ -789,7 +792,7 @@ sub templateIndex($$)
     }
     unless($types eq 'ALL')
     {   my @take   = map { $_ eq 'method' ? '.*method' : $_ }
-                         split /_/, $types;
+                         split /[_|]/, $types;
         local $"   = ')|(';
         my $regexp = qr/^(@take)$/i;
         my $before = $select;
@@ -874,16 +877,17 @@ DIAG
 
 
 sub templateList($$)
-{   my ($self, $attr, $args) = @_;
-    my ($contained, $attributes) = @$attr;
-    my $group    = $attributes =~ s/^\s*(\w+)\b// ? $1 : undef;
-    my %opts     = split " ", $attributes;
+{   my ($self, $zone, $args) = @_;
+    my $contained = $zone->content;
+    warn "WARNING: no meaning for container $contained in index block\n"
+        if defined $contained && length $contained;
+
+    my $attrs    = $zone->attributes;
+    my $group    = $attrs =~ s/^\s*(\w+)\s*\,?// ? $1 : undef;
+    my %opts     = $self->zoneGetParameters($attrs);
 
     die "ERROR: no group named as attribute for index\n"
        unless defined $group;
-
-    warn "WARNING: no meaning for container $contained in index block\n"
-        if defined $contained && length $contained;
 
     my $show_sub = $opts{show_subroutines}||$args->{show_subroutines}||'LIST';
     my $types    = $opts{subroutine_types}||$args->{subroutine_types}||'ALL';
@@ -894,7 +898,7 @@ sub templateList($$)
     my $selected = sub { @_ };
     unless($types eq 'ALL')
     {   my @take   = map { $_ eq 'method' ? '.*method' : $_ }
-                         split /_/, $types;
+                         split /[_|]/, $types;
         local $"   = ')|(';
         my $regexp = qr/^(@take)$/;
         $selected  = sub { grep { $_->type =~ $regexp } @_ };
@@ -911,7 +915,7 @@ sub templateList($$)
         }
     }
     else  # any chapter
-    {   my $chapter  = $manual->chapter($group) or return;
+    {   my $chapter  = $manual->chapter($group) or return '';
         my $show_sec = $opts{show_sections} ||$args->{show_sections} ||'LINK';
         my @sections = $show_sec eq 'NO' ? () : $chapter->sections;
 

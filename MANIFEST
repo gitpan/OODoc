@@ -1,5 +1,12 @@
+ChangeLog
+LICENSE
 MANIFEST
+Makefile.PL
+README.examples
+examples/mailbox.tar.gz
+examples/mimetypes.tar.gz
 examples/oodoc.tar.gz
+examples/orl.tar.gz
 lib/OODoc.pm
 lib/OODoc.pod
 lib/OODoc/Format.pm
@@ -40,3 +47,4 @@ lib/OODoc/Text/SubSection.pm
 lib/OODoc/Text/SubSection.pod
 lib/OODoc/Text/Subroutine.pm
 lib/OODoc/Text/Subroutine.pod
+t/00works.t

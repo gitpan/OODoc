@@ -587,6 +587,33 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 =back
 
+=head2 Text::MagicTemplate
+
+Support methods for implementations which are based on L<Text::MagicTemplate>.
+
+$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
+
+=over 4
+
+Takes a Text::MagicTemplate::Zone object, which is produced by
+L<Text::MagicTemplateX::Core> to process the text after the
+tag.  You may also specify a string, for instance a modified
+attribute list.  The return is a list of key-value pairs with data.
+
+The parameters are either old style (before MagicTemplate 2.1)
+(where only one blank is permitted between words, and no special
+characters allowed), or new style (more flexible).
+
+I<Example:> of valid arguments
+
+
+ <!--{examples expand NO list ALL}-->   # old style
+ <!--{examples expand => NO, list => ALL}-->
+ <!--{examples expand => NO,
+         list => ALL}-->
+
+=back
+
 =head2 Commonly used functions
 
 
@@ -701,7 +728,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.07.
+Module version 0.08.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

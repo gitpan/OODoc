@@ -311,6 +311,17 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =back
 
+=head2 Text::MagicTemplate
+
+
+$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
+
+=over 4
+
+See L<OODoc::Format/"Text::MagicTemplate">
+
+=back
+
 =head2 Template processing
 
 
@@ -451,7 +462,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.07.
+Module version 0.08.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
