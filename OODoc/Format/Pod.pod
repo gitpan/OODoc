@@ -1,0 +1,263 @@
+
+=head1 NAME
+
+OODoc::Format::Pod - Produce POD pages from the doc tree
+
+=head1 INHERITANCE
+
+ OODoc::Format::Pod
+   is a OODoc::Format
+   is a OODoc::Object
+
+=head1 SYNOPSIS
+
+Complex:
+
+ use OODoc::Format::Pod;
+ my $pod = OODoc::Format::Pod->new;
+ $pod->createPackageManual(manuals => \@mans, ...);
+
+Simple:
+
+ my $doc = OODoc->new(...);
+ $doc->createManual('pod');
+
+=head1 DESCRIPTION
+
+Create manual pages in the POD syntax.  POD is the standard document
+description syntax for Perl.  POD can be translated to many different
+operating system specific manual systems, like the Unix C<man> system.
+
+=head1 METHODS
+
+
+$obj-E<gt>B<chapterInheritance>(OPTIONS)
+
+=over 4
+
+ Option  Defined in       Default   
+ manual                   <required>
+ output                   <required>
+
+. manual OBJECT
+
+. output IO::File
+
+=back
+
+$obj-E<gt>B<createPackageManual>(OPTIONS)
+
+=over 4
+
+ Option    Defined in       Default   
+ manifest                   C<undef>  
+ manuals                    []        
+ verbose                    0         
+ workdir                    <required>
+
+. manifest FILENAME
+
+. manuals ARRAY-OF-MANUALS
+
+. verbose INTEGER
+
+. workdir DIRECTORY
+
+=back
+
+$obj-E<gt>B<link>(MANUAL, OBJECT, [TEXT])
+
+=over 4
+
+Create the text for a link which refers to the OBJECT.  The link will be
+shown somewhere in the MANUAL.  The TEXT will be displayed is stead
+of the link path, when specified.
+
+=back
+
+$obj-E<gt>B<showChapterIndex>(FILE, CHAPTER, INDENT)
+
+=over 4
+
+=back
+
+$obj-E<gt>B<showChapters>(OPTIONS)
+
+=over 4
+
+ Option           Defined in       Default   
+ display_options                   <see text>
+ manual                            <required>
+ output                            <required>
+
+. display_options HASH
+
+=over 4
+
+The display options are used to tell the formatter exactly what the
+output must be.  The output is extremely configurable, by extension
+of the methods and by passing all kinds of options.
+
+=back
+
+. manual MANUAL
+
+. output FILE
+
+=back
+
+$obj-E<gt>B<writeTable>
+
+=over 4
+
+ Option  Defined in       Default   
+ ARRAY                    <required>
+ header                   <required>
+ output                   <required>
+ widths                   C<undef>  
+
+. ARRAY -OF-ARRAYS
+
+=over 4
+
+An array of arrays, each describing a row for the output.  The first row
+is the header.
+
+=back
+
+. header ARRAY
+
+. output FILE
+
+. widths ARRAY
+
+=back
+
+=head2 Initiation
+
+
+OODoc::Format::Pod-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Text::Diagnostic/"METHODS">
+
+=back
+
+=head2 Inheritance
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Format::Pod-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mergeObjects>(OPTIONS)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Format::Pod-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+See L<OODoc::Text/"METHODS">
+
+=back
+
+=head2 Manual database
+
+All manuals can be reached everywhere in the program: it is a global
+collection.
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual database">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual database">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual database">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual database">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual database">
+
+=back
+
+=head1 DIAGNOSTICS
+
+I<Error:> cannot write pod manual at $manfile: $!
+
+
+I<Error:> manual definition requires manual object
+
+A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+however an incompatible thing was passed.  Usually, intended was a call
+to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
+
+I<Error:> no directory to put pod manual for $name in
+
+
+I<Error:> no package name for pod production
+
+
+I<Warning:> order conflict "$take" before "$insert" in $file line $number
+
+The order of the objects in a sub-class shall be the same as that of
+the super class, otherwise the result of merging of the information
+received from both classes is undertermined.
