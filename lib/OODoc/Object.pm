@@ -1,7 +1,7 @@
 
 package OODoc::Object;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.90';
 
 use strict;
 use warnings;
@@ -28,6 +28,7 @@ sub new(@)
 
 sub init($)
 {   my ($self, $args) = @_;
+    $self->{OO_extends} = [];
     $self;
 }
 
@@ -36,7 +37,12 @@ sub init($)
 
 sub extends(;$)
 {   my $self = shift;
-    @_ ? ($self->{OO_extends} = shift) : $self->{OO_extends};
+    my $ext  = $self->{OO_extends};
+    if(@_)
+    {   push @$ext, @_;
+    }
+
+    wantarray ? @$ext : $ext->[0];
 }
 
 #-------------------------------------------

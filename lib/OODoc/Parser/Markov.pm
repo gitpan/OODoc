@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.90';
 use base 'OODoc::Parser';
 
 use strict;
@@ -577,7 +577,7 @@ sub decomposeM($$)
     {   eval "no warnings; require $link";
         if(! $@)  { ; }
         elsif($@ =~ m/Can't locate/ )
-        {  warn "WARNING: module $link is not on your system, but linked to in $manual\n";
+        {  warn "WARNING: module $link is not on your system, found in $manual\n";
         }
         else
         {  warn "ERROR: compilation problems for module $link in $manual:\n$@";
@@ -616,7 +616,7 @@ sub decomposeM($$)
 
     my $opt = $sub->findOption($option);
     unless(defined $opt)
-    {   warn "WARNING: option \"$option\" is not defined for subroutine $subroutine in $location, but linked to in $manual\n";
+    {   warn "WARNING: option \"$option\" unknown for $subroutine() in $location, found in $manual\n";
         return ($location, "$package subroutine $subroutine option $option");
     }
 

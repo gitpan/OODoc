@@ -412,7 +412,7 @@ way, this may indicate that the NAME chapter of the manual page in that
 module differs from the package name.  Often, this is a typo in the
 NAME... probably a difference in used cases.
 
-I<Warning:> option "$name" is not defined for subroutine $name in $package, but is linked to in $manual
+I<Warning:> option "$name" unknow for $name() in $package, found in $manual
 
 
 I<Error:> option $name outside subroutine in $file line $number
@@ -429,7 +429,7 @@ I<Error:> section $name outside chapter in $file line $number
 
 Sections must be contained in chapters.
 
-I<Warning:> subroutine $name is not defined by $package, but linked to in $manual
+I<Warning:> subroutine $name is not defined by $package, found in $manual
 
 
 I<Error:> subroutine $name outside chapter in $file line $number
@@ -717,7 +717,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.10.
+Module version 0.90.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

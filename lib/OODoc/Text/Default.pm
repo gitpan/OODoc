@@ -1,7 +1,7 @@
 
 package OODoc::Text::Default;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.90';
 use base 'OODoc::Text';
 
 use strict;

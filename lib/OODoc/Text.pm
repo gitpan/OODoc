@@ -1,7 +1,7 @@
 
 package OODoc::Text;
 use vars '$VERSION';
-$VERSION = '0.10';
+$VERSION = '0.90';
 use base 'OODoc::Object';
 
 use strict;
@@ -110,8 +110,8 @@ sub findDescriptionObject()
 {   my $self   = shift;
     return $self if length $self->description;
 
-    my $extends = $self->extends;
-    defined $extends ? $extends->findDescriptionObject : undef;
+    my @descr = map { $_->findDescriptionObject } $self->extends;
+    wantarray ? @descr : $descr[0];
 }
 
 #-------------------------------------------
