@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 use base 'OODoc::Parser';
 
 use strict;
@@ -49,6 +49,8 @@ my @default_rules =
  , [ '=examples'   => 'docExample'    ]
  , [ '=error'      => 'docDiagnostic' ]
  , [ '=warning'    => 'docDiagnostic' ]
+ , [ '=notice'     => 'docDiagnostic' ]
+ , [ '=debug'      => 'docDiagnostic' ]
 
  # deprecated
  , [ '=head1'      => 'docChapter'    ]
@@ -75,9 +77,6 @@ sub init($)
     $self->rule(@$_) foreach @rules;
     $self;
 }
-
-#-------------------------------------------
-
 
 #-------------------------------------------
 
@@ -575,13 +574,15 @@ sub decomposeM($$)
        if(not length($link)) { $man = $manual }
     elsif(defined($man = $self->manual($link))) { ; }
     else
-    {   eval "{require $link}";
+    {   eval "no warnings; require $link";
         if(! $@)  { ; }
         elsif($@ =~ m/Can't locate/ )
         {  warn "WARNING: module $link is not on your system, but linked to in $manual\n";
-           }
+        }
         else
-        {  warn "ERROR: compilation problems for module $link\n  $@" }
+        {  warn "ERROR: compilation problems for module $link in $manual:\n$@";
+           warn " Did you use an 'M' tag on something which is not a module?\n";
+        }
         $man = $link;
     }
 

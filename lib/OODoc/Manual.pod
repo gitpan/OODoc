@@ -521,6 +521,20 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
+I<Error:> No chapter NAME in manual in $source
+
+Each documentation part requires a chapter NAME which starts with
+the manual name followed by a dash.  Apparently, this was not found
+in the indicated file.
+
+I<Error:> The NAME chapter does not have the right format in $source
+
+The NAME chapter is used to figure-out what name the manual page must
+have.  The standard format contains only one line, containing the
+manual's name, one dash ('-'), and then a brief explanation. For instance:
+  =chapter NAME
+  OODoc::Manual - one manual about a package
+
 I<Error:> manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
@@ -529,12 +543,6 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Error:> no distribution is specified for manual $name
 
-
-I<Error:> no name in manual in $source
-
-Each documentation part requires a chapter NAME which starts with
-the manual name followed by a dash.  Apparently, this was not found
-in the indicated file.
 
 I<Error:> no source filename is specified for manual $name
 
@@ -588,7 +596,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.09.
+Module version 0.10.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -364,14 +364,14 @@ is the header.
 
 =back
 
-=head2 Text::MagicTemplate
+=head2 Template::Magic
 
 
 $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 =over 4
 
-See L<OODoc::Format/"Text::MagicTemplate">
+See L<OODoc::Format/"Template::Magic">
 
 =back
 
@@ -604,15 +604,15 @@ I<Example:> adding to a chapter's output
      $self;
  }
 
-=head3 Configuring with Text::MagicTemplate
+=head3 Configuring with Template::Magic
 
 When using 'pod2' in stead of 'pod' when L<OODoc::create()|OODoc/"Formatter"> is called,
 the L<OODoc::Format::Pod2|OODoc::Format::Pod2> will be used.   It's nearly a drop-in
 replacement by its default behavior.  When you specify
 your own template file, every thing can be made.
 
-See the manual page of Text::MagicTemplate.  You have to install
-Bundle::Text::MagicTemplate to get it to work.
+See the manual page of Template::Magic.  You have to install
+Bundle::Template::Magic to get it to work.
 
 I<Example:> formatting with template
 
@@ -650,7 +650,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.09.
+Module version 0.10.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

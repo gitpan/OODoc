@@ -347,7 +347,7 @@ name space.  The docs are sorted after the name space.  Therefore,
 each chapter must be preceeded by a package statement in the file
 to be sure that the correct name space is used.
 
-I<Error:> compilation problems for module $link $@
+I<Error:> compilation problems for module $link in $module: $@
 
 If the report is about a syntax error involving 'require', then you
 may have created a link to a module with a name which is not acceptable
@@ -717,7 +717,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.09.
+Module version 0.10.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -22,7 +22,7 @@ OODoc::Format::Html - Produce HTML pages from the doc tree
 
 =head1 DESCRIPTION
 
-Create manual pages in the HTML syntax, using the Text::MagicTemplate
+Create manual pages in the HTML syntax, using the Template::Magic
 template system.  Producing HTML is more complicated than producing
 POD, because one manual page may be spread over multiple output files.
 
@@ -402,14 +402,14 @@ is the header.
 
 =back
 
-=head2 Text::MagicTemplate
+=head2 Template::Magic
 
 
 $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 =over 4
 
-See L<OODoc::Format/"Text::MagicTemplate">
+See L<OODoc::Format/"Template::Magic">
 
 =back
 
@@ -548,7 +548,7 @@ should the subroutines be listed within the chapter.
 
 The LIST contains a I<underscore> separated set of subroutine types which are
 selected to be displayed, for instance C<method_tie_function>. The separator
-underscore is used because Text::MagicTemplate does not accept commas
+underscore is used because Template::Magic does not accept commas
 in the tag parameter list, which is a pity.
 
 =back
@@ -763,7 +763,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.09.
+Module version 0.10.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

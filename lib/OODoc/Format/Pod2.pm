@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 use base 'OODoc::Format::Pod';
 
 use strict;
@@ -11,7 +11,7 @@ use Carp;
 use File::Spec;
 use IO::Scalar;
 
-use Text::MagicTemplate;
+use Template::Magic;
 
 
 #-------------------------------------------
@@ -44,7 +44,7 @@ sub formatManual(@)
      , comment     => sub { '' }
      );
 
-    my $template  = Text::MagicTemplate->new
+    my $template  = Template::Magic->new
      ( { -lookups => \%permitted }
      );
 

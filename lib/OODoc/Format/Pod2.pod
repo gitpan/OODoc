@@ -23,10 +23,10 @@ OODoc::Format::Pod2 - Produce POD pages from the doc tree with a template
 
 =head1 DESCRIPTION
 
-Create manual pages in the POD syntax, using the Text::MagicTemplate
+Create manual pages in the POD syntax, using the Template::Magic
 template system.  It may be a bit simpler to configure the outcome
 using the template, than using L<OODoc::Format::Pod|OODoc::Format::Pod>, however you
-first need to install L<Bundle::Text::MagicTemplate>.
+first need to install L<Bundle::Template::Magic>.
 
 
 =head1 OVERLOADED
@@ -311,14 +311,14 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =back
 
-=head2 Text::MagicTemplate
+=head2 Template::Magic
 
 
 $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 =over 4
 
-See L<OODoc::Format/"Text::MagicTemplate">
+See L<OODoc::Format/"Template::Magic">
 
 =back
 
@@ -462,7 +462,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.09.
+Module version 0.10.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

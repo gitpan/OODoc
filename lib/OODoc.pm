@@ -1,7 +1,7 @@
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.09';
+$VERSION = '0.10';
 use base 'OODoc::Object';
 
 use strict;
@@ -212,18 +212,20 @@ sub processFiles(@)
 
         # do the stripping
         my @manuals = $parser->parse
-            ( input        => $fn
-            , output       => $dn
-            , distribution => $distr
-            , version      => $version
-            );
+          ( input        => $fn
+          , output       => $dn
+          , distribution => $distr
+          , version      => $version
+          );
 
         if($verbose > 2)
         {   print "Stripped $fn into $dn\n" if defined $dn;
             print $_->stats foreach @manuals;
         }
 
-        $self->addManual($_) foreach @manuals;
+        foreach my $man (@manuals)
+        {   $self->addManual($man) if $man->chapters;
+        }
     }
 
     #
@@ -301,9 +303,6 @@ sub expandManuals() { $_->expand foreach shift->manuals }
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 our %formatters =
  ( pod  => 'OODoc::Format::Pod'
  , pod2 => 'OODoc::Format::Pod2'
@@ -329,8 +328,10 @@ sub create($@)
 
     unless(ref $format)
     {   $format = $formatters{$format} if exists $formatters{$format};
+
         eval "require $format";
         die "ERROR: formatter $format has compilation errors: $@" if $@;
+
         my $options    = delete $args{format_options} || [];
 
         $format = $format->new
@@ -351,8 +352,14 @@ sub create($@)
                :                        sub { $_[0]->name =~ $args{select}};
 
     foreach my $package (sort $self->packageNames)
-    {   foreach my $manual ($self->manualsForPackage($package))
+    {
+        foreach my $manual ($self->manualsForPackage($package))
         {   next unless $select->($manual);
+
+            unless($manual->chapters)
+            {   print "Skipping $manual: no chapters\n" if $verbose > 1;
+                next;
+            }
 
             print "Creating manual $manual with ",ref($format), "\n"
                 if $verbose > 1;

@@ -1,6 +1,7 @@
 ChangeLog
 LICENSE
 MANIFEST
+META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README.examples
 examples/mailbox.tar.gz
