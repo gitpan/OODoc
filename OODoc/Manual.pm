@@ -1,7 +1,7 @@
 
 package OODoc::Manual;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Object';
 
 use strict;
@@ -38,6 +38,9 @@ sub init($)
     $self->{OP_source}   = delete $args->{source}
        or croak "ERROR: no source filename is specified for manual $name";
 
+    $self->{OP_version}  = delete $args->{version}
+       or croak "ERROR: no version is specified for manual $name";
+
     $self->{OP_parser}   = delete $args->{parser}    or confess;
     $self->{OP_stripped} = delete $args->{stripped};
 
@@ -65,6 +68,11 @@ sub parser() {shift->{OP_parser}}
 
 
 sub source() {shift->{OP_source}}
+
+#-------------------------------------------
+
+
+sub version() {shift->{OP_version}}
 
 #-------------------------------------------
 
@@ -287,67 +295,146 @@ sub expand()
     my @chapters = $self->chapters;
 
     my $merge_subsections =
-        sub {  $_[0]->extends($_[1]);
-               $_[0]->subsection($self->mergeObjects
-                ( this  => [ $_[0]->subsections ]
-                , super => [ $_[1]->subsections ]
-                , merge => sub { $_[0]->extends($_[1]) }
+        sub {  my ($section, $inherit) = @_;
+               $section->extends($inherit);
+               $section->subsection($self->mergeStructure
+                ( this      => [ $section->subsections ]
+                , super     => [ $inherit->subsections ]
+                , merge     => sub { $_[0]->extends($_[1]) }
+                , container => $section
                 ));
-               $_[0];
+               $section;
             };
 
     my $merge_sections =
-        sub {  $_[0]->extends($_[1]);
-               $_[0]->sections($self->mergeObjects
-                ( this  => [ $_[0]->sections ]
-                , super => [ $_[1]->sections ]
-                , merge => $merge_subsections
+        sub {  my ($chapter, $inherit) = @_;
+               $chapter->extends($inherit);
+               $chapter->sections($self->mergeStructure
+                ( this      => [ $chapter->sections ]
+                , super     => [ $inherit->sections ]
+                , merge     => $merge_subsections
+                , container => $chapter
                 ));
-               $_[0];
+               $chapter;
             };
 
     foreach my $super (@supers)
-    { 
-        $self->chapters($self->mergeObjects
-         ( this    => \@chapters
-         , super   => [ $super->chapters ]
-         , merge   => $merge_sections
+    {
+        $self->chapters($self->mergeStructure
+         ( this      => \@chapters
+         , super     => [ $super->chapters ]
+         , merge     => $merge_sections
+         , container => $self
          ));
     }
 
     #
-    # Expand subroutines
+    # Give all the inherited subroutines a new location in this manual.
     #
 
-    my %subroutine = map { ($_->name => $_) }
-                        map { $_->subroutines }
-                           @supers;
+    my %extended  = map { ($_->name => $_) } $self->subroutines;
+    my @inherited = map { $_->subroutines  } @supers;
+    my %location;
 
-    foreach my $subroutine ($self->ownSubroutines)
-    {   my $name = $subroutine->name;
-        $subroutine->extends($subroutine{$name}) if exists $subroutine{$name};
-        $subroutine{$name} = $subroutine;
-    }
-
-    my %groups;
-    foreach my $subroutine (values %subroutine)
-    {   my $hash = $subroutine->location($self)->unique;
-        push @{$groups{$hash}}, $subroutine;
-    }
-
-    foreach my $chapter ($self->chapters)
-    {   $chapter->setSubroutines(@{$groups{$chapter->unique}});
-
-        foreach my $section ($chapter->sections)
-        {   $section->setSubroutines(@{$groups{$section->unique}});
-
-            $_->setSubroutines(@{$groups{$_->unique}})
-               foreach $section->subsections;
+    foreach my $inherited (@inherited)
+    {   my $name        = $inherited->name;
+        if(my $extended = delete $extended{$name})
+        {   $extended->extends($inherited);
+            my $path = $self->mostDetailedLocation($extended);
+            push @{$location{$path}}, $extended;
+        }
+        else
+        {   push @{$location{$inherited->path}}, $inherited;
         }
     }
 
+    push @{$location{$_->path}}, $_ foreach values %extended;
+
+    foreach my $chapter ($self->chapters)
+    {   $chapter->setSubroutines(delete $location{$chapter->path});
+        foreach my $section ($chapter->sections)
+        {   $section->setSubroutines(delete $location{$section->path});
+            foreach ($section->subsections)
+            {   $_->setSubroutines(delete $location{$_->path});
+            }
+        }
+    }
+
+    confess "Huh? $_\n" for keys %location;
+
     $self->{OP_is_expanded} = 1;
     $self;
+}
+
+#-------------------------------------------
+
+
+sub mergeStructure(@)
+{   my ($self, %args) = @_;
+    my @this      = defined $args{this}  ? @{$args{this}}  : ();
+    my @super     = defined $args{super} ? @{$args{super}} : ();
+    my $container = $args{container} or confess;
+
+    my $equal     = $args{equal} || sub {"$_[0]" eq "$_[1]"};
+    my $merge     = $args{merge} || sub {$_[0]};
+
+    my @joined;
+
+    while(@super)
+    {   my $take = shift @super;
+        unless(first {$equal->($take, $_)} @this)
+        {   push @joined, $take->emptyExtension($container);
+            next;
+        }
+
+        # A low-level merge is needed.
+
+        my $insert;
+        while(@this)      # insert everything until equivalents
+        {   $insert = shift @this;
+            last if $equal->($take, $insert);
+
+            if(first {$equal->($insert, $_)} @super)
+            {   my ($fn, $ln) = $insert->where;
+                warn "WARNING: order conflict \"$take\" before \"$insert\" in $fn line $ln\n";
+            }
+
+            push @joined, $insert;
+        }
+
+        push @joined, $merge->($insert, $take);
+    }
+
+    (@joined, @this);
+}
+
+#-------------------------------------------
+
+
+sub mostDetailedLocation($)
+{   my ($self, $thing) = @_;
+
+    my $inherit = $thing->extends
+       or return $thing->path;
+
+   my $path1    = $thing->path;
+   my $path2    = $self->mostDetailedLocation($inherit);
+   my ($lpath1, $lpath2) = (length($path1), length($path2));
+
+   return $path1 if $path1 eq $path2;
+
+   return $path2
+      if $lpath1 < $lpath2 && substr($path2, 0, $lpath1+1) eq "$path1/";
+
+   return $path1
+      if $lpath2 < $lpath1 && substr($path1, 0, $lpath2+1) eq "$path2/";
+
+   warn "WARNING: subroutine $thing location conflict:\n"
+      , "   $path1 in ",$thing->manual, "\n"
+      , "   $path2 in ",$inherit->manual, "\n"
+         if $self eq $thing->manual;
+
+   $path1;
 }
 
 #-------------------------------------------

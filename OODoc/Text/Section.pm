@@ -1,7 +1,7 @@
 
 package OODoc::Text::Section;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -19,10 +19,9 @@ use List::Util 'first';
 
 sub init($)
 {   my ($self, $args) = @_;
-    $args->{type}    ||= 'Section';
-
-    my $chapter        = delete $args->{chapter} or confess;
-    $args->{container} = $chapter;
+    $args->{type}      ||= 'Section';
+    $args->{level}     ||= 2;
+    $args->{container} ||= delete $args->{chapter} or confess;
 
     $self->SUPER::init($args) or return;
 
@@ -81,7 +80,11 @@ sub subsection($)
 
 sub subsections(;@)
 {   my $self = shift;
-    $self->{OTS_subsections} = [ @_ ] if @_;
+    if(@_)
+    {   $self->{OTS_subsections} = [ @_ ];
+        $_->container($self) for @_;
+    }
+
     @{$self->{OTS_subsections}};
 }
 

@@ -1,7 +1,7 @@
 
-package OODoc::Format::PodTemplate;
-use vars 'VERSION';
-$VERSION = '0.03';
+package OODoc::Format::Pod2;
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Format::Pod';
 
 use strict;
@@ -9,7 +9,6 @@ use warnings;
 
 use Carp;
 use File::Spec;
-use List::Util 'max';
 use IO::Scalar;
 
 use Text::MagicTemplate;
@@ -112,7 +111,7 @@ __DATA__
 {inheritance}
 {chapter SYNOPSIS}
 {chapter DESCRIPTION}
-{chapter OVERLOADING}
+{chapter OVERLOADED}
 {chapter METHODS}
 {chapter EXPORTS}
 {diagnostics}

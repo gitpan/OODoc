@@ -1,7 +1,7 @@
 
 package OODoc::Text::Example;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Text';
 
 use strict;

@@ -1,7 +1,7 @@
 
 package OODoc::Object;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 
 use strict;
 use warnings;
@@ -48,7 +48,7 @@ sub extends(;$)
 sub mkdirhier($)
 {   my $thing = shift;
     my @dirs  = File::Spec->splitdir(shift);
-    my $path  = shift @dirs;   #  '/'
+    my $path  = $dirs[0] eq '' ? shift @dirs : '.';
 
     while(@dirs)
     {   $path = File::Spec->catdir($path, shift @dirs);
@@ -67,54 +67,6 @@ sub filenameToPackage($)
     $package =~ s#/#::#g;
     $package =~ s/\.(pm|pod)$//g;
     $package;
-}
-
-#-------------------------------------------
-
-
-sub unique(@)
-{   my $self  = shift;
-    my %count;
-    $count{$_}++ foreach @_;
-    keys %count;
-} 
-
-#-------------------------------------------
-
-
-sub mergeObjects(@)
-{   my ($self, %args) = @_;
-    my @list   = defined $args{this}  ? @{$args{this}}  : [];
-    my @insert = defined $args{super} ? @{$args{super}} : [];
-    my $equal  = $args{equal} || sub {"$_[0]" eq "$_[1]"};
-    my $merge  = $args{merge} || sub {$_[0]};
-
-    my @joined;
-
-    while(@list && @insert)
-    {   my $take = shift @list;
-        unless(grep {$equal->($take, $_)} @insert)
-        {   push @joined, $take;
-            next;
-        }
-
-        my $insert;
-        while(1)      # insert everything until equivalents
-        {   $insert = shift @insert;
-            last if $equal->($take, $insert);
-
-            if(grep {$equal->($insert, $_)} @list)
-            {   my ($fn, $ln) = $take->where;
-                warn "WARNING: order conflict \"$take\" before \"$insert\" in $fn line $ln\n";
-            }
-
-            push @joined, $insert;
-        }
-
-        push @joined, $merge->($take, $insert);
-    }
-
-    (@joined, @list, @insert);
 }
 
 #-------------------------------------------

@@ -1,7 +1,7 @@
 
 package OODoc::Text::Subroutine;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Text';
 
 use strict;
@@ -106,9 +106,6 @@ sub diagnostics() { @{shift->{OTS_diags}} }
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 sub location($)
 {   my ($self, $manual) = @_;
     my $container = $self->container;
@@ -194,5 +191,10 @@ sub collectedOptions(@)
 
     $options;
 }
+
+#-------------------------------------------
+
+
+sub path() { shift->container->path }
 
 1;

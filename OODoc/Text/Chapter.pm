@@ -1,7 +1,7 @@
 
 package OODoc::Text::Chapter;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -20,12 +20,10 @@ use Carp;
 sub init($)
 {   my ($self, $args) = @_;
     $args->{type}       ||= 'Chapter';
-    $args->{container}    = undef;
+    $args->{container}  ||= delete $args->{manual} or confess;
+    $args->{level}      ||= 1;
 
     $self->SUPER::init($args) or return;
-
-    $self->{OTC_manual} = delete $args->{manual}
-       or confess "ERROR: chapter $self created without manual";
 
     $self->{OTC_sections} = [];
 
@@ -34,7 +32,7 @@ sub init($)
 
 #-------------------------------------------
 
-sub manual() {shift->{OTC_manual}}
+sub manual() {shift->container}
 
 #-------------------------------------------
 
@@ -84,7 +82,10 @@ sub section($)
 
 sub sections()
 {  my $self = shift;
-   $self->{OTC_sections} = [ @_ ] if @_;
+   if(@_)
+   {   $self->{OTC_sections} = [ @_ ];
+       $_->container($self) for @_;
+   }
    @{$self->{OTC_sections}};
 }
 

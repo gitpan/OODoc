@@ -13,11 +13,11 @@ OODoc - object oriented production of code documentation
 =head1 SYNOPSIS
 
  use OODoc;
- my $doc = OODoc->new(files => \@files);
-
- use OODoc::POD;
- my $pod = OODoc::POD->new(...);
- $pod->produce($doc);
+ my $doc = OODoc->new(module => 'My Name', version => '0.02');
+ $doc->processFiles(workdir => $dest);
+ $doc->prepare;
+ $doc->create('pod', workdir => $dest);
+ $doc->create('html', workdir => '/tmp/html');
 
 
 =head1 DESCRIPTION
@@ -27,10 +27,137 @@ to two things: this module simplifies writing documentation for Object
 Oriented programs, and at the same time, it is Object Oriented itself:
 easily extensible.
 
+OODoc is a rather new module, but is developed far enough to be
+useful for most applications.  You have the possibility to modify
+the output of the formatters to your taste using templates, although
+it is not donfigurable in full extend.
+
+Please contribute ideas.  Have a look at the main website of this
+project at C<http://perl.overmeer.net/oodoc/>.
+
 
 
 =head1 METHODS
 
+
+=head2 Initiation
+
+
+OODoc-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option   Defined in       Default   
+ module                    <required>
+ verbose                   0         
+ version                   <required>
+
+. module STRING
+
+=over 4
+
+The name of the module, as will be shown on many places in the produced
+manual pages and code.  You can use the main package name, or something
+which is nicer to read.
+
+=back
+
+. verbose INTEGER
+
+=over 4
+
+Verbosity during the process.  The higher the number, the more information
+will be presented (current useful maximum is 4).
+
+=back
+
+. version STRING
+
+=over 4
+
+The version number as automatically included in all packages after
+each package statement and on many places in the documentation.
+
+=back
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Collected">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
 
 =head2 Attributes
 
@@ -63,7 +190,7 @@ $obj-E<gt>B<processFiles>(OPTIONS)
  parser                     'OODoc::Parser::ExtendedPOD'
  select                     qr/\.(pod|pm)$/             
  verbose                    <from object>               
- workdir                    <from object>               
+ workdir                    <required>                  
 
 . manifest FILENAME
 
@@ -144,7 +271,7 @@ $obj-E<gt>B<prepare>(OPTIONS)
 
 Add information to the documentation tree about inheritance relationships
 of the packages.  C<prepare> must be called between L<processFiles()|"Parser">
-and L<createManual()|"Formatter">.
+and L<create()|"Formatter">.
 
  Option   Defined in  Default      
  verbose              <from object>
@@ -156,7 +283,7 @@ and L<createManual()|"Formatter">.
 =head2 Formatter
 
 
-$obj-E<gt>B<createManual>(NAME|CLASS|OBJECT, OPTIONS)
+$obj-E<gt>B<create>(NAME|CLASS|OBJECT, OPTIONS)
 
 =over 4
 
@@ -167,22 +294,26 @@ for you.
 
 The first, optional argument specifies the type of pages to be produced.
 This can be either a predefined NAME (currently available are C<pod>
-and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and OODoc::Format::Html subroutine 
+and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and L<OODoc::Format::Html|OODoc::Format::Html>
 respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
- Option          Defined in       Default           
- append                           C<undef>          
- format_options                   []                
- manifest                         <workdir>/MANIFEST
- verbose                          0                 
- workdir                          <required>        
+ Option           Defined in       Default              
+ append                            C<undef>             
+ format_options                    []                   
+ manifest                          <workdir>/MANIFEST   
+ manual_format                     []                   
+ manual_template                   C<undef>             
+ other_files                       C<undef>             
+ process_files                     <formatter dependent>
+ verbose                           0                    
+ workdir                           <required>           
 
 . append STRING|CODE
 
 =over 4
 
-The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"METHODS">,
+The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"Attributes">,
 but the behavior is formatter dependent.
 
 =back
@@ -191,9 +322,8 @@ but the behavior is formatter dependent.
 
 =over 4
 
-Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"METHODS"> when
-a manual page has to be produced.  See the applicable formatter
-manual page for the possible flags and values.
+Formatter dependent initialization options.  See the documentation of
+the formatter which will be used for the possible values.
 
 =back
 
@@ -203,6 +333,46 @@ manual page for the possible flags and values.
 
 The names of the produced files are appended to this file.  When undef
 is given, no file will be written for this.
+
+=back
+
+. manual_format ARRAY
+
+=over 4
+
+Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"Attributes"> when
+a manual page has to be produced.  See the applicable formatter
+manual page for the possible flags and values.
+
+=back
+
+. manual_template LOCATION
+
+=over 4
+
+Passed to L<OODoc::Format::createManual(template)|OODoc::Format/"Attributes">, and defines the
+location of the set of pages which has to be created for each manual
+page.  Some formatters do not support templates and the valid values
+are formatter dependent.
+
+=back
+
+. other_files DIRECTORY
+
+=over 4
+
+Other files which have to be copied
+passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Attributes">.
+
+=back
+
+. process_files REGEXP
+
+=over 4
+
+Selects the files which are to be processed for special markup information.
+Other files, like image files, will be simply copied.  The value will be
+passed to L<OODoc::Format::createOtherPages(process)|OODoc::Format/"Attributes">.
 
 =back
 
@@ -231,112 +401,6 @@ $obj-E<gt>B<stats>
 
 Returns a string which contains some statistics about the whole parsed
 document set.
-
-=back
-
-=head2 Initiation
-
-
-OODoc-E<gt>B<new>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Text::Diagnostic/"METHODS">
-
-=back
-
-=head2 Inheritance
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Inheritance">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<unique>
-
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
 
 =back
 
@@ -369,20 +433,20 @@ The formatter which is specified does not compile, so can not be used.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> no file $fn to include in the distribution
 
 Probably your MANIFEST file lists this file which does not exist.  The file
 will be skipped for now, but may cause problems later on.
 
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
+I<Error:> no version specified for module "$name"
 
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+Version information will be added to all packages and all manual
+pages.  You need to specify a version and be sure that it changes
+with each release.
 
 I<Error:> problems compiling $code for package $name: $@
 
@@ -405,6 +469,11 @@ You have to give a value to C<workdir>, which will be used as top directory
 for the produced output.  It does not matter whether there is already some
 stuff in that directory.
 
+I<Error:> the produced module needs a descriptive name
+
+Every module needs a name, which will be used on many places in the
+documentation.
+
 
 =head1 DETAILS
 
@@ -420,7 +489,7 @@ One of the main problems with POD is that is using a visual markup
 style: you specify information by how it must be presented to the
 viewer.  This in contrast with logical markup where you specify the
 information more abstract, and a visual representation is created by
-translation.  For instance in HTML defines a C<I> tag (visual markup
+translation.  For instance in HTML defines a C<I > tag (visual markup
 italic) and C<EM> (logical markup emphasis, which will usually show
 as italic).
 
@@ -476,12 +545,11 @@ the distribution of your module.  The simpest script look like this:
  my $doc  = OODoc->new
   ( module     => 'E-mail handling'
   , version    => '0.01'
-  , workdir    => $dist
   );
 
- $doc->processFiles;        # parsing
- $doc->prepare;             # collecting
- $doc->createManual('pod'); # formatting to POD
+ $doc->processFiles(workdir => $dist);  # parsing
+ $doc->prepare;                         # collecting
+ $doc->create('pod', workdir => $dist); # formatting to POD
 
 The default parser will be used to process the files, see
 L<OODoc::Parser::Markov|OODoc::Parser::Markov> for its syntax.  The formatter is
@@ -496,15 +564,15 @@ calls to adapt the result more to your own taste.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Format';
 
 use strict;
@@ -41,20 +41,15 @@ sub createManual($@)
 {   my ($self, %args) = @_;
     my $verbose  = $args{verbose} || 0;
     my $manual   = $args{manual} or confess;
-    my $manifest = $args{manifest} || OODoc::Manifest->new;
-
-    my $workdir  = $args{workdir}
-       or die "ERROR: no directory to put pod for $manual in";
-
     my $options  = $args{format_options} || [];
 
     print $manual->orderedChapters." chapters in $manual\n" if $verbose==3;
     (my $podname = $manual->source) =~ s/\.pm$/.pod/;
-    $manifest->add($podname);
+    $self->manifest->add($podname);
 
-    my $podfile  = File::Spec->catfile($workdir, $podname);
+    my $podfile  = File::Spec->catfile($self->workdir, $podname);
     my $output  = IO::File->new($podfile, "w")
-    or die "ERROR: cannot write pod manual at $podfile: $!";
+        or die "ERROR: cannot write pod manual at $podfile: $!";
 
     $self->formatManual
       ( manual => $manual
@@ -75,7 +70,7 @@ sub formatManual(@)
     $self->chapterInheritance(@_);
     $self->chapterSynopsis(@_);
     $self->chapterDescription(@_);
-    $self->chapterOverloading(@_);
+    $self->chapterOverloaded(@_);
     $self->chapterMethods(@_);
     $self->chapterExports(@_);
     $self->chapterDiagnostics(@_);
@@ -104,42 +99,42 @@ sub showAppend(@)
 
 #-------------------------------------------
 
-sub showChapter(@)
+sub showStructureExpand(@)
 {   my ($self, %args) = @_;
-    my $chapter = $args{chapter} or confess;
-    my $name    = $chapter->name;
-    my $output  = $args{output}  or confess;
-    my $manual  = $args{manual}  or confess;
 
-    my $show_examples
-      = defined $args{show_chapter_examples} ? $args{show_chapter_examples} : 1;
-    my $descr   = $self->cleanup($manual, $chapter->description);
+    my $examples = $args{show_chapter_examples} || 'EXPAND';
+    my $text     = $args{structure} or confess;
 
-    $output->print("\n=head1 $name\n\n");
-    $output->print($descr);
+    my $name     = $text->name;
+    my $level    = $text->level;
+    my $output   = $args{output}  or confess;
+    my $manual   = $args{manual}  or confess;
 
-    $self->showSubroutines(subroutines => [$chapter->subroutines], %args);
+    my $descr   = $self->cleanup($manual, $text->description);
+    $output->print("\n=head$level $name\n\n$descr");
 
-    foreach my $section ($chapter->sections)
-    {   $output->print("\n=head2 ", $section->name, "\n\n");
-        $output->print($self->cleanup($manual, $section->description));
+    $self->showSubroutines(%args, subroutines => [$text->subroutines]);
+    $self->showExamples(%args, examples => [$text->examples])
+         if $examples eq 'EXPAND';
 
-        $self->showSubroutines(subroutines => [$section->subroutines], %args);
-        $self->showExamples(examples => [$section->examples], %args)
-           if $show_examples;
+    return $self;
+}
 
-        foreach my $subsection ($section->subsections)
-        {   $output->print("\n=head3 ",  $subsection->name, "\n\n");
-            $output->print($self->cleanup($manual,$subsection->description));
-            $self->showSubroutines(subroutines => [$subsection->subroutines]
-                                  , %args);
-            $self->showExamples(examples => [$subsection->examples], %args)
-               if $show_examples;
-        }
-    }
+#-------------------------------------------
 
-    $self->showExamples(examples => [$chapter->examples], %args)
-        if $show_examples;
+sub showStructureRefer(@)
+{   my ($self, %args) = @_;
+
+    my $text     = $args{structure} or confess;
+
+    my $name     = $text->name;
+    my $level    = $text->level;
+    my $output   = $args{output}  or confess;
+    my $manual   = $args{manual}  or confess;
+
+    my $link     = $self->link($manual, $text);
+    $output->print("\n=head$level $name\n\nSee $link.\n");
+    $self;
 }
 
 #-------------------------------------------
@@ -321,28 +316,22 @@ sub showSubroutineUse(@)
     my $params     = length $paramlist ? "($paramlist)" : '';
 
     my $class      = $manual->package;
+    my $use
+     = $type eq 'i_method' ? qq[\$obj-E<gt>B<$name>$params]
+     : $type eq 'c_method' ? qq[$class-E<gt>B<$name>$params]
+     : $type eq 'ci_method'? qq[\$obj-E<gt>B<$name>$params\n\n]
+                           . qq[$class-E<gt>B<$name>$params]
+     : $type eq 'overload' ? qq[overload: B<$name>$params]
+     : $type eq 'tie'      ? qq[B<$name>$params]
+     :                       '';
 
-    if($type eq 'i_method')
-    {   $output->print("\n\$obj-E<gt>B<$name>$params\n") }
-    elsif($type eq 'c_method')
-    {   $output->print("\n$class-E<gt>B<$name>$params\n") }
-    elsif($type eq 'ci_method')
-    {   $output->print("\n\$obj-E<gt>B<$name>$params\n");
-        $output->print("\n$class-E<gt>B<$name>$params\n");
-    }
-    elsif($type eq 'overload')
-    {   $output->print("\noverload: B<$name>$params\n") }
-    elsif($type eq 'tie')
-    {   $output->print("\nB<$name> $paramlist\n") }
-    else
-    {   warn "WARNING: unknown subroutine type $type for $name in $manual";
-    }
+    warn "WARNING: unknown subroutine type $type for $name in $manual"
+       unless length $use;
 
-    $output->print("\n=over 4\n");
+    $output->print( qq[\n$use\n\n=over 4\n] );
 
-    if($manual->inherited($subroutine))
-    {   $output->print("\nSee ". $self->link($manual, $subroutine)."\n");
-    }
+    $output->print("\nSee ". $self->link($manual, $subroutine)."\n")
+        if $manual->inherited($subroutine);
 
     $self;
 }
@@ -364,32 +353,6 @@ sub showSubroutineName(@)
     $output->print
      ( $self->cleanup($manual, $url)
      , ($args{last} ? ".\n" : ",\n")
-     );
-}
-
-#-------------------------------------------
-
-sub showOptionTable(@)
-{   my ($self, %args) = @_;
-    my $options = $args{options} or confess;
-    my $manual  = $args{manual}  or confess;
-    my $output  = $args{output}  or confess;
-
-    my @rows;
-    foreach (@$options)
-    {   my ($option, $default) = @$_;
-        push @rows, [ $self->cleanup($manual, $option->name)
-                    , ($manual->inherited($option) ? $option->manual : '')
-                    , $self->cleanup($manual, $default->value)
-                    ];
-    }
-
-    $output->print("\n");
-    $self->writeTable
-     ( output => $output
-     , header => ['Option', 'Defined in', 'Default']
-     , rows   => \@rows
-     , widths => [undef, 15, undef]
      );
 }
 
@@ -420,11 +383,10 @@ sub showOptionExpand(@)
     $self->showOptionUse(%args);
 
     my $where = $option->findDescriptionObject or return $self;
-    $output->print
-     ( "\n=over 4\n\n"
-     , $self->cleanup($manual, $where->description)
-     , "\n=back\n"
-     );
+    my $descr = $self->cleanup($manual, $where->description);
+    $output->print("\n=over 4\n\n$descr\n=back\n")
+       if length $descr;
+
     $self;
 }
 

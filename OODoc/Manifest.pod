@@ -88,18 +88,28 @@ OODoc::Manifest-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-See L<OODoc::Text::Diagnostic/"METHODS">
+ Option    Defined in  Default 
+ filename              C<undef>
+
+. filename FILENAME
+
+=over 4
+
+The filename where the manifest is in.  When the name is not defined,
+the data will not be written.
 
 =back
 
-=head2 Inheritance
+=back
+
+=head2 Collected
 
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Inheritance">
+See L<OODoc::Object/"Collected">
 
 =back
 
@@ -109,14 +119,6 @@ See L<OODoc::Object/"Inheritance">
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Manifest-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
 
 =over 4
 
@@ -134,24 +136,14 @@ See L<OODoc::Object/"Commonly used functions">
 
 =back
 
-$obj-E<gt>B<unique>
+=head2 Manual Repository
 
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
 
 $obj-E<gt>B<addManual>(MANUAL)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -159,7 +151,7 @@ $obj-E<gt>B<mainManual>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -167,7 +159,7 @@ $obj-E<gt>B<manuals>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -175,7 +167,7 @@ $obj-E<gt>B<manualsForPackage>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -183,7 +175,7 @@ $obj-E<gt>B<packageNames>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -197,15 +189,9 @@ The manifest file could not be opened for reading.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
-
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
-
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -214,15 +200,15 @@ received from both classes is undertermined.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OODoc::Text - base class for all data which was found in a manual
+OODoc::Text - text component as found in a manual
 
 
 =head1 INHERITANCE
@@ -25,10 +25,14 @@ OODoc::Text - base class for all data which was found in a manual
 
 =head1 DESCRIPTION
 
+The parsers (implemented in the L<OODoc::Parser|OODoc::Parser> classes) scan
+the documentation as written down by the author of the module, and
+build a tree of these OODoc::Text objects from it. Then, any formatter
+(implemented by the L<OODoc::Format|OODoc::Format> classes) can take this tree of text
+objects and convert it into manual pages.
 
 
-
-=head1 METHODS
+=head1 OVERLOADED
 
 
 overload: B<'""' (stringification)>
@@ -57,6 +61,83 @@ Names are compared.
 
 =back
 
+
+=head1 METHODS
+
+
+=head2 Initiation
+
+
+OODoc::Text-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option       Defined in       Default   
+ container                     <required>
+ description                   ''        
+ linenr                        <required>
+ name                          C<undef>  
+ type                          <required>
+
+. container OBJECT
+
+=over 4
+
+All text objects except chapters are contained in some other object.
+
+=back
+
+. description STRING
+
+=over 4
+
+The text which is contained in the body of this text item.  Often, this
+is filled in later by L<openDescription()|"Collected">.
+
+=back
+
+. linenr INTEGER
+
+. name STRING
+
+=over 4
+
+The name contains the main data about the text piece.
+
+=back
+
+. type STRING
+
+=over 4
+
+The type of this text element.  This is used for debugging only.
+
+=back
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<container>([OBJECT])
+
+=over 4
+
+The text element which encapsulaters the text element at hand.  This
+defines the structure of the documentation.
+Only for chapters, this value will be undefined.
+
+=back
+
+$obj-E<gt>B<description>
+
+=over 4
+
+Returns the description text for this object.  Nearly all objects
+contains some kind of introductory description.
+
+=back
+
 $obj-E<gt>B<name>
 
 =over 4
@@ -71,15 +152,75 @@ I<Example:>
 
 =back
 
-=head2 Attributes
-
-
-$obj-E<gt>B<description>
+$obj-E<gt>B<type>
 
 =over 4
 
-Returns the description text for this object.  Nearly all objects
-contains some kind of introductory description.
+Returns the type name of this data object.
+
+=back
+
+=head2 Location
+
+
+$obj-E<gt>B<manual>
+
+=over 4
+
+Returns the manual object which contains this text element.
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+Returns a unique id for this text item.  This is the easiest way to
+see whether two references to the same (overloaded) objects point to
+the same thing. The ids are numeric.
+
+I<Example:> 
+
+ if($obj1->unique == $obj2->unique) {...}
+ if($obj1 == $obj2) {...}   # same via overload
+
+=back
+
+$obj-E<gt>B<where>
+
+=over 4
+
+Returns the source of the text item: the filename name and the line
+number of the start of it.
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<example>(OBJECT)
+
+=over 4
+
+Add a new example (a OODoc::Text::Example object) to the list already in
+this object.  You can not look for a specific because they have no real
+name (only a sequence number).
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+Returns a list of all examples contained in this text element.
+
+=back
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Collected">
 
 =back
 
@@ -106,101 +247,12 @@ I<Example:>
 
 =back
 
-$obj-E<gt>B<type>
-
-=over 4
-
-Returns the type name of this data object.
-
-=back
-
-$obj-E<gt>B<where>
-
-=over 4
-
-Returns the source of the text item: the filename name and the line
-number of the start of it.
-
-=back
-
-=head2 Container
-
-
-$obj-E<gt>B<container>
-
-=over 4
-
-The text element which encapsulaters the text element at hand.  This
-defines the structure of the documentation.
-Only for chapters, this value will be undefined.
-
-=back
-
-$obj-E<gt>B<manual>
-
-=over 4
-
-Returns the manual object which contains this text element.
-
-=back
-
-=head2 Examples
-
-
-$obj-E<gt>B<example>(OBJECT)
-
-=over 4
-
-Add a new example (a OODoc::Text::Example object) to the list already in
-this object.  You can not look for a specific because they have no real
-name (only a sequence number).
-
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
-
-Returns a list of all examples contained in this text element.
-
-=back
-
-=head2 Initiation
-
-
-OODoc::Text-E<gt>B<new>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Text::Diagnostic/"METHODS">
-
-=back
-
-=head2 Inheritance
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Inheritance">
-
-=back
-
 =head2 Commonly used functions
 
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
 
 =over 4
 
@@ -218,31 +270,14 @@ See L<OODoc::Object/"Commonly used functions">
 
 =back
 
-$obj-E<gt>B<unique>
+=head2 Manual Repository
 
-=over 4
-
-Returns a unique id for this text item.  This is the easiest way to
-see whether two references to the same (overloaded) objects point to
-the same thing. The ids are numeric.
-
-I<Example:> 
-
- if($obj1->unique == $obj2->unique) {...}
- if($obj1 == $obj2) {...}   # same via overload
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
 
 $obj-E<gt>B<addManual>(MANUAL)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -250,7 +285,7 @@ $obj-E<gt>B<mainManual>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -258,7 +293,7 @@ $obj-E<gt>B<manuals>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -266,7 +301,7 @@ $obj-E<gt>B<manualsForPackage>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -274,7 +309,7 @@ $obj-E<gt>B<packageNames>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -284,15 +319,15 @@ See L<OODoc::Object/"Manual database">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
+I<Error:> no text container specified for the $type object
 
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+Each text element is encapsulated by an other text element, except
+chapters.  A value must be known for this C<container> option to
+define the elements relative location.
 
 
 
@@ -301,15 +336,15 @@ received from both classes is undertermined.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

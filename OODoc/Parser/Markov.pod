@@ -32,6 +32,105 @@ later formatted into manual pages.
 =head1 METHODS
 
 
+=head2 Initiation
+
+
+OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option            Defined in  Default
+ additional_rules              []     
+
+. additional_rules ARRAY
+
+=over 4
+
+Reference to an array which contains references to match-action pairs,
+as accepted by L<rule()|"Parsing a file">.  These rules get preference over the existing
+rules.
+
+=back
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Collected">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Parser::Markov-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Parser::Markov-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
 =head2 Parsing a file
 
 
@@ -114,6 +213,17 @@ in.
 
 =back
 
+=head2 Formatting text pieces
+
+
+$obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
+
+=over 4
+
+See L<OODoc::Parser/"Formatting text pieces">
+
+=back
+
 =head2 Producing manuals
 
 
@@ -123,8 +233,20 @@ $obj-E<gt>B<decomposeLink>(MANUAL, LINK)
 
 =back
 
-=head3 Producing POD
+=head2 Producing POD
 
+
+$obj-E<gt>B<cleanupHtml>(FORMATTER, MANUAL, STRING)
+
+=over 4
+
+=back
+
+$obj-E<gt>B<cleanupHtmlLink>(FORMATTER, MANUAL, LINK)
+
+=over 4
+
+=back
 
 $obj-E<gt>B<cleanupPod>(FORMATTER, MANUAL, STRING)
 
@@ -135,129 +257,6 @@ $obj-E<gt>B<cleanupPod>(FORMATTER, MANUAL, STRING)
 $obj-E<gt>B<cleanupPodLink>(FORMATTER, MANUAL, LINK)
 
 =over 4
-
-=back
-
-=head2 Formatting text pieces
-
-After the manuals have been parsed into objects, the information can
-be formatted in various ways, for instance into POD and HTML.  However,
-the parsing is not yet complete: the structure has been decomposed 
-with L<parse()|"Parsing a file">, but the text blocks not yet.  This is because the
-transformations which are needed are context dependent.  For each
-text section L<cleanup()|OODoc::Parser/"Formatting text pieces"> is called for the final touch.
-
-$obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
-
-=over 4
-
-See L<OODoc::Parser/"Formatting text pieces">
-
-=back
-
-=head2 Initiation
-
-
-OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Text::Diagnostic/"METHODS">
-
-=back
-
-=head2 Inheritance
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Inheritance">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc::Parser::Markov-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc::Parser::Markov-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<unique>
-
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
 
 =back
 
@@ -328,9 +327,9 @@ the file.
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Warning:> no diagnostic message supplied in $file line $number
 
@@ -354,12 +353,6 @@ I<Warning:> option line incorrect in $file line $number: $line
 The shown $line is not in the right format: it should contain at least
 two words being the option name and an abstract description of possible
 values.
-
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
-
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
 
 I<Warning:> package $link is not on your system, but linked to in $manual
 
@@ -502,9 +495,9 @@ For comfort, all POD markups are supported as well
 
 =head2 Text markup
 
-Next to the structural markup, there is textual markup.  This markup is the
-same as POD defines in the perlpod manual page. For instance,
-C<< C<some code> >> can be used to create visual markup as a code
+Next to the structural markup, there is textual markup.  This markup
+is the same as POD defines in the perlpod manual page. For instance,
+CE<lt>some codeE<gt> can be used to create visual markup as a code
 fragment.
 
 One kind is added to the standard list: the C<M>.
@@ -614,15 +607,15 @@ I<Example:> how subroutines are documented
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

@@ -35,11 +35,9 @@ OODoc::Object-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-See L<OODoc::Text::Diagnostic/"METHODS">
-
 =back
 
-=head2 Inheritance
+=head2 Collected
 
 
 $obj-E<gt>B<extends>([OBJECT])
@@ -67,48 +65,6 @@ I<Example:>
 
 =back
 
-$obj-E<gt>B<mergeObjects>(OPTIONS)
-
-=over 4
-
-Merge two lists of objects: "this" list and "super" list.  The "this"
-objects are defined on this level of inheritance, where the "super"
-objects are from an inheritence level higher (super class).  The
-combined list is returned.
-
-Merging is a complicated task, because the order of both lists should be
-kept as well as possible.
-
- Option  Defined in       Default                 
- equal                    sub {"$_[0]" eq "$_[1]"}
- merge                    sub {$_[0]}             
- super                    []                      
- this                     []                      
-
-. equal CODE
-
-=over 4
-
-Define how can be determined that two objects are the same.  By default,
-the stringification of both objects are compared.
-
-=back
-
-. merge CODE
-
-=over 4
-
-What to call if both lists contain the same object.  These two objects
-will be passed as argument to the code reference.
-
-=back
-
-. super ARRAY
-
-. this ARRAY
-
-=back
-
 $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Object-E<gt>B<mkdirhier>(DIRECTORY)
@@ -119,15 +75,7 @@ Creates this DIRECTORY and all its non-existing parents.
 
 =back
 
-$obj-E<gt>B<unique>
-
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
+=head2 Manual Repository
 
 All manuals can be reached everywhere in the program: it is a global
 collection.
@@ -181,17 +129,21 @@ Returns the names of all defined packages.
 
 =head1 DIAGNOSTICS
 
+I<Warning:> Unknown option $name
+
+You have used the option with $name, which is not defined with the
+instantiation of this object.
+
+I<Warning:> Unknown options @names
+
+You have used more than one option which is not defined to instantiate
+the object.
+
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|"Manual database"> or L<mainManual()|"Manual database">.
-
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
-
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+to L<manualsForPackage()|"Manual Repository"> or L<mainManual()|"Manual Repository">.
 
 
 
@@ -200,15 +152,15 @@ received from both classes is undertermined.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

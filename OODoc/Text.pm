@@ -1,7 +1,7 @@
 
 package OODoc::Text;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Object';
 
 use strict;
@@ -9,6 +9,18 @@ use warnings;
 
 use Carp;
 
+
+#-------------------------------------------
+
+
+#-------------------------------------------
+
+
+use overload '=='   => sub {$_[0]->unique == $_[1]->unique}
+           , '!='   => sub {$_[0]->unique != $_[1]->unique}
+           , '""'   => sub {$_[0]->name}
+           , 'cmp'  => sub {$_[0]->name cmp "$_[1]"}
+           , 'bool' => sub {1};
 
 #-------------------------------------------
 
@@ -28,7 +40,7 @@ sub init($)
     $self->{OT_type}     = delete $args->{type} or confess;
 
     confess "no text container specified for the ".ref($self)." object"
-       unless exists $args->{container};
+       unless exists $args->{container};   # may be undef
     $self->{OT_container}= delete $args->{container};
     
     $self->{OT_descr}    = delete $args->{description} || '';
@@ -41,32 +53,10 @@ sub init($)
 #-------------------------------------------
 
 
+#-------------------------------------------
+
+
 sub name() {shift->{OT_name}}
-
-#-------------------------------------------
-
-
-use overload '=='   => sub {$_[0]->unique == $_[1]->unique}
-           , '!='   => sub {$_[0]->unique != $_[1]->unique}
-           , '""'   => sub {$_[0]->name}
-           , 'cmp'  => sub {$_[0]->name cmp "$_[1]"}
-           , 'bool' => sub {1};
-
-#-------------------------------------------
-
-
-sub unique() {shift->{OT_unique}}
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
-
-sub where()
-{   my $self = shift;
-    ($self->manual->source, $self->{OT_linenr});
-}
 
 #-------------------------------------------
 
@@ -82,6 +72,32 @@ sub description()
     shift @lines while @lines && $lines[ 0] =~ m/^\s*$/;
     pop   @lines while @lines && $lines[-1] =~ m/^\s*$/;
     join '', @lines;
+}
+
+#-------------------------------------------
+
+
+sub container(;$)
+{   my $self = shift;
+    @_ ? ($self->{OT_container} = shift) : $self->{OT_container};
+}
+
+#-------------------------------------------
+
+
+sub manual() { shift->container->manual }
+
+#-------------------------------------------
+
+
+sub unique() {shift->{OT_unique}}
+
+#-------------------------------------------
+
+
+sub where()
+{   my $self = shift;
+    ($self->manual->source, $self->{OT_linenr});
 }
 
 #-------------------------------------------
@@ -103,22 +119,6 @@ sub findDescriptionObject()
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
-sub manual() { shift->container->manual }
-
-#-------------------------------------------
-
-
-sub container() { shift->{OT_container} }
-
-#-------------------------------------------
-
-
-#-------------------------------------------
-
-
 sub example($)
 {   my ($self, $example) = @_;
     push @{$self->{OT_examples}}, $example;
@@ -131,5 +131,7 @@ sub example($)
 sub examples() { @{shift->{OT_examples}} }
 
 #-------------------------------------------
+
+
 
 1;

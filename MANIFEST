@@ -6,10 +6,12 @@ OODoc.pm
 OODoc.pod
 OODoc/Format.pm
 OODoc/Format.pod
+OODoc/Format/Html.pm
+OODoc/Format/Html.pod
 OODoc/Format/Pod.pm
 OODoc/Format/Pod.pod
-OODoc/Format/PodTemplate.pm
-OODoc/Format/PodTemplate.pod
+OODoc/Format/Pod2.pm
+OODoc/Format/Pod2.pod
 OODoc/Manifest.pm
 OODoc/Manifest.pod
 OODoc/Manual.pm
@@ -40,4 +42,6 @@ OODoc/Text/SubSection.pm
 OODoc/Text/SubSection.pod
 OODoc/Text/Subroutine.pm
 OODoc/Text/Subroutine.pod
+README.examples
+examples/oodoc.tar.gz
 t/00works.t

@@ -1,17 +1,59 @@
 
 package OODoc::Format;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Object';
 
 use strict;
 use warnings;
 
 use Carp;
+use OODoc::Manifest;
 
 
 #-------------------------------------------
 
+
+#-------------------------------------------
+
+
+sub init($)
+{   my ($self, $args) = @_;
+    $self->SUPER::init($args) or return;
+
+    $self->{OF_project} = delete $args->{project}
+        or croak "ERROR: formatter knows no project name.\n";
+
+    $self->{OF_version} = delete $args->{version}
+        or croak "ERROR: formatter does not know the version.\n";
+
+    $self->{OF_workdir} = delete $args->{workdir}
+        or croak "ERROR: no working directory specified.\n";
+
+    $self->{OF_manifest} = delete $args->{manifest} || OODoc::Manifest->new;
+
+    $self;
+}
+
+#-------------------------------------------
+
+
+sub project() {shift->{OF_project}}
+
+#-------------------------------------------
+
+
+sub version() {shift->{OF_version}}
+
+#-------------------------------------------
+
+
+sub workdir() {shift->{OF_workdir}}
+
+#-------------------------------------------
+
+
+sub manifest() {shift->{OF_manifest}}
 
 #-------------------------------------------
 
@@ -29,12 +71,59 @@ sub cleanup($$)
 #-------------------------------------------
 
 
-sub showChapter(@) {confess}
+sub showChapter(@)
+{   my ($self, %args) = @_;
+    my $chapter  = $args{chapter} or confess;
+    my $manual   = $args{manual}  or confess;
+    my $show_ch  = $args{show_inherited_chapter}    || 'REFER';
+    my $show_sec = $args{show_inherited_section}    || 'REFER';
+    my $show_ssec= $args{show_inherited_subsection} || 'REFER';
+
+    if($manual->inherited($chapter))
+    {    return $self if $show_ch eq 'NO';
+         $self->showStructureRefer(%args, structure => $chapter);
+         return $self;
+    }
+
+    $self->showStructureExpand(%args, structure => $chapter);
+
+    foreach my $section ($chapter->sections)
+    {   if($manual->inherited($section))
+        {   next if $show_sec eq 'NO';
+            $self->showStructureRefer(%args, structure => $section), next
+                unless $show_sec eq 'REFER';
+        }
+
+        $self->showStructureExpand(%args, structure => $section);
+
+        foreach my $subsection ($section->subsections)
+        {   if($manual->inherited($subsection))
+            {   next if $show_ssec eq 'NO';
+                $self->showStructureRefer(%args, structure=>$subsection), next
+                    unless $show_ssec eq 'REFER';
+            }
+
+            $self->showStructureExpand(%args, structure => $subsection);
+        }
+    }
+}
+
+#-------------------------------------------
+
+
+sub showStructureExpanded(@) {confess}
+
+#-------------------------------------------
+
+
+sub showStructureRefer(@) {confess}
+
+#-------------------------------------------
 
 sub chapterName(@)        {shift->showRequiredChapter(NAME        => @_)}
 sub chapterSynopsis(@)    {shift->showOptionalChapter(SYNOPSIS    => @_)}
 sub chapterDescription(@) {shift->showRequiredChapter(DESCRIPTION => @_)}
-sub chapterOverloading(@) {shift->showOptionalChapter(OVERLOADING => @_)}
+sub chapterOverloaded(@)  {shift->showOptionalChapter(OVERLOADED  => @_)}
 sub chapterMethods(@)     {shift->showOptionalChapter(METHODS     => @_)}
 sub chapterExports(@)     {shift->showOptionalChapter(EXPORTS     => @_)}
 sub chapterDiagnostics(@) {shift->showOptionalChapter(DIAGNOSTICS => @_)}
@@ -74,7 +163,7 @@ sub showOptionalChapter($@)
 #-------------------------------------------
 
 
-sub createIndexPages(@) {shift}
+sub createOtherPages(@) {shift}
 
 #-------------------------------------------
 
@@ -237,7 +326,31 @@ sub showSubroutineDescription(@) {shift}
 #-------------------------------------------
 
 
-sub showOptionTable(@) {shift}
+sub showOptionTable(@)
+{   my ($self, %args) = @_;
+    my $options = $args{options} or confess;
+    my $manual  = $args{manual}  or confess;
+    my $output  = $args{output}  or confess;
+
+    my @rows;
+    foreach (@$options)
+    {   my ($option, $default) = @$_;
+        push @rows, [ $self->cleanup($manual, $option->name)
+                    , ($manual->inherited($option) ? $option->manual : '')
+                    , $self->cleanup($manual, $default->value)
+                    ];
+    }
+
+    $output->print("\n");
+    $self->writeTable
+     ( output => $output
+     , header => ['Option', 'Defined in', 'Default']
+     , rows   => \@rows
+     , widths => [undef, 15, undef]
+     );
+
+    $self
+}
 
 #-------------------------------------------
 
@@ -275,6 +388,62 @@ sub showOptionUse(@) {shift}
 sub showOptionExpand(@) {shift}
 
 #-------------------------------------------
+
+
+sub createInheritance($)
+{   my ($self, $package) = @_;
+    my $output;
+    my @supers  = $package->superClasses;
+
+    if(my $realized = $package->realizes)
+    {   $output .= "\n $package realizes a M<$realized>\n";
+        @supers = $realized->superClasses if ref $realized;
+    }
+
+    if(my @extras = $package->extraCode)
+    {   $output .= "\n $package has extra code in\n";
+        $output .= "   M<$_>\n" foreach @extras;
+    }
+
+    foreach (@supers)
+    {   $output .= "\n $package\n";
+        $output .= $self->showSuperSupers($_);
+    }
+
+    if(my @subclasses = $package->subClasses)
+    {   $output .= "\n $package is extended by\n";
+        $output .= "   M<$_>\n" foreach sort @subclasses;
+    }
+
+    if(my @realized = $package->realizers)
+    {   $output .= "\n $package is realized by\n";
+        $output .= "   M<$_>\n" foreach sort @realized;
+    }
+
+    $output;
+}
+
+sub showSuperSupers($)
+{   my ($self, $package) = @_;
+    my $output = "   is a M<$package>\n";
+    return $output
+        unless ref $package;  # only the name of the package is known
+
+    if(my $realizes = $package->realizes)
+    {   $output .= $self->showSuperSupers($realizes);
+        return $output;
+    }
+
+    my @supers = $package->superClasses or return $output;
+    $output .= $self->showSuperSupers(shift @supers);
+
+    foreach(@supers)
+    {   $output .= "\n\n   $package also extends M<$_>\n";
+        $output .= $self->showSuperSupers($_);
+    }
+
+    $output;
+}
 
 1;
 

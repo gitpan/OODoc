@@ -27,9 +27,314 @@ OODoc::Text::Section - collects the text of one section within a chapter
 
 
 
+=head1 OVERLOADED
+
+
+overload: B<'""' (stringification)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'==' and '!='>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'cmp' (string comparison)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
 
 =head1 METHODS
 
+
+=head2 Initiation
+
+
+$obj-E<gt>B<emptyExtension>(CONTAINER)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Initiation">
+
+=back
+
+OODoc::Text::Section-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option       Defined in       Default   
+ chapter                       <required>
+ container    OODoc::Text      <chapter> 
+ description  OODoc::Text      ''        
+ level        OODoc::Text::Structure  2         
+ linenr       OODoc::Text      <required>
+ name         OODoc::Text      C<undef>  
+ type         OODoc::Text      <required>
+
+. chapter OBJECT
+
+. container OBJECT
+
+. description STRING
+
+. level INTEGER
+
+. linenr INTEGER
+
+. name STRING
+
+. type STRING
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<container>([OBJECT])
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<description>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<level>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Attributes">
+
+=back
+
+$obj-E<gt>B<name>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<niceName>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Attributes">
+
+=back
+
+$obj-E<gt>B<type>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+=head2 Location
+
+
+$obj-E<gt>B<manual>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<path>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<where>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<all>(METHOD, PARAMETERS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
+
+=back
+
+$obj-E<gt>B<example>(OBJECT)
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Collected">
+
+=back
+
+$obj-E<gt>B<findDescriptionObject>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<openDescription>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+=head2 Subroutines
+
+
+$obj-E<gt>B<addSubroutine>(OBJECTS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<setSubroutines>(ARRAY)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutine>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutines>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Text::Section-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Text::Section-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
 
 =head2 Subsections
 
@@ -49,49 +354,6 @@ $obj-E<gt>B<subsections>([SUBSECTIONS])
 =over 4
 
 Returns a list of all sections in this chapter.
-
-=back
-
-=head2 Attributes
-
-
-$obj-E<gt>B<description>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<findDescriptionObject>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<openDescription>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<type>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<where>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
 
 =back
 
@@ -118,183 +380,15 @@ objects, enclosed in the section and its subsections.
 
 =back
 
-=head2 Subroutines
-
-Each manual page structure element (chapter, section, and subsection)
-can contain a list of subroutine descriptions.
-
-$obj-E<gt>B<addSubroutine>(OBJECT)
-
-=over 4
-
-See L<OODoc::Text::Structure/"Subroutines">
-
-=back
-
-$obj-E<gt>B<setSubroutines>(OBJECTS)
-
-=over 4
-
-See L<OODoc::Text::Structure/"Subroutines">
-
-=back
-
-$obj-E<gt>B<subroutine>(NAME)
-
-=over 4
-
-See L<OODoc::Text::Structure/"Subroutines">
-
-=back
-
-$obj-E<gt>B<subroutines>
-
-=over 4
-
-See L<OODoc::Text::Structure/"Subroutines">
-
-=back
-
-=head2 Examples
-
-
-$obj-E<gt>B<example>(OBJECT)
-
-=over 4
-
-See L<OODoc::Text/"Examples">
-
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
-
-See L<OODoc::Text/"Examples">
-
-=back
-
-=head2 Initiation
-
-
-OODoc::Text::Section-E<gt>B<new>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Text::Diagnostic/"METHODS">
-
-=back
-
-=head2 Inheritance
-
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
-
-See L<OODoc::Object/"Inheritance">
-
-=back
-
-=head2 Commonly used functions
-
-
-$obj-E<gt>B<filenameToPackage>(FILENAME)
-
-OODoc::Text::Section-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
-
-OODoc::Text::Section-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<unique>
-
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
-
-$obj-E<gt>B<addManual>(MANUAL)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual database">
-
-=back
-
 
 
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
-
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
-
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -303,15 +397,15 @@ received from both classes is undertermined.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

@@ -1,7 +1,7 @@
 
 package OODoc;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Object';
 
 use strict;
@@ -37,7 +37,6 @@ sub init($)
     croak "ERROR: no version specified for module \"$module\""
         unless defined $version;
 
-    $self->{O_workdir} = delete $args->{workdir};
     $self->{O_verbose} = delete $args->{verbose} || 0;
     $self;
 }
@@ -90,7 +89,7 @@ sub processFiles(@)
 {   my ($self, %args) = @_;
     my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
-    my $dest    = $args{workdir} || $self->{O_workdir}
+    my $dest    = $args{workdir}
        or croak "ERROR: requires a directory to write the distribution to";
 
     #
@@ -195,7 +194,7 @@ sub getPackageRelations()
 {   my $self     = shift;
     my @manuals  = $self->manuals;  # all
 
-    my @sources  = $self->unique( map {$_->source} @manuals );
+    my @sources  = map {$_->source} @manuals;
 
     foreach my $fn (@sources)
     {    eval { require $fn };
@@ -205,9 +204,7 @@ sub getPackageRelations()
 
     foreach my $manual (@manuals)
     {   if($manual->name ne $manual->package)     # autoloaded code
-        {   
-warn "main manual of $manual";
-            my $main = $self->mainManual("$manual");
+        {   my $main = $self->mainManual("$manual");
             $main->extraCode($manual) if defined $main;
             next;
         }
@@ -244,26 +241,16 @@ sub expandManuals() { $_->expand foreach shift->manuals }
 
 our %formatters =
  ( pod  => 'OODoc::Format::Pod'
- , pod2 => 'OODoc::Format::PodTemplate'
+ , pod2 => 'OODoc::Format::Pod2'
  , html => 'OODoc::Format::Html'
  );
 
-sub createManual($@)
+sub create($@)
 {   my ($self, $format, %args) = @_;
     my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
-    my $dest    = $args{workdir} || $self->{O_workdir}
+    my $dest    = $args{workdir}
        or croak "ERROR: requires a directory to write the manuals to";
-
-    # Create the formatter
-
-    unless(ref $format)
-    {   $format = $formatters{$format} if exists $formatters{$format};
-        eval "require $format";
-        die "ERROR: formatter $format has compilation errors: $@" if $@;
-
-        $format = $format->new();
-    }
 
     #
     # Start manifest
@@ -272,6 +259,23 @@ sub createManual($@)
     my $manfile  = exists $args{manifest} ? $args{manifest}
                  : File::Spec->catfile($dest, 'MANIFEST');
     my $manifest = OODoc::Manifest->new(filename => $manfile);
+
+    # Create the formatter
+
+    unless(ref $format)
+    {   $format = $formatters{$format} if exists $formatters{$format};
+        eval "require $format";
+        die "ERROR: formatter $format has compilation errors: $@" if $@;
+        my $options    = delete $args{format_options} || [];
+
+        $format = $format->new
+          ( manifest    => $manifest
+          , workdir     => $dest
+          , project     => $self->module
+          , version     => $self->version
+          , @$options
+          );
+    }
 
     #
     # Create the manual pages
@@ -282,11 +286,9 @@ sub createManual($@)
         {   print "Creating manual $manual for $package\n" if $verbose > 1;
             $format->createManual
              ( manual   => $manual
-             , workdir  => $dest
-             , manifest => $manifest
-
+             , template => $args{manual_template}
              , append         => $args{append}
-             , format_options => ($args{format_options} || [])
+             , format_options => ($args{manual_format} || [])
              );
         }
     }
@@ -295,10 +297,10 @@ sub createManual($@)
     # Create other pages
     #
 
-    print "Creating index pages\n" if $verbose > 1;
-    $format->createIndexPages
-     (
-       manifest => $manifest
+    print "Creating other pages\n" if $verbose > 1;
+    $format->createOtherPages
+     ( source   => $args{other_files}
+     , process  => $args{process_files}
      );
 
     $format;
@@ -331,7 +333,6 @@ STATS
 }
 
 #-------------------------------------------
-
 
 
 1;

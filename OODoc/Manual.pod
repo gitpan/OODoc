@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OODoc::Manual - Contains the information found in one manual about a package
+OODoc::Manual - one manual about a package
 
 
 =head1 INHERITANCE
@@ -34,7 +34,7 @@ $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
 =over 4
 
-Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Container"> on all chapters, passing the METHOD
+Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Collected"> on all chapters, passing the METHOD
 and PARAMETERS.  In practice, this means that you can simply collect
 kinds of information from various parts within the manual page.
 
@@ -148,6 +148,63 @@ $obj-E<gt>B<isPurePod>
 =over 4
 
 Returns whether this package has real code related to it.
+
+=back
+
+$obj-E<gt>B<mergeStructure>(OPTIONS)
+
+=over 4
+
+Merge two lists of structured text objects: "this" list and "super" list.
+The "this" objects are defined on this level of inheritance, where the
+"super" objects are from an inheritence level higher (super class).
+The combined list is returned, where the inherited objects are
+preferably included before the new ones.
+
+Merging is a complicated task, because the order of both lists should be
+kept as well as possible.
+
+ Option     Defined in       Default                    
+ container                   <required>                 
+ equal                       C<sub {"$_[0]" eq "$_[1]"}>
+ merge                       C<sub {$_[0]}>             
+ super                       []                         
+ this                        []                         
+
+. container OBJECT
+
+. equal CODE
+
+=over 4
+
+Define how can be determined that two objects are the same.  By default,
+the stringification of both objects are compared.
+
+=back
+
+. merge CODE
+
+=over 4
+
+What to call if both lists contain the same object.  These two objects
+will be passed as argument to the code reference.
+
+=back
+
+. super ARRAY
+
+. this ARRAY
+
+=back
+
+$obj-E<gt>B<mostDetailedLocation>(OBJECT)
+
+=over 4
+
+The OBJECT (a text element) is lccated in some subsection, section or
+chapter.  But the OBJECT may also be an extension to a piece of
+documentation which is described in a super class with a location in
+more detail.  The most detailed location for the description is returned.
 
 =back
 
@@ -276,6 +333,14 @@ will be added to the list of superclasses first.
 
 =back
 
+$obj-E<gt>B<version>
+
+=over 4
+
+Returns the version of this manual information.
+
+=back
+
 =head2 Initiation
 
 
@@ -283,18 +348,69 @@ OODoc::Manual-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-See L<OODoc::Text::Diagnostic/"METHODS">
+ Option    Defined in       Default   
+ package                    <required>
+ parser                     <required>
+ pure_pod                   0         
+ source                     <required>
+ stripped                   C<undef>  
+ version                    <required>
+
+. package STRING
+
+=over 4
+
+The name of the package which is described by this manual.
 
 =back
 
-=head2 Inheritance
+. parser OBJECT
+
+=over 4
+
+The parser which produces this manual page.  This parameter is needed
+to be able to low-level format the text blocks.
+
+=back
+
+. pure_pod BOOLEAN
+
+=over 4
+
+Some documentation is stored in files which look like a module,
+but do not contain any code.  Their filenames usually end with C<.pod>.
+
+=back
+
+. source STRING
+
+=over 4
+
+The file where the manual was found in, or in some cases some other
+string which explains where the data came from.
+
+=back
+
+. stripped STRING
+
+=over 4
+
+The file where the stripped code is written to.
+
+=back
+
+. version STRING
+
+=back
+
+=head2 Collected
 
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Inheritance">
+See L<OODoc::Object/"Collected">
 
 =back
 
@@ -304,14 +420,6 @@ See L<OODoc::Object/"Inheritance">
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Manual-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
 
 =over 4
 
@@ -329,24 +437,14 @@ See L<OODoc::Object/"Commonly used functions">
 
 =back
 
-$obj-E<gt>B<unique>
+=head2 Manual Repository
 
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
 
 $obj-E<gt>B<addManual>(MANUAL)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -354,7 +452,7 @@ $obj-E<gt>B<mainManual>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -362,7 +460,7 @@ $obj-E<gt>B<manuals>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -370,7 +468,7 @@ $obj-E<gt>B<manualsForPackage>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -378,7 +476,7 @@ $obj-E<gt>B<packageNames>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -388,9 +486,9 @@ See L<OODoc::Object/"Manual database">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 I<Error:> no name in manual in $source
 
@@ -398,11 +496,38 @@ Each documentation part requires a chapter NAME which starts with
 the manual name followed by a dash.  Apparently, this was not found
 in the indicated file.
 
+I<Error:> no source filename is specified for manual $name
+
+You have to specify where you found the information for the manual.  This
+does not need to be the name of an existing file, but usually it will be.
+
 I<Warning:> order conflict "$take" before "$insert" in $file line $number
 
 The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
+
+I<Error:> package name is not specified
+
+You try to instantiate a manual, but have not specified the name
+of the package which is described in this manual, which is required.
+
+I<Warning:> subroutine $name location conflict: $here and $there
+
+Finding the optimal location to list a subroutine description is
+a harsh job: information from various manual pages is being used.
+
+It is not a problem to list the documentation of a certain method M
+in module A in chapter "METHODS", section "General", subsection "X"
+(which is abbreviated in the report as METHODS/General/X), and the
+same method M in module A::B, which extends A, in chapter "METHODS"
+without providing details about the section and subsection.  The in most
+detail descripted location is used everywhere.
+
+This warning means that the location of the method in this manual page
+is not related to that of the same method in an other page.  For instance,
+in the first page it is listed in chapter "METHODS", and in the second
+in chapter "FUNCTIONS".
 
 I<Error:> two chapters name $name in $filename line $ln1 and $ln2
 
@@ -416,15 +541,15 @@ is not permitted.  Join the contents of both parts.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

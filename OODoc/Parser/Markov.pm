@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Parser';
 
 use strict;
@@ -135,6 +135,7 @@ sub parse(@)
          , pure_pod => 1
          , source   => $input
          , parser   => $self
+         , version  => $version
          );
 
         push @manuals, $manual;
@@ -157,11 +158,12 @@ sub parse(@)
              , source   => $input
              , stripped => $output
              , parser   => $self
+             , version  => $version
              );
             push @manuals, $manual;
             $self->currentManual($manual);
             $out->print($line);
-            $out->print("use vars 'VERSION';\n\$VERSION = '$version';\n");
+            $out->print("use vars '\$VERSION';\n\$VERSION = '$version';\n");
         }
         elsif(my($match, $action) = $self->findMatchingRule($line))
         {
@@ -615,6 +617,63 @@ sub cleanupPod($$$)
 
 
 sub cleanupPodLink($$$)
+{   my ($self, $formatter, $manual, $link) = @_;
+    my $to = $self->decomposeLink($manual, $link);
+    ref $to ? $formatter->link($manual, $to, $link) : $to;
+}
+
+#-------------------------------------------
+
+
+my $url_modsearch = "http://search.cpan.org/perldoc?";
+my $url_coderoot  = 'CODE';
+
+sub cleanupHtml($$$)
+{   my ($self, $formatter, $manual, $string) = @_;
+    for($string)
+    {   s#\&#\amp;#g;
+        s#(?<![LFCIBEM])\<#&lt;#g;
+        s/M\<([^>]*)\>/$self->cleanupHtmlLink($formatter, $manual, $1)/ge;
+        s#L\<([^>]*)\>#<a href="$url_modsearch$1>$1</a>#g;
+        s#F\<([^>]*)\>#<a href="$url_coderoot"/$1>$1</a>#g;
+        s#C\<([^>]*)\>#<code>$1</code>#g;
+        s#I\<([^>]*)\>#<em>$1</em>#g;
+        s#B\<([^>]*)\>#<b>$1</b>#g;
+        s#E\<([^>]*)\>#\&$1;#g;
+        s#\-\>#-\&gt;#g;
+        s#^\=over\s+\d+\s*#\n<ul>#gms;
+        s#^\=item\s*(?:\*\s*)?([^\n]*)\s*#\n<li><b>$1</b><br />\n#gs;
+        s#^\=back\s+#</ul>\n#gms;
+ 
+        my ($label, $level, $title);
+        s#^\=head([1-6])\s*([^\n]*)#
+          ($title, $level) = ($1, $2);
+          $label = $title;
+          $label =~ s/\W+/_/g;
+          qq[<h$level class="$title"><a name="$label">$title</a></h$level>];
+         #ge;
+
+        s!(?:(?:^|\n)
+              [^\ \t\n]+[^\n]*      # line starting with blank: para
+          )+
+         !<p>$&</p>!gsx;
+
+        s!(?:(?:^|\n)               # start of line
+              [\ \t]+[^\n]+         # line starting with blank: pre
+          )+
+         !<pre>$&\n</pre>!gsx;
+
+        s#</pre>\n<pre>##gs;
+        s#<p>\n#\n<p>#gs;
+    }
+
+    $string;
+}
+
+#-------------------------------------------
+
+
+sub cleanupHtmlLink($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
     my $to = $self->decomposeLink($manual, $link);
     ref $to ? $formatter->link($manual, $to, $link) : $to;

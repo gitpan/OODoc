@@ -1,7 +1,7 @@
 
 package OODoc::Text::SubSection;
-use vars 'VERSION';
-$VERSION = '0.03';
+use vars '$VERSION';
+$VERSION = '0.04';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -18,8 +18,9 @@ use Carp;
 
 sub init($)
 {   my ($self, $args) = @_;
-    $args->{type}    ||= 'Subsection';
-    $args->{container} = delete $args->{section} or confess;
+    $args->{type}      ||= 'Subsection';
+    $args->{container} ||= delete $args->{section} or confess;
+    $args->{level}     ||= 3;
 
     $self->SUPER::init($args) or return;
 

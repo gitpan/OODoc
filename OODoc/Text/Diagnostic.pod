@@ -17,103 +17,41 @@ OODoc::Text::Diagnostic - one explanation of a problem report
 
 =head1 DESCRIPTION
 
-Each OODoc::Text::Subroutine can have a list of warning and 
+Each L<OODoc::Text::Subroutine|OODoc::Text::Subroutine> can have a list of warning and 
 error messages, which are each captured in a separate object as described
 in this manual page.
 
 
+=head1 OVERLOADED
+
+
+overload: B<'""' (stringification)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'==' and '!='>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'cmp' (string comparison)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
 
 =head1 METHODS
 
-
-$obj-E<gt>B<subroutine>
-
-=over 4
-
-Returns the subroutine object for this option.
-
-=back
-
-=head2 Attributes
-
-
-$obj-E<gt>B<description>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<findDescriptionObject>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<openDescription>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<type>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-$obj-E<gt>B<where>
-
-=over 4
-
-See L<OODoc::Text/"Attributes">
-
-=back
-
-=head2 Container
-
-
-$obj-E<gt>B<container>
-
-=over 4
-
-See L<OODoc::Text/"Container">
-
-=back
-
-$obj-E<gt>B<manual>
-
-=over 4
-
-See L<OODoc::Text/"Container">
-
-=back
-
-=head2 Examples
-
-
-$obj-E<gt>B<example>(OBJECT)
-
-=over 4
-
-See L<OODoc::Text/"Examples">
-
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
-
-See L<OODoc::Text/"Examples">
-
-=back
 
 =head2 Initiation
 
@@ -122,61 +60,21 @@ OODoc::Text::Diagnostic-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option            Defined in       Default     
- additional_rules  OODoc::Parser::Markov  []          
- chapter           OODoc::Text::Section  <required>  
- container         OODoc::Text      <subroutine>
- description       OODoc::Text      ''          
- filename          OODoc::Manifest  C<undef>    
- linenr            OODoc::Text      <required>  
- manual            OODoc::Text::Chapter  <required>  
- module            OODoc            <required>  
- name              OODoc::Text      C<undef>    
- package           OODoc::Manual    <required>  
- parameters        OODoc::Text::Subroutine  C<undef>    
- parser            OODoc::Manual    <required>  
- pure_pod          OODoc::Manual    0           
- section           OODoc::Text::SubSection  <required>  
- source            OODoc::Manual    <required>  
- stripped          OODoc::Manual    C<undef>    
- subroutine                         <required>  
- type              OODoc::Text      <required>  
- value             OODoc::Text::Default  <required>  
- verbose           OODoc            0           
- version           OODoc            <required>  
- workdir           OODoc            C<undef>    
-
-. additional_rules ARRAY
-
-. chapter OBJECT
+ Option       Defined in       Default     
+ container    OODoc::Text      <subroutine>
+ description  OODoc::Text      ''          
+ linenr       OODoc::Text      <required>  
+ name         OODoc::Text      C<undef>    
+ subroutine                    <required>  
+ type         OODoc::Text      <required>  
 
 . container OBJECT
 
 . description STRING
 
-. filename FILENAME
-
 . linenr INTEGER
 
-. manual OBJECT
-
-. module STRING
-
 . name STRING
-
-. package STRING
-
-. parameters STRING
-
-. parser OBJECT
-
-. pure_pod BOOLEAN
-
-. section OBJECT
-
-. source STRING
-
-. stripped STRING
 
 . subroutine OBJECT
 
@@ -188,24 +86,118 @@ The subroutine in which this option lives.
 
 . type STRING
 
-. value STRING
+=back
 
-. verbose INTEGER
+=head2 Attributes
 
-. version STRING
 
-. workdir DIRECTORY
+$obj-E<gt>B<container>([OBJECT])
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
 
 =back
 
-=head2 Inheritance
+$obj-E<gt>B<description>
 
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<name>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<subroutine>
+
+=over 4
+
+Returns the subroutine object for this option.
+
+=back
+
+$obj-E<gt>B<type>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+=head2 Location
+
+
+$obj-E<gt>B<manual>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<where>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<example>(OBJECT)
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
 
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
 
-See L<OODoc::Object/"Inheritance">
+See L<OODoc::Object/"Collected">
+
+=back
+
+$obj-E<gt>B<findDescriptionObject>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<openDescription>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
 
 =back
 
@@ -215,14 +207,6 @@ See L<OODoc::Object/"Inheritance">
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text::Diagnostic-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
-
-See L<OODoc::Object/"Commonly used functions">
-
-=back
-
-$obj-E<gt>B<mergeObjects>(OPTIONS)
 
 =over 4
 
@@ -240,24 +224,14 @@ See L<OODoc::Object/"Commonly used functions">
 
 =back
 
-$obj-E<gt>B<unique>
+=head2 Manual Repository
 
-=over 4
-
-See L<OODoc::Text/"METHODS">
-
-=back
-
-=head2 Manual database
-
-All manuals can be reached everywhere in the program: it is a global
-collection.
 
 $obj-E<gt>B<addManual>(MANUAL)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -265,7 +239,7 @@ $obj-E<gt>B<mainManual>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -273,7 +247,7 @@ $obj-E<gt>B<manuals>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -281,7 +255,7 @@ $obj-E<gt>B<manualsForPackage>(NAME)
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -289,7 +263,7 @@ $obj-E<gt>B<packageNames>
 
 =over 4
 
-See L<OODoc::Object/"Manual database">
+See L<OODoc::Object/"Manual Repository">
 
 =back
 
@@ -299,15 +273,9 @@ See L<OODoc::Object/"Manual database">
 
 I<Error:> manual definition requires manual object
 
-A call to L<addManual()|OODoc::Object/"Manual database"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
-to L<manualsForPackage()|OODoc::Object/"Manual database"> or L<mainManual()|OODoc::Object/"Manual database">.
-
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
-
-The order of the objects in a sub-class shall be the same as that of
-the super class, otherwise the result of merging of the information
-received from both classes is undertermined.
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
 
 
@@ -316,15 +284,15 @@ received from both classes is undertermined.
 
 =head1 REFERENCES
 
-See the OODoc website at L<$website> for more details.
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version $version.
+Module version 0.04.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2001-2002 by the authors. All rights reserved.  This program
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 
