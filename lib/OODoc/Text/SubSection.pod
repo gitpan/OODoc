@@ -1,0 +1,407 @@
+
+=head1 NAME
+
+OODoc::Text::SubSection - collects the text of one subsection within a section
+
+
+=head1 INHERITANCE
+
+ OODoc::Text::SubSection
+   is a OODoc::Text::Structure
+   is a OODoc::Text
+   is a OODoc::Object
+
+
+=head1 SYNOPSIS
+
+ my $section = $subsection->section;
+ my $chapter = $subsection->chapter;
+
+
+=head1 DESCRIPTION
+
+A subsection (or head3) is the third level of refining document
+hierarchies.  A subsection must be a part of a section, which is
+part of a chapter.
+
+
+=head1 OVERLOADED
+
+
+overload: B<'""' (stringification)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'==' and '!='>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'cmp' (string comparison)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+$obj-E<gt>B<emptyExtension>(CONTAINER)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Constructors">
+
+=back
+
+OODoc::Text::SubSection-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option       Defined in       Default                                          
+ container    L<OODoc::Text>   L<new(section)|OODoc::Text::SubSection/"METHODS">
+ description  L<OODoc::Text>   C<''>                                            
+ level        L<OODoc::Text::Structure>  C<3>                                             
+ linenr       L<OODoc::Text>   <required>                                       
+ name         L<OODoc::Text>   undef                                            
+ section                       <required>                                       
+ type         L<OODoc::Text>   C<'Subsection'>                                  
+
+. container OBJECT
+
+. description STRING
+
+. level INTEGER
+
+. linenr INTEGER
+
+. name STRING
+
+. section OBJECT
+
+=over 4
+
+The section in which this sub-section lives.
+
+=back
+
+. type STRING
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<container>([OBJECT])
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<description>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<level>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Attributes">
+
+=back
+
+$obj-E<gt>B<name>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<niceName>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Attributes">
+
+=back
+
+$obj-E<gt>B<type>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+=head2 Location
+
+
+$obj-E<gt>B<chapter>
+
+=over 4
+
+Returns the chapter object for this subsection.
+
+=back
+
+$obj-E<gt>B<findEntry>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
+
+=back
+
+$obj-E<gt>B<manual>([NAME])
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<path>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
+
+=back
+
+$obj-E<gt>B<section>
+
+=over 4
+
+Returns the section object for this subsection.
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<where>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<all>(METHOD, PARAMETERS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
+
+=back
+
+$obj-E<gt>B<example>(OBJECT)
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<findDescriptionObject>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<isEmpty>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
+
+=back
+
+$obj-E<gt>B<openDescription>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+=head2 Subroutines
+
+
+$obj-E<gt>B<addSubroutine>(OBJECTS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<setSubroutines>(ARRAY)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutine>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutines>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Text::SubSection-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Text::SubSection-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+
+
+=head1 DIAGNOSTICS
+
+I<Error:> manual definition requires manual object
+
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+however an incompatible thing was passed.  Usually, intended was a call
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.07.
+Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+

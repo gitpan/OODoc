@@ -1,0 +1,285 @@
+
+=head1 NAME
+
+OODoc::Text::Example - one example for the use of a subroutine
+
+
+=head1 INHERITANCE
+
+ OODoc::Text::Example
+   is a OODoc::Text
+   is a OODoc::Object
+
+
+=head1 SYNOPSIS
+
+
+
+=head1 DESCRIPTION
+
+Each L<OODoc::Text|OODoc::Text> element can have a list of examples,
+which are each captured in a separate object as described
+in this manual page.
+
+
+=head1 OVERLOADED
+
+
+overload: B<'""' (stringification)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'==' and '!='>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+overload: B<'cmp' (string comparison)>
+
+=over 4
+
+See L<OODoc::Text/"OVERLOADED">
+
+=back
+
+
+=head1 METHODS
+
+
+=head2 Constructors
+
+
+OODoc::Text::Example-E<gt>B<new>(OPTIONS)
+
+=over 4
+
+ Option       Defined in       Default     
+ container    L<OODoc::Text>   <required>  
+ description  L<OODoc::Text>   C<''>       
+ linenr       L<OODoc::Text>   <required>  
+ name         L<OODoc::Text>   undef       
+ type         L<OODoc::Text>   C<'Example'>
+
+. container OBJECT
+
+. description STRING
+
+. linenr INTEGER
+
+. name STRING
+
+. type STRING
+
+=back
+
+=head2 Inheritance knowledge
+
+
+$obj-E<gt>B<extends>([OBJECT])
+
+=over 4
+
+See L<OODoc::Object/"Inheritance knowledge">
+
+=back
+
+=head2 Attributes
+
+
+$obj-E<gt>B<container>([OBJECT])
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<description>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<name>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+$obj-E<gt>B<type>
+
+=over 4
+
+See L<OODoc::Text/"Attributes">
+
+=back
+
+=head2 Location
+
+
+$obj-E<gt>B<manual>([NAME])
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<unique>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<where>
+
+=over 4
+
+See L<OODoc::Text/"Location">
+
+=back
+
+=head2 Collected
+
+
+$obj-E<gt>B<example>(OBJECT)
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<examples>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<findDescriptionObject>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+$obj-E<gt>B<openDescription>
+
+=over 4
+
+See L<OODoc::Text/"Collected">
+
+=back
+
+=head2 Commonly used functions
+
+
+$obj-E<gt>B<filenameToPackage>(FILENAME)
+
+OODoc::Text::Example-E<gt>B<filenameToPackage>(FILENAME)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+$obj-E<gt>B<mkdirhier>(DIRECTORY)
+
+OODoc::Text::Example-E<gt>B<mkdirhier>(DIRECTORY)
+
+=over 4
+
+See L<OODoc::Object/"Commonly used functions">
+
+=back
+
+=head2 Manual Repository
+
+
+$obj-E<gt>B<addManual>(MANUAL)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<mainManual>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manuals>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<manualsForPackage>(NAME)
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+$obj-E<gt>B<packageNames>
+
+=over 4
+
+See L<OODoc::Object/"Manual Repository">
+
+=back
+
+
+
+=head1 DIAGNOSTICS
+
+I<Error:> manual definition requires manual object
+
+A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
+however an incompatible thing was passed.  Usually, intended was a call
+to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
+
+
+
+
+
+
+=head1 REFERENCES
+
+See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
+
+=head1 COPYRIGHTS
+
+Module version 0.07.
+Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
+other contributors.
+
+Copyright (c) 2003 by the author(s). All rights reserved.  This program
+is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself.
+
+
