@@ -1,7 +1,7 @@
 
 package OODoc::Manual;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.92';
 use base 'OODoc::Object';
 
 use strict;
@@ -100,7 +100,7 @@ sub chapter($)
     if(my $old = $self->{OP_chapter_hash}{$name})
     {   my ($fn,   $ln2) = $it->where;
         my (undef, $ln1) = $old->where;
-        die "ERROR: two chapters name $name in $fn line $ln1 and $ln2\n";
+        die "ERROR: two chapters name $name in $fn line $ln2 and $ln1\n";
     }
 
     $self->{OP_chapter_hash}{$name} = $it;
@@ -128,7 +128,8 @@ sub name()
     return $self->{OP_name} if defined $self->{OP_name};
 
     my $chapter = $self->chapter('NAME')
-        or die "ERROR: No chapter NAME in manual ".$self->source."\n";
+        or die 'ERROR: No chapter NAME in scope of package ',$self->package
+             , ' in file '.$self->source."\n";
 
     my $text   = $chapter->description || '';
     $text =~ m/^\s*(\S+)\s*\-\s/

@@ -124,12 +124,12 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
- Option          Defined in       Default   
- append          L<OODoc::Format::Pod>  ''        
- format_options  L<OODoc::Format>  []        
+-Option        --Defined in     --Default
+ append          L<OODoc::Format::Pod>  ''
+ format_options  L<OODoc::Format>  []
  manual          L<OODoc::Format>  <required>
  project         L<OODoc::Format>  <required>
- template                         <in code> 
+ template                         <in code>
 
 . append STRING|CODE
 
@@ -462,11 +462,11 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.90.
+Module version 0.92.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2003 by the author(s). All rights reserved.  This program
+Copyright (c) 2003-2006 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

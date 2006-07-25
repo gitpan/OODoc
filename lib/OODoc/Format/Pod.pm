@@ -1,7 +1,6 @@
-
 package OODoc::Format::Pod;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.92';
 use base 'OODoc::Format';
 
 use strict;
@@ -78,7 +77,7 @@ sub formatManual(@)
     $self->chapterDetails(@_);
     $self->chapterReferences(@_);
     $self->chapterCopyrights(@_);
-    $self->showApppend(@_);
+    $self->showAppend(@_);
     $self;
 }
 
@@ -400,10 +399,11 @@ sub writeTable($@)
 {   my ($self, %args) = @_;
 
     my $head   = $args{header} or confess;
-    my @w      = (0) x @$head;
-
+    my $output = $args{output} or confess;
     my $rows   = $args{rows}   or confess;
     return unless @$rows;
+
+    my @w      = (0) x @$head;
 
     foreach my $row ($head, @$rows)
     {   $w[$_] = max $w[$_], length($row->[$_])
@@ -415,11 +415,15 @@ sub writeTable($@)
            foreach 0..$#$rows;
     }
 
-    my $format = " ".join("  ", map { "\%-${_}s" } @w)."\n";
+    pop @w;   # ignore width of last column
 
-    my $output = $args{output}   or confess;
+    my $format = " ".join("  ", map { "\%-${_}s" } @w)."  %s\n";
+    (my $headf = $format) =~ s/ /-/g;
+
+    $output->printf($headf, @$head);
+
     $output->printf($format, @$_)
-       foreach $head, @$rows;
+       foreach @$rows;
 }
 
 #-------------------------------------------

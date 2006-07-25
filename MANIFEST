@@ -1,6 +1,7 @@
 ChangeLog
 LICENSE
 MANIFEST
+META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README.examples
 examples/mailbox.tar.gz
@@ -48,4 +49,4 @@ lib/OODoc/Text/SubSection.pod
 lib/OODoc/Text/Subroutine.pm
 lib/OODoc/Text/Subroutine.pod
 t/00works.t
-META.yml                                 Module meta-data (added by MakeMaker)
+version

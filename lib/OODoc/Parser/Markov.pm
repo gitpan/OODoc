@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.90';
+$VERSION = '0.92';
 use base 'OODoc::Parser';
 
 use strict;
@@ -580,7 +580,8 @@ sub decomposeM($$)
         {  warn "WARNING: module $link is not on your system, found in $manual\n";
         }
         else
-        {  warn "ERROR: compilation problems for module $link in $manual:\n$@";
+        {  $@ =~ s/ at \(eval.*//;
+           warn "WARNING: use problem for module $link in $manual;\n$@";
            warn " Did you use an 'M' tag on something which is not a module?\n";
         }
         $man = $link;

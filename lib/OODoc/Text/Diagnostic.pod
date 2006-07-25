@@ -60,13 +60,13 @@ OODoc::Text::Diagnostic-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option       Defined in       Default                                             
+-Option     --Defined in     --Default
  container    L<OODoc::Text>   L<new(subroutine)|OODoc::Text::Diagnostic/"METHODS">
- description  L<OODoc::Text>   C<''>                                               
- linenr       L<OODoc::Text>   <required>                                          
- name         L<OODoc::Text>   undef                                               
- subroutine                    <required>                                          
- type         L<OODoc::Text>   C<'Diagnostic'>                                     
+ description  L<OODoc::Text>   C<''>
+ linenr       L<OODoc::Text>   <required>
+ name         L<OODoc::Text>   undef
+ subroutine                    <required>
+ type         L<OODoc::Text>   'Diagnostic'
 
 . container OBJECT
 
@@ -291,11 +291,11 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.90.
+Module version 0.92.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2003 by the author(s). All rights reserved.  This program
+Copyright (c) 2003-2006 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

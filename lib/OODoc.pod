@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-OODoc - object oriented production of code documentation
+OODoc - object oriented production of code related documentation
 
 
 =head1 INHERITANCE
@@ -22,18 +22,28 @@ OODoc - object oriented production of code documentation
 
 =head1 DESCRIPTION
 
-OODoc stands for "Object Oriented Documentation".  The OO part refers
-to two things: this module simplifies writing documentation for Object
-Oriented programs, and at the same time, it is Object Oriented itself:
-easily extensible.
+OODoc stands for "Object Oriented Documentation": to produce manual-pages
+in HTML or the usual man-page UNIX format, describing Perl programs.  The
+OO part refers to two things: this module simplifies writing documentation
+for Object Oriented programs, and at the same time, it is Object Oriented
+itself: easily extensible.
 
-OODoc is a rather new module, but is developed far enough to be
-useful for most applications.  You have the possibility to modify
-the output of the formatters to your taste using templates, although
-it is not donfigurable in full extend.
+OODoc has been used for small and for very large modules.  It can also
+be used to integrate manual-pages from many modules into one homogeneous
+set.
 
-Please contribute ideas.  Have a look at the main website of this
-project at L<http://perl.overmeer.net/oodoc/>.
+The documentation syntax can be changed, by configuring the parser
+or adding a new one.  The L<OODoc::Parser::Markov|OODoc::Parser::Markov> parser understands POD
+and has additional logical markup tags.  See L<OODoc::Parser|OODoc::Parser> about what
+each parser needs to support.
+
+The output is produced by formatters.  The current implementation contains
+two POD formatters and one HTML formatter.  See L<OODoc::Format|OODoc::Format>.
+
+Do not forget to read the L<DETAILS> section, later on this manual-page to
+get started.  Please contribute ideas.  Have a look at the main website
+of this project at L<http://perl.overmeer.net/oodoc/>.  That is also an
+example of the produced output.
 
 
 =head1 OVERLOADED
@@ -50,10 +60,10 @@ OODoc-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option        Defined in       Default                       
- distribution                   <required>                    
- project                        <distribution>                
- verbose                        0                             
+-Option      --Defined in     --Default
+ distribution                   <required>
+ project                        <distribution>
+ verbose                        0
  version                        <from version or VERSION file>
 
 . distribution STRING
@@ -141,15 +151,15 @@ $obj-E<gt>B<processFiles>(OPTIONS)
 
 =over 4
 
- Option        Defined in       Default                                       
- distribution                   <from main OODoc object>                      
- manifest                       <source/>'MANIFEST'                           
+-Option      --Defined in     --Default
+ distribution                   <from main OODoc object>
+ manifest                       <source/>'MANIFEST'
  parser                         L<OODoc::Parser::Markov|OODoc::Parser::Markov>
- select                         qr/\.(pod|pm)$/                               
- source                         C<'.'>                                        
- verbose                        <from object>                                 
- version                        <from source directory or OODoc object>       
- workdir                        <required>                                    
+ select                         qr/\.(pod|pm)$/
+ source                         C<'.'>
+ verbose                        <from object>
+ version                        <from source directory or OODoc object>
+ workdir                        <required>
 
 . distribution NAME
 
@@ -217,6 +227,9 @@ directory is scanned for a file named C<version> or C<VERSION>. The
 content is used as version value.  If these do not exist, then the
 main OODoc object needs to provide the version.
 
+To make C<Makefile.PL> option C<VERSION_FROM> to work with this
+seperate version file, that line should contain C<$VERSION = >.
+
 =back
 
 . workdir DIRECTORY
@@ -275,7 +288,7 @@ Add information to the documentation tree about inheritance relationships
 of the packages.  C<prepare> must be called between L<processFiles()|OODoc/"Parser">
 and L<create()|OODoc/"Formatter">.
 
- Option   Defined in  Default      
+-Option --Defined in--Default
  verbose              <from object>
 
 . verbose INTEGER
@@ -300,17 +313,17 @@ and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and L<OODoc::F
 respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
- Option           Defined in       Default              
- append                            C<undef>             
- format_options                    []                   
- manifest                          <workdir>/MANIFEST   
- manual_format                     []                   
- manual_template                   C<undef>             
- other_files                       C<undef>             
+-Option         --Defined in     --Default
+ append                            C<undef>
+ format_options                    []
+ manifest                          <workdir>/MANIFEST
+ manual_format                     []
+ manual_template                   C<undef>
+ other_files                       C<undef>
  process_files                     <formatter dependent>
- select                            C<undef>             
- verbose                           0                    
- workdir                           <required>           
+ select                            C<undef>
+ verbose                           0
+ workdir                           <required>
 
 . append STRING|CODE
 
@@ -582,7 +595,7 @@ an ARRAY, regular expression, or a code reference.
 POD (Perl's standard Plain Old Document format) has a very simple
 syntax.  POD is very simple to learn, and the produced manual pages
 look like normal Unix manual pages.  However, when you start writing
-larger programs, you start seeing the weaker sites of POD.
+larger programs, you start seeing the weaker sides of POD.
 
 One of the main problems with POD is that is using a visual markup
 style: you specify information by how it must be presented to the
@@ -634,7 +647,7 @@ The final phase can be called more than once: based on the same object
 tree, documents can be produced in various formats.  The initial
 implementation produces POD and HTML.
 
-=head2 Getting Started
+=head2 Getting Started from scratch
 
 To use OODoc, you need to create a scripts which helps you producing
 the distribution of your module.  The simpest script look like this:
@@ -651,11 +664,44 @@ the distribution of your module.  The simpest script look like this:
  $doc->create('pod', workdir => $dist); # formatting to POD
 
 The default parser will be used to process the files, see
-L<OODoc::Parser::Markov|OODoc::Parser::Markov> for its syntax.  The formatter is
-described in L<OODoc::Format::Pod|OODoc::Format::Pod>.
+L<OODoc::Parser::Markov|OODoc::Parser::Markov> for its syntax.  The formatter is described
+in L<OODoc::Format::Pod|OODoc::Format::Pod>.  Once you have this working, you may decide
+to add options to the calls to adapt the result more to your own taste.
 
-Once you have this working, you may decide to add options to the
-calls to adapt the result more to your own taste.
+=head2 Getting Started by Cloning
+
+A much easier way to start, is to simply pick one of the examples
+which are distributed with OODoc.  They come in three sizes: for a
+small module (mimetypes and orl), an average sized set-up (for OODoc
+itself), and a huge one (mailbox, over 140 packages).
+
+All examples are written by the same person, and therefore follow the
+same set-up.  Copy the files C<mkdoc>, C<mkdist> and C<MANIFEST.extra>
+plus the directory C<html> to the top directory of your distribution.
+Edit all the files, to contain the name of your module.
+
+It expects a C<MANIFEST> file to be present, like standard for Perl
+modules.  That file lists your own code, pod and additional files
+which need to be included in the release.  OODoc will extend this
+file with produced POD files.
+
+The demo-scripts use a C<version> file, which contains something like
+C<< $VERSION = 0.1 >>.  This is not required: you can specify to
+take a version from any file, in the traditional Perl way.  However,
+when you glue multiple modules together into one big HTML documentation
+website (see the mailbox example), then this separate file simplifies
+the production script.
+
+To test the document production, use C<./mkdoc 1>  (C<1> = verbose)
+The output can be found in the specified C<workdir>.  To see them:
+try (on UNIX/Linux)  C<<pod2man xyz.pod | man -l - >>
+
+To get a prepared distribution, use C<./mkdist 1>.  This will first
+produce all documentation, and then run C<make test> and C<make dist>.
+It generates two distributions: the C<module-version.tar.gz> which
+can be uploaded to CPAN, and the C<module-version-raw.tar.gz> which
+is for yourself.  The latter contains the whole setup which is used
+to generate the distribution, so the unprocessed files!
 
 
 
@@ -667,11 +713,11 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.90.
+Module version 0.92.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2003 by the author(s). All rights reserved.  This program
+Copyright (c) 2003-2006 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

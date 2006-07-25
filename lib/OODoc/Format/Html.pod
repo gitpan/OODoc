@@ -41,14 +41,14 @@ OODoc::Format::Html-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option          Defined in       Default             
- html_meta_data                   ''                  
- html_root                        '/'                 
+-Option        --Defined in     --Default
+ html_meta_data                   ''
+ html_root                        '/'
  jump_script                      <html_root>/jump.cgi
- manifest        L<OODoc::Format>  C<undef>            
- project         L<OODoc::Format>  <required>          
- version         L<OODoc::Format>  <required>          
- workdir         L<OODoc::Format>  <required>          
+ manifest        L<OODoc::Format>  undef
+ project         L<OODoc::Format>  <required>
+ version         L<OODoc::Format>  <required>
+ workdir         L<OODoc::Format>  <required>
 
 . html_meta_data STRING
 
@@ -152,11 +152,11 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
- Option          Defined in       Default       
- append          L<OODoc::Format>  C<undef>      
- format_options  L<OODoc::Format>  []            
- manual          L<OODoc::Format>  <required>    
- project         L<OODoc::Format>  <required>    
+-Option        --Defined in     --Default
+ append          L<OODoc::Format>  undef
+ format_options  L<OODoc::Format>  []
+ manual          L<OODoc::Format>  <required>
+ project         L<OODoc::Format>  <required>
  template                         "html/manual/"
 
 . append STRING|CODE
@@ -199,10 +199,10 @@ $obj-E<gt>B<createOtherPages>(OPTIONS)
 
 =over 4
 
- Option   Defined in       Default            
+-Option --Defined in     --Default
  process  L<OODoc::Format>  qr/\.(s?html|cgi)$/
- source   L<OODoc::Format>  "html/other/"      
- verbose  L<OODoc::Format>  0                  
+ source   L<OODoc::Format>  "html/other/"
+ verbose  L<OODoc::Format>  0
 
 . process REGEXP
 
@@ -382,7 +382,7 @@ $obj-E<gt>B<writeTable>
 
 =over 4
 
- Option  Defined in       Default   
+-Option--Defined in     --Default
  ARRAY                    <required>
  header                   <required>
  output                   <required>
@@ -420,7 +420,7 @@ $obj-E<gt>B<format>(OPTIONS)
 
 =over 4
 
- Option  Defined in  Default 
+-Option--Defined in--Default
  manual              C<undef>
 
 . manual MANUAL
@@ -465,10 +465,10 @@ names may get defined.
 The tag produces a list of columns which should be put in a table
 container to produce valid html.
 
- Option         Defined in       Default
- starting_with                   'ALL'  
- table_columns                   2      
- type                            'ALL'  
+-Option       --Defined in     --Default
+ starting_with                   'ALL'
+ table_columns                   2
+ type                            'ALL'
 
 . starting_with 'ALL'|STRING
 
@@ -522,11 +522,11 @@ The ZONE (which originate from the template file) start with the
 name of a chapter or C<'ALL'>.  The rest of the ZONE
 are interpreted as argument list which overrule the OPTIONS.
 
- Option            Defined in       Default   
+-Option          --Defined in     --Default
  manual                             <required>
- show_sections                      'LINK'    
- show_subroutines                   'LIST'    
- subroutine_types                   'ALL'     
+ show_sections                      'LINK'
+ show_subroutines                   'LIST'
+ subroutine_types                   'ALL'
 
 . manual MANUAL
 
@@ -763,11 +763,11 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.90.
+Module version 0.92.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
-Copyright (c) 2003 by the author(s). All rights reserved.  This program
+Copyright (c) 2003-2006 by the author(s). All rights reserved.  This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 
