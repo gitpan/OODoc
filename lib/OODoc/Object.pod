@@ -139,6 +139,7 @@ Returns the names of all defined packages.
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Warning:> Unknown option $name
@@ -168,7 +169,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

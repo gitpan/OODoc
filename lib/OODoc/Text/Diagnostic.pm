@@ -1,7 +1,7 @@
 
 package OODoc::Text::Diagnostic;
 use vars '$VERSION';
-$VERSION = '0.92';
+$VERSION = '0.93';
 use base 'OODoc::Text';
 
 use strict;

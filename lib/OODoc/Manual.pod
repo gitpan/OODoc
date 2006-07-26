@@ -7,7 +7,7 @@ OODoc::Manual - one manual about a package
 =head1 INHERITANCE
 
  OODoc::Manual
-   is a OODoc::Object
+   is an OODoc::Object
 
 
 =head1 SYNOPSIS
@@ -519,6 +519,7 @@ See L<OODoc::Object/"Manual Repository">
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> No chapter NAME in scope of package $pkg in file $source
@@ -597,7 +598,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

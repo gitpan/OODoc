@@ -5,6 +5,8 @@ META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README.examples
 examples/mailbox.tar.gz
+examples/markov.pm
+examples/markov.pod
 examples/mimetypes.tar.gz
 examples/oodoc.tar.gz
 examples/orl.tar.gz

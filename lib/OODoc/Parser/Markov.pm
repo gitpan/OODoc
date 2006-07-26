@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.92';
+$VERSION = '0.93';
 use base 'OODoc::Parser';
 
 use strict;
@@ -185,7 +185,7 @@ sub parse(@)
             }
         }
         elsif($line =~ m/^=(over|back|item|for|pod|begin|end|head4)\b/ )
-        {   ${$self->{OPM_block}} .= $line;
+        {   ${$self->{OPM_block}} .= "\n". $line;
             $self->inDoc(1);
         }
         elsif(substr($line, 0, 1) eq '=')

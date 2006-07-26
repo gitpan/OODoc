@@ -7,9 +7,9 @@ OODoc::Text::Chapter - collects the information of one chapter
 =head1 INHERITANCE
 
  OODoc::Text::Chapter
-   is a OODoc::Text::Structure
-   is a OODoc::Text
-   is a OODoc::Object
+   is an OODoc::Text::Structure
+   is an OODoc::Text
+   is an OODoc::Object
 
 
 =head1 SYNOPSIS
@@ -378,6 +378,7 @@ Returns a list of all sections in this chapter.
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -397,7 +398,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

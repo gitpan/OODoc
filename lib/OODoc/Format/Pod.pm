@@ -1,6 +1,6 @@
 package OODoc::Format::Pod;
 use vars '$VERSION';
-$VERSION = '0.92';
+$VERSION = '0.93';
 use base 'OODoc::Format';
 
 use strict;
@@ -272,7 +272,8 @@ sub chapterInheritance(@)
 
 sub showSuperSupers($$)
 {   my ($self, $output, $package) = @_;
-    $output->print("   is a $package\n");
+    my $a = $package =~ m/^[aeouy]/i ? 'an' : 'a';
+    $output->print("   is $a $package\n");
     return unless ref $package;  # only the name of the package is known
 
     if(my $realizes = $package->realizes)

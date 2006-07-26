@@ -7,8 +7,8 @@ OODoc::Parser::Markov - Parser for the MARKOV syntax
 =head1 INHERITANCE
 
  OODoc::Parser::Markov
-   is a OODoc::Parser
-   is a OODoc::Object
+   is an OODoc::Parser
+   is an OODoc::Object
 
 
 =head1 SYNOPSIS
@@ -302,6 +302,7 @@ See L<OODoc::Object/"Manual Repository">
 =back
 
 =head2 Commonly used functions
+
 
 
 
@@ -719,7 +720,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

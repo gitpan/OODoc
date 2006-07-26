@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.92';
+$VERSION = '0.93';
 use base 'OODoc::Format::Pod';
 
 use strict;
@@ -116,6 +116,7 @@ __DATA__
 {chapter DESCRIPTION}
 {chapter OVERLOADED}
 {chapter METHODS}
+{chapter FUNCTIONS}
 {chapter EXPORTS}
 {diagnostics}
 {chapter DETAILS}

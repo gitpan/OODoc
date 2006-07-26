@@ -7,8 +7,8 @@ OODoc::Format::Pod - Produce POD pages from the doc tree
 =head1 INHERITANCE
 
  OODoc::Format::Pod
-   is a OODoc::Format
-   is a OODoc::Object
+   is an OODoc::Format
+   is an OODoc::Object
 
  OODoc::Format::Pod is extended by
    OODoc::Format::Pod2
@@ -451,6 +451,7 @@ See L<OODoc::Object/"Manual Repository">
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> cannot write pod manual at $manfile: $!
@@ -650,7 +651,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

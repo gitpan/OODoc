@@ -7,8 +7,8 @@ OODoc::Format::Html - Produce HTML pages from the doc tree
 =head1 INHERITANCE
 
  OODoc::Format::Html
-   is a OODoc::Format
-   is a OODoc::Object
+   is an OODoc::Format
+   is an OODoc::Object
 
 
 =head1 SYNOPSIS
@@ -669,6 +669,7 @@ See L<OODoc::Object/"Manual Repository">
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> cannot find chapter NAME in manual $name
@@ -763,7 +764,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

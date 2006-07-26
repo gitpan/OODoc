@@ -7,8 +7,8 @@ OODoc::Text::Subroutine - collects information about one documented sub
 =head1 INHERITANCE
 
  OODoc::Text::Subroutine
-   is a OODoc::Text
-   is a OODoc::Object
+   is an OODoc::Text
+   is an OODoc::Object
 
 
 =head1 SYNOPSIS
@@ -362,6 +362,7 @@ See L<OODoc::Object/"Manual Repository">
 
 
 
+
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -399,7 +400,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.92.
+Module version 0.93.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
