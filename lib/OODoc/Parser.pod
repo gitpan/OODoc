@@ -76,9 +76,9 @@ Parse the specified input file into a code file and an object tree which
 describes the pod.  Returned is a list of package objects which contain
 the docs found in this file.
 
--Option--Defined in     --Default
- input                    <required>
- output                   <black hole>
+S<< Option--Defined in     --Default >>
+S<< input                    <required> >>
+S<< output                   <black hole> >>
 
 . input FILENAME
 
@@ -226,7 +226,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

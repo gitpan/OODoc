@@ -1,6 +1,6 @@
 package OODoc::Format::Pod;
 use vars '$VERSION';
-$VERSION = '0.93';
+$VERSION = '0.94';
 use base 'OODoc::Format';
 
 use strict;
@@ -404,6 +404,7 @@ sub writeTable($@)
     my $rows   = $args{rows}   or confess;
     return unless @$rows;
 
+    # Compute column widths
     my @w      = (0) x @$head;
 
     foreach my $row ($head, @$rows)
@@ -418,13 +419,14 @@ sub writeTable($@)
 
     pop @w;   # ignore width of last column
 
-    my $format = " ".join("  ", map { "\%-${_}s" } @w)."  %s\n";
-    (my $headf = $format) =~ s/ /-/g;
-
+    # Table head
+    my $headf  = "S<< ".join("--", map { "\%-${_}s" } @w)."--%s >>\n";
     $output->printf($headf, @$head);
 
+    # Table body
+    my $format = "S<< ".join("  ", map { "\%-${_}s" } @w)."  %s >>\n";
     $output->printf($format, @$_)
-       foreach @$rows;
+       for @$rows;
 }
 
 #-------------------------------------------

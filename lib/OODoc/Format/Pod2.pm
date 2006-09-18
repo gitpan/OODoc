@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.93';
+$VERSION = '0.94';
 use base 'OODoc::Format::Pod';
 
 use strict;

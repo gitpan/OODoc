@@ -78,13 +78,13 @@ OODoc::Text::Structure-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option     --Defined in     --Default
- container    L<OODoc::Text>   <required>
- description  L<OODoc::Text>   C<''>
- level                         <required>
- linenr       L<OODoc::Text>   <required>
- name         L<OODoc::Text>   undef
- type         L<OODoc::Text>   <required>
+S<< Option     --Defined in     --Default >>
+S<< container    L<OODoc::Text>   <required> >>
+S<< description  L<OODoc::Text>   '' >>
+S<< level                         <required> >>
+S<< linenr       L<OODoc::Text>   <required> >>
+S<< name         L<OODoc::Text>   undef >>
+S<< type         L<OODoc::Text>   <required> >>
 
 . container OBJECT
 
@@ -416,7 +416,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

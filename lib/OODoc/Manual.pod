@@ -66,14 +66,14 @@ OODoc::Manual-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option      --Defined in     --Default
- distribution                   <required>
- package                        <required>
- parser                         <required>
- pure_pod                       <false>
- source                         <required>
- stripped                       undef
- version                        <required>
+S<< Option      --Defined in     --Default >>
+S<< distribution                   <required> >>
+S<< package                        <required> >>
+S<< parser                         <required> >>
+S<< pure_pod                       <false> >>
+S<< source                         <required> >>
+S<< stripped                       undef >>
+S<< version                        <required> >>
 
 . distribution STRING
 
@@ -210,8 +210,8 @@ $obj-E<gt>B<diagnostics>(OPTIONS)
 
 All diagnostic messages of all chapters for this manual together.
 
--Option--Defined in--Default
- select              []
+S<< Option--Defined in--Default >>
+S<< select              [] >>
 
 . select ARRAY
 
@@ -388,12 +388,12 @@ preferably included before the new ones.
 Merging is a complicated task, because the order of both lists should be
 kept as well as possible.
 
--Option   --Defined in     --Default
- container                   <required>
- equal                       C<sub {"$_[0]" eq "$_[1]"}>
- merge                       C<sub {$_[0]}>
- super                       C<[]>
- this                        C<[]>
+S<< Option   --Defined in     --Default >>
+S<< container                   <required> >>
+S<< equal                       sub {"$_[0]" eq "$_[1]"} >>
+S<< merge                       sub {$_[0]} >>
+S<< super                       [] >>
+S<< this                        [] >>
 
 . container OBJECT
 
@@ -598,7 +598,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

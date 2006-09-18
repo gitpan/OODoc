@@ -71,14 +71,14 @@ OODoc::Text::SubSection-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option     --Defined in     --Default
- container    L<OODoc::Text>   L<new(section)|OODoc::Text::SubSection/"METHODS">
- description  L<OODoc::Text>   C<''>
- level        L<OODoc::Text::Structure>  3
- linenr       L<OODoc::Text>   <required>
- name         L<OODoc::Text>   undef
- section                       <required>
- type         L<OODoc::Text>   'Subsection'
+S<< Option     --Defined in     --Default >>
+S<< container    L<OODoc::Text>   L<new(section)|OODoc::Text::SubSection/"METHODS"> >>
+S<< description  L<OODoc::Text>   '' >>
+S<< level        L<OODoc::Text::Structure>  3 >>
+S<< linenr       L<OODoc::Text>   <required> >>
+S<< name         L<OODoc::Text>   undef >>
+S<< section                       <required> >>
+S<< type         L<OODoc::Text>   'Subsection' >>
 
 . container OBJECT
 
@@ -397,7 +397,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

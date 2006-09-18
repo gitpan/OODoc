@@ -60,11 +60,11 @@ OODoc-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option      --Defined in     --Default
- distribution                   <required>
- project                        <distribution>
- verbose                        0
- version                        <from version or VERSION file>
+S<< Option      --Defined in     --Default >>
+S<< distribution                   <required> >>
+S<< project                        <distribution> >>
+S<< verbose                        0 >>
+S<< version                        <from version or VERSION file> >>
 
 . distribution STRING
 
@@ -151,15 +151,15 @@ $obj-E<gt>B<processFiles>(OPTIONS)
 
 =over 4
 
--Option      --Defined in     --Default
- distribution                   <from main OODoc object>
- manifest                       <source/>'MANIFEST'
- parser                         L<OODoc::Parser::Markov|OODoc::Parser::Markov>
- select                         qr/\.(pod|pm)$/
- source                         C<'.'>
- verbose                        <from object>
- version                        <from source directory or OODoc object>
- workdir                        <required>
+S<< Option      --Defined in     --Default >>
+S<< distribution                   <from main OODoc object> >>
+S<< manifest                       <source/>'MANIFEST' >>
+S<< parser                         L<OODoc::Parser::Markov|OODoc::Parser::Markov> >>
+S<< select                         qr/\.(pod|pm)$/ >>
+S<< source                         C<'.'> >>
+S<< verbose                        <from object> >>
+S<< version                        <from source directory or OODoc object> >>
+S<< workdir                        <required> >>
 
 . distribution NAME
 
@@ -288,8 +288,8 @@ Add information to the documentation tree about inheritance relationships
 of the packages.  C<prepare> must be called between L<processFiles()|OODoc/"Parser">
 and L<create()|OODoc/"Formatter">.
 
--Option --Defined in--Default
- verbose              <from object>
+S<< Option --Defined in--Default >>
+S<< verbose              <from object> >>
 
 . verbose INTEGER
 
@@ -313,17 +313,17 @@ and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and L<OODoc::F
 respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
--Option         --Defined in     --Default
- append                            C<undef>
- format_options                    []
- manifest                          <workdir>/MANIFEST
- manual_format                     []
- manual_template                   C<undef>
- other_files                       C<undef>
- process_files                     <formatter dependent>
- select                            C<undef>
- verbose                           0
- workdir                           <required>
+S<< Option         --Defined in     --Default >>
+S<< append                            C<undef> >>
+S<< format_options                    [] >>
+S<< manifest                          <workdir>/MANIFEST >>
+S<< manual_format                     [] >>
+S<< manual_template                   C<undef> >>
+S<< other_files                       C<undef> >>
+S<< process_files                     <formatter dependent> >>
+S<< select                            C<undef> >>
+S<< verbose                           0 >>
+S<< workdir                           <required> >>
 
 . append STRING|CODE
 
@@ -714,7 +714,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

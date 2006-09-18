@@ -42,8 +42,8 @@ OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option          --Defined in--Default
- additional_rules              []
+S<< Option          --Defined in--Default >>
+S<< additional_rules              [] >>
 
 . additional_rules ARRAY
 
@@ -110,11 +110,11 @@ $obj-E<gt>B<parse>(OPTIONS)
 
 =over 4
 
--Option      --Defined in     --Default
- distribution                   <required>
- input                          <required>
- output                         devnull
- version                        <required>
+S<< Option      --Defined in     --Default >>
+S<< distribution                   <required> >>
+S<< input                          <required> >>
+S<< output                         devnull >>
+S<< version                        <required> >>
 
 . distribution STRING
 
@@ -720,7 +720,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

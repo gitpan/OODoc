@@ -69,11 +69,11 @@ OODoc::Format-E<gt>B<new>(OPTIONS)
 
 =over 4
 
--Option  --Defined in     --Default
- manifest                   undef
- project                    <required>
- version                    <required>
- workdir                    <required>
+S<< Option  --Defined in     --Default >>
+S<< manifest                   undef >>
+S<< project                    <required> >>
+S<< version                    <required> >>
+S<< workdir                    <required> >>
 
 . manifest OBJECT
 
@@ -182,12 +182,12 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
--Option        --Defined in     --Default
- append                           undef
- format_options                   []
- manual                           <required>
- project                          <required>
- template                         undef
+S<< Option        --Defined in     --Default >>
+S<< append                           undef >>
+S<< format_options                   [] >>
+S<< manual                           <required> >>
+S<< project                          <required> >>
+S<< template                         undef >>
 
 . append STRING|CODE
 
@@ -236,10 +236,10 @@ the contents of these pages is depends on the formatter.  Some formatters
 simply ignore the functionality of this method as a whole: they do not
 support data-files which are not manuals.
 
--Option --Defined in     --Default
- process                   undef
- source                    undef
- verbose                   0
+S<< Option --Defined in     --Default >>
+S<< process                   undef >>
+S<< source                    undef >>
+S<< verbose                   0 >>
 
 . process REGEXP
 
@@ -273,13 +273,13 @@ You can pass all OPTIONS about formatting to this method.  They will passed
 to the related methods.  So: the list of options you can pass here is much
 longer: the combination of everything possible for all show* methods.
 
--Option                    --Defined in     --Default
- chapter                                      <required>
- manual                                       <required>
- output                                       <required>
- show_inherited_chapters                      'REFER'
- show_inherited_sections                      'REFER'
- show_inherited_subsections                   'REFER'
+S<< Option                    --Defined in     --Default >>
+S<< chapter                                      <required> >>
+S<< manual                                       <required> >>
+S<< output                                       <required> >>
+S<< show_inherited_chapters                      'REFER' >>
+S<< show_inherited_sections                      'REFER' >>
+S<< show_inherited_subsections                   'REFER' >>
 
 . chapter CHAPTER
 
@@ -306,10 +306,10 @@ $obj-E<gt>B<showExamples>(OPTIONS)
 
 =over 4
 
--Option  --Defined in     --Default
- examples                   <required>
- manual                     <required>
- output                     <required>
+S<< Option  --Defined in     --Default >>
+S<< examples                   <required> >>
+S<< manual                     <required> >>
+S<< output                     <required> >>
 
 . examples ARRAY
 
@@ -323,11 +323,11 @@ $obj-E<gt>B<showOptionExpand>(OPTIONS)
 
 =over 4
 
--Option --Defined in     --Default
- default                   <required>
- manual                    <required>
- option                    <required>
- output                    <required>
+S<< Option --Defined in     --Default >>
+S<< default                   <required> >>
+S<< manual                    <required> >>
+S<< option                    <required> >>
+S<< output                    <required> >>
 
 . default OBJECT
 
@@ -343,10 +343,10 @@ $obj-E<gt>B<showOptionTable>(OPTIONS)
 
 =over 4
 
--Option --Defined in     --Default
- manual                    <required>
- options                   <required>
- output                    <required>
+S<< Option --Defined in     --Default >>
+S<< manual                    <required> >>
+S<< options                   <required> >>
+S<< output                    <required> >>
 
 . manual OBJECT
 
@@ -360,11 +360,11 @@ $obj-E<gt>B<showOptionUse>(OPTIONS)
 
 =over 4
 
--Option --Defined in     --Default
- default                   <required>
- manual                    <required>
- option                    <required>
- output                    <required>
+S<< Option --Defined in     --Default >>
+S<< default                   <required> >>
+S<< manual                    <required> >>
+S<< option                    <required> >>
+S<< output                    <required> >>
 
 . default OBJECT
 
@@ -389,11 +389,11 @@ $obj-E<gt>B<showOptions>(OPTIONS)
 The options shown are B<not> the OPTIONS passed as argument, but the
 options which belong to the subroutine being displayed.
 
--Option                --Defined in     --Default
- manual                                   <required>
- options                                  <required>
- show_described_options                   'EXPAND'
- show_inherited_options                   'USE'
+S<< Option                --Defined in     --Default >>
+S<< manual                                   <required> >>
+S<< options                                  <required> >>
+S<< show_described_options                   'EXPAND' >>
+S<< show_inherited_options                   'USE' >>
 
 . manual OBJECT
 
@@ -415,8 +415,8 @@ $obj-E<gt>B<showStructureExpanded>(OPTIONS)
 
 =over 4
 
--Option               --Defined in--Default
- show_chapter_examples              'EXPAND'
+S<< Option               --Defined in--Default >>
+S<< show_chapter_examples              'EXPAND' >>
 
 . show_chapter_examples 'NO'|'EXPAND'
 
@@ -440,18 +440,18 @@ $obj-E<gt>B<showSubroutine>((@))
 
 =over 4
 
--Option                --Defined in     --Default
- last                                     0
- manual                                   <required>
- output                                   <selected filehandle>
- show_described_options                   'EXPAND'
- show_diagnostics                         'NO'
- show_examples                            'EXPAND'
- show_inherited_options                   'USE'
- show_option_table                        'ALL'
- show_sub_description                     'DESCRIBED'
- show_subroutine                          'EXPAND'
- subroutine                               <required>
+S<< Option                --Defined in     --Default >>
+S<< last                                     0 >>
+S<< manual                                   <required> >>
+S<< output                                   <selected filehandle> >>
+S<< show_described_options                   'EXPAND' >>
+S<< show_diagnostics                         'NO' >>
+S<< show_examples                            'EXPAND' >>
+S<< show_inherited_options                   'USE' >>
+S<< show_option_table                        'ALL' >>
+S<< show_sub_description                     'DESCRIBED' >>
+S<< show_subroutine                          'EXPAND' >>
+S<< subroutine                               <required> >>
 
 . last BOOLEAN
 
@@ -502,10 +502,10 @@ $obj-E<gt>B<showSubroutineDescription>(OPTIONS)
 
 =over 4
 
--Option    --Defined in     --Default
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+S<< Option    --Defined in     --Default >>
+S<< manual                       <required> >>
+S<< output                       <required> >>
+S<< subroutine                   <required> >>
 
 . manual OBJECT
 
@@ -519,11 +519,11 @@ $obj-E<gt>B<showSubroutineName>(OPTIONS)
 
 =over 4
 
--Option    --Defined in     --Default
- last                         0
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+S<< Option    --Defined in     --Default >>
+S<< last                         0 >>
+S<< manual                       <required> >>
+S<< output                       <required> >>
+S<< subroutine                   <required> >>
 
 . last BOOLEAN
 
@@ -539,10 +539,10 @@ $obj-E<gt>B<showSubroutineUse>(OPTIONS)
 
 =over 4
 
--Option    --Defined in     --Default
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+S<< Option    --Defined in     --Default >>
+S<< manual                       <required> >>
+S<< output                       <required> >>
+S<< subroutine                   <required> >>
 
 . manual OBJECT
 
@@ -556,16 +556,16 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 =over 4
 
--Option                --Defined in     --Default
- manual                                   <required>
- output                                   <selected filehandle>
- show_described_options                   C<'EXPAND'>
- show_described_subs                      C<'EXPAND'>
- show_inherited_options                   C<'USE'>
- show_inherited_subs                      C<'USE'>
- show_option_table                        C<'ALL'>
- show_subs_index                          C<'NO'>
- subroutines                              []
+S<< Option                --Defined in     --Default >>
+S<< manual                                   <required> >>
+S<< output                                   <selected filehandle> >>
+S<< show_described_options                   'EXPAND' >>
+S<< show_described_subs                      'EXPAND' >>
+S<< show_inherited_options                   'USE' >>
+S<< show_inherited_subs                      'USE' >>
+S<< show_option_table                        'ALL' >>
+S<< show_subs_index                          'NO' >>
+S<< subroutines                              [] >>
 
 . manual MANUAL
 
@@ -724,7 +724,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

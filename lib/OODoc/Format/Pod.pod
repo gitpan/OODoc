@@ -104,9 +104,9 @@ $obj-E<gt>B<chapterInheritance>(OPTIONS)
 
 Produces the chapter which shows inheritance relationships.
 
--Option--Defined in     --Default
- manual                   <required>
- output                   <required>
+S<< Option--Defined in     --Default >>
+S<< manual                   <required> >>
+S<< output                   <required> >>
 
 . manual OBJECT
 
@@ -134,12 +134,12 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
--Option        --Defined in     --Default
- append                           ''
- format_options  L<OODoc::Format>  []
- manual          L<OODoc::Format>  <required>
- project         L<OODoc::Format>  <required>
- template        L<OODoc::Format>  undef
+S<< Option        --Defined in     --Default >>
+S<< append                           '' >>
+S<< format_options  L<OODoc::Format>  [] >>
+S<< manual          L<OODoc::Format>  <required> >>
+S<< project         L<OODoc::Format>  <required> >>
+S<< template        L<OODoc::Format>  undef >>
 
 . append STRING|CODE
 
@@ -175,10 +175,10 @@ $obj-E<gt>B<formatManual>(OPTIONS)
 The OPTIONS are a collection of all options available to show* methods.
 They are completed with the defaults set by L<createManual(format_options)|OODoc::Format/"Page generation">.
 
--Option--Defined in     --Default
- append                   ''
- manual                   <required>
- output                   <required>
+S<< Option--Defined in     --Default >>
+S<< append                   '' >>
+S<< manual                   <required> >>
+S<< output                   <required> >>
 
 . append STRING|CODE
 
@@ -341,11 +341,11 @@ $obj-E<gt>B<writeTable>
 
 =over 4
 
--Option--Defined in     --Default
- ARRAY                    <required>
- header                   <required>
- output                   <required>
- widths                   C<undef>
+S<< Option--Defined in     --Default >>
+S<< ARRAY                    <required> >>
+S<< header                   <required> >>
+S<< output                   <required> >>
+S<< widths                   undef >>
 
 . ARRAY -OF-ARRAYS
 
@@ -651,7 +651,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.93.
+Module version 0.94.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
