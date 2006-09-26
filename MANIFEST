@@ -51,4 +51,5 @@ lib/OODoc/Text/SubSection.pod
 lib/OODoc/Text/Subroutine.pm
 lib/OODoc/Text/Subroutine.pod
 t/00works.t
+t/10nomarkup.t
 version

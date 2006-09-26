@@ -59,14 +59,14 @@ OODoc::Text::Option-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-S<< Option     --Defined in     --Default >>
-S<< container    L<OODoc::Text>   L<new(subroutine)|OODoc::Text::Option/"METHODS"> >>
-S<< description  L<OODoc::Text>   '' >>
-S<< linenr       L<OODoc::Text>   <required> >>
-S<< name         L<OODoc::Text>   undef >>
-S<< parameters                    <required> >>
-S<< subroutine                    <required> >>
-S<< type         L<OODoc::Text>   'Option' >>
+ Option     --Defined in     --Default
+ container    OODoc::Text      new(subroutine)
+ description  OODoc::Text      ''
+ linenr       OODoc::Text      <required>
+ name         OODoc::Text      undef
+ parameters                    <required>
+ subroutine                    <required>
+ type         OODoc::Text      'Option'
 
 . container OBJECT
 
@@ -309,7 +309,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.94.
+Module version 0.95.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -1,7 +1,7 @@
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.94';
+$VERSION = '0.95';
 use base 'OODoc::Parser';
 
 use strict;

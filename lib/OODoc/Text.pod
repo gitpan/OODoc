@@ -72,12 +72,12 @@ OODoc::Text-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-S<< Option     --Defined in     --Default >>
-S<< container                     <required> >>
-S<< description                   '' >>
-S<< linenr                        <required> >>
-S<< name                          undef >>
-S<< type                          <required> >>
+ Option     --Defined in     --Default
+ container                     <required>
+ description                   ''
+ linenr                        <required>
+ name                          undef
+ type                          <required>
 
 . container OBJECT
 
@@ -346,7 +346,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.94.
+Module version 0.95.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

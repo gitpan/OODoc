@@ -124,12 +124,12 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
-S<< Option        --Defined in     --Default >>
-S<< append          L<OODoc::Format::Pod>  '' >>
-S<< format_options  L<OODoc::Format>  [] >>
-S<< manual          L<OODoc::Format>  <required> >>
-S<< project         L<OODoc::Format>  <required> >>
-S<< template                         <in code> >>
+ Option        --Defined in     --Default
+ append          OODoc::Format::Pod  ''
+ format_options  OODoc::Format    []
+ manual          OODoc::Format    <required>
+ project         OODoc::Format    <required>
+ template                         <in code>
 
 . append STRING|CODE
 
@@ -168,6 +168,14 @@ See L<OODoc::Format::Pod/"Page generation">
 =back
 
 $obj-E<gt>B<link>(MANUAL, OBJECT, [TEXT])
+
+=over 4
+
+See L<OODoc::Format::Pod/"Page generation">
+
+=back
+
+$obj-E<gt>B<removeMarkup>(STRING)
 
 =over 4
 
@@ -463,7 +471,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.94.
+Module version 0.95.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

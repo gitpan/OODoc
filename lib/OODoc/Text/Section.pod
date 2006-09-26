@@ -73,14 +73,14 @@ OODoc::Text::Section-E<gt>B<new>(OPTIONS)
 
 =over 4
 
-S<< Option     --Defined in     --Default >>
-S<< chapter                       <required> >>
-S<< container    L<OODoc::Text>   L<new(chapter)|OODoc::Text::Section/"METHODS"> >>
-S<< description  L<OODoc::Text>   '' >>
-S<< level        L<OODoc::Text::Structure>  2 >>
-S<< linenr       L<OODoc::Text>   <required> >>
-S<< name         L<OODoc::Text>   undef >>
-S<< type         L<OODoc::Text>   'Section' >>
+ Option     --Defined in     --Default
+ chapter                       <required>
+ container    OODoc::Text      new(chapter)
+ description  OODoc::Text      ''
+ level        OODoc::Text::Structure  2
+ linenr       OODoc::Text      <required>
+ name         OODoc::Text      undef
+ type         OODoc::Text      'Section'
 
 . chapter OBJECT
 
@@ -406,7 +406,7 @@ See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
 
 =head1 COPYRIGHTS
 
-Module version 0.94.
+Module version 0.95.
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 
