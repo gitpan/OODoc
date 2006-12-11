@@ -1,7 +1,10 @@
+# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc .
 
 package OODoc::Manual;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 use base 'OODoc::Object';
 
 use strict;
@@ -469,6 +472,7 @@ sub stats()
 {   my $self     = shift;
     my $chapters = $self->chapters || return;
     my $subs     = $self->ownSubroutines;
+    my $options  = map { $_->options } $self->ownSubroutines;
     my $diags    = $self->diagnostics;
     my $examples = $self->examples;
 
@@ -483,7 +487,8 @@ sub stats()
 $head
    chapters:               $chapters
    documented subroutines: $subs
-   documented diagnistics: $diags
+   documented options:     $options
+   documented diagnostics: $diags
    shown examples:         $examples
 STATS
 }

@@ -1,7 +1,10 @@
+# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc .
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 use base 'OODoc::Parser';
 
 use strict;
@@ -58,8 +61,12 @@ my @default_rules =
  , [ '=head3'      => 'docSubSection' ]
 
  # problem spotter
- , [ qr/^(warn|die|carp|confess|croak)/ => 'debugRemains' ]
- , [ qr/^(sub|my|our|package|use)\s/    => 'forgotCut' ]
+ , [ qr/^(warn|die|carp|confess|croak)\s/ => 'debugRemains' ]
+ , [ qr/^( sub \s+ \w
+         | (?:my|our) \s+ [\($@%]
+         | (?:package|use) \s+ \w+\:
+         )
+       /x => 'forgotCut' ]
  );
 
 #-------------------------------------------
@@ -148,7 +155,8 @@ sub parse(@)
         $self->inDoc(1);
     }
     else
-    {   $self->inDoc(0);
+    {   $out->print($args{notice}) if $args{notice};
+        $self->inDoc(0);
     }
 
     # Read through the file.

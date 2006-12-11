@@ -1,7 +1,10 @@
+# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc .
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 use base 'OODoc::Object';
 
 use strict;
@@ -127,6 +130,9 @@ sub processFiles(@)
         }
     }
 
+    my $notice = $args{notice} || '';
+    $notice =~ s/^(\#\s)?/# /mg;       # put comments if none
+
     #
     # Split the set of files into those who do need special processing
     # and those who do not.
@@ -218,6 +224,7 @@ sub processFiles(@)
           , output       => $dn
           , distribution => $distr
           , version      => $version
+          , notice       => $notice
           );
 
         if($verbose > 2)
@@ -268,9 +275,8 @@ sub getPackageRelations()
     foreach my $manual (@manuals)
     {    next if $manual->isPurePod;
          eval "require $manual";
-         if($@ && $@ !~ /Can't locate/)
-         {   die "$@";
-         }
+         warn "WARNING: errors from $manual\n"
+            if $@ && $@ !~ /Can't locate/;
     }
 
     foreach my $manual (@manuals)
@@ -401,6 +407,8 @@ sub stats()
     my $realpkg  = $self->packageNames;
 
     my $subs     = map {$_->subroutines} @manuals;
+my @options = map { map {$_->options} $_->subroutines } @manuals;
+    my $options  = @options;
     my $examples = map {$_->examples}    @manuals;
 
     my $diags    = map {$_->diagnostics} @manuals;
@@ -412,6 +420,7 @@ $distribution version $version
   Number of package manuals: $manuals
   Real number of packages:   $realpkg
   documented subroutines:    $subs
+  documented options:        $options
   documented diagnostics:    $diags
   shown examples:            $examples
 STATS

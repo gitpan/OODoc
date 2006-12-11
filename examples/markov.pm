@@ -1,3 +1,6 @@
+# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc .
 # This is an example package file for a OODoc::Parser::Markov documentation
 # set-up.  Other syntax parsers can be added to OODoc.  You may also add
 # all documentation to the end of the file, if you want to... as long as
@@ -8,7 +11,7 @@ use strict;
 
 package My::Name::Space;
 use vars '$VERSION';
-$VERSION = '0.95';
+$VERSION = '0.96';
 use base 'My::Other::Module';   # will result in INHERITANCE block autom
 
 # I put these next declarations above NAME, but may also be included after

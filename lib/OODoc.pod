@@ -19,6 +19,8 @@ OODoc - object oriented production of code related documentation
  $doc->create('pod', workdir => $dest);
  $doc->create('html', workdir => '/tmp/html');
 
+or use the oodist script
+
 
 =head1 DESCRIPTION
 
@@ -27,6 +29,22 @@ in HTML or the usual man-page UNIX format, describing Perl programs.  The
 OO part refers to two things: this module simplifies writing documentation
 for Object Oriented programs, and at the same time, it is Object Oriented
 itself: easily extensible.
+
+Before you read any further, decide:
+
+=over 4
+
+=item 1.
+
+to use your own modified version of the mkdist and mkdoc scripts, as provided
+in the examples which come with this module, or
+
+=item 2.
+
+use the oodist, which is less flexible but much simpler, and only requires
+some additions to your Makefile.PL.
+
+=back
 
 OODoc has been used for small and for very large modules.  It can also
 be used to integrate manual-pages from many modules into one homogeneous
@@ -40,7 +58,7 @@ each parser needs to support.
 The output is produced by formatters.  The current implementation contains
 two POD formatters and one HTML formatter.  See L<OODoc::Format|OODoc::Format>.
 
-Do not forget to read the L<DETAILS> section, later on this manual-page to
+Do not forget to B<read> the L<DETAILS> section, later on this manual-page to
 get started.  Please contribute ideas.  Have a look at the main website
 of this project at L<http://perl.overmeer.net/oodoc/>.  That is also an
 example of the produced output.
@@ -154,6 +172,7 @@ $obj-E<gt>B<processFiles>(OPTIONS)
  Option      --Defined in     --Default
  distribution                   <from main OODoc object>
  manifest                       <source/>'MANIFEST'
+ notice                         ''
  parser                         OODoc::Parser::Markov
  select                         qr/\.(pod|pm)$/
  source                         '.'
@@ -176,6 +195,15 @@ documentation.
 
 The manifest file lists all files which belong to this distribution: packages,
 pods, tests, etc. before the new pod files are created.
+
+=back
+
+. notice STRING
+
+=over 4
+
+Include the string (which may consist of multiple lines) to each of the
+pm files.  This notice usually contains the copyright message.
 
 =back
 
@@ -611,7 +639,7 @@ formatter of the manual page can not help the author of the documentation
 to produce more consistent manual pages.  This is not a problem for small
 distributions, but is much more needed when programs grow larger.
 
-=head2 How does OODoc work
+=head2 How OODoc works
 
 Like with POD, you simply mix your documentation with your code.  When
 the module is distributed, this information is stripped from the files
@@ -657,7 +685,7 @@ the distribution of your module.  The simpest script look like this:
  my $dist = '/tmp/abc';
  my $doc  = OODoc->new
   ( distribution => 'E-mail handling'
-  , version       => '0.01'
+  , version      => '0.01'
   );
 
  $doc->processFiles(workdir => $dist);  # parsing
@@ -708,18 +736,18 @@ to generate the distribution, so the unprocessed files!
 
 
 
-=head1 REFERENCES
+=head1 SEE ALSO
 
-See the OODoc website at L<http://perl.overmeer.net/oodoc/> for more details.
+This module is part of OODoc distribution version 0.96,
+built on December 11, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
-=head1 COPYRIGHTS
+=head1 LICENSE
 
-Module version 0.95.
-Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
-other contributors.
+Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 
-Copyright (c) 2003-2006 by the author(s). All rights reserved.  This program
-is free software; you can redistribute it and/or modify it under the
-same terms as Perl itself.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
 
 

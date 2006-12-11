@@ -1,11 +1,12 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         OODoc
-version:      0.95
-version_from: version
+version:      0.96
+version_from: 
 installdirs:  site
 requires:
     Bundle::Template::Magic:       0
+    File::Slurp:                   9999.12
     Pod::Man:                      2.12
     Template::Magic::HTML:         1.02
     Test::More:                    0.47
