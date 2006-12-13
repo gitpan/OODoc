@@ -1,10 +1,7 @@
-# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
-# See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc .
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.96';
+$VERSION = '0.97';
 use base 'OODoc::Object';
 
 use strict;
@@ -130,8 +127,10 @@ sub processFiles(@)
         }
     }
 
-    my $notice = $args{notice} || '';
-    $notice =~ s/^(\#\s)?/# /mg;       # put comments if none
+    my $notice = '';
+    if($notice = $args{notice})
+    {   $notice =~ s/^(\#\s)?/# /mg;       # put comments if none
+    }
 
     #
     # Split the set of files into those who do need special processing

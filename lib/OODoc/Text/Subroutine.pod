@@ -396,8 +396,8 @@ be a part of the chapter).
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.96,
-built on December 11, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.97,
+built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

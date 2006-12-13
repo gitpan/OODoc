@@ -1,10 +1,7 @@
-# Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
-# See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc .
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.96';
+$VERSION = '0.97';
 use base 'OODoc::Format::Pod';
 
 use strict;
