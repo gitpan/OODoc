@@ -8,7 +8,7 @@ use strict;
 
 package My::Name::Space;
 use vars '$VERSION';
-$VERSION = '0.97';
+$VERSION = '0.98';
 use base 'My::Other::Module';   # will result in INHERITANCE block autom
 
 # I put these next declarations above NAME, but may also be included after

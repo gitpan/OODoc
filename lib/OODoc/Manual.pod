@@ -1,14 +1,11 @@
-
 =head1 NAME
 
 OODoc::Manual - one manual about a package
-
 
 =head1 INHERITANCE
 
  OODoc::Manual
    is an OODoc::Object
-
 
 =head1 SYNOPSIS
 
@@ -21,15 +18,12 @@ OODoc::Manual - one manual about a package
  print $manual->name;
  print $manual->package;
 
-
 =head1 DESCRIPTION
 
 The C<OODoc::Manual> object contains information of a singel manual page.
 More than one manual can be related to a single package.
 
-
 =head1 OVERLOADED
-
 
 overload: B<cmp>
 
@@ -55,12 +49,9 @@ Used in string context, a manual produces its name.
 
 =back
 
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Manual-E<gt>B<new>(OPTIONS)
 
@@ -126,7 +117,6 @@ The file where the stripped code is written to.
 
 =head2 Attributes
 
-
 $obj-E<gt>B<distribution>
 
 =over 4
@@ -184,7 +174,6 @@ Returns the version of this manual information.
 =back
 
 =head2 Collected
-
 
 $obj-E<gt>B<chapter>(NAME|OBJECT)
 
@@ -269,7 +258,6 @@ I<Example:>
 =back
 
 =head2 Inheritance knowledge
-
 
 $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
@@ -360,7 +348,6 @@ will be added to the list of superclasses first.
 
 =head2 Processing
 
-
 $obj-E<gt>B<collectPackageRelations>
 
 =over 4
@@ -434,7 +421,6 @@ more detail.  The most detailed location for the description is returned.
 
 =head2 Tracing
 
-
 $obj-E<gt>B<stats>
 
 =over 4
@@ -444,7 +430,6 @@ Returns a string which displays some stats about the manual.
 =back
 
 =head2 Commonly used functions
-
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
@@ -467,7 +452,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -517,9 +501,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> No chapter NAME in scope of package $pkg in file $source
@@ -545,14 +526,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Error:> no distribution is specified for manual $name
 
-
 I<Error:> no source filename is specified for manual $name
 
 You have to specify where you found the information for the manual.  This
 does not need to be the name of an existing file, but usually it will be.
 
 I<Error:> no version is specified for manual $name
-
 
 I<Warning:> order conflict "$take" before "$insert" in $file line $number
 
@@ -587,15 +566,10 @@ I<Error:> two chapters name $name in $filename line $ln1 and $ln2
 The indicated file contains two chapters with the same name, which
 is not permitted.  Join the contents of both parts.
 
-
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -604,6 +578,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

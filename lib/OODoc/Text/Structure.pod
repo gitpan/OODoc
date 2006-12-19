@@ -1,8 +1,6 @@
-
 =head1 NAME
 
 OODoc::Text::Structure - set of paragraphs with examples and subroutines
-
 
 =head1 INHERITANCE
 
@@ -15,11 +13,9 @@ OODoc::Text::Structure - set of paragraphs with examples and subroutines
    OODoc::Text::Section
    OODoc::Text::SubSection
 
-
 =head1 SYNOPSIS
 
  # Cannot be instantiated itself
-
 
 =head1 DESCRIPTION
 
@@ -29,9 +25,7 @@ L<OODoc::Text::SubSection|OODoc::Text::SubSection> classes.  Each of these class
 paragraphs of text, probably some examples and some subroutines: they
 provide a structure to the document.
 
-
 =head1 OVERLOADED
-
 
 overload: B<'""' (stringification)>
 
@@ -57,12 +51,9 @@ See L<OODoc::Text/"OVERLOADED">
 
 =back
 
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 $obj-E<gt>B<emptyExtension>(CONTAINER)
 
@@ -109,7 +100,6 @@ subsection 3.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -119,7 +109,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<container>([OBJECT])
 
@@ -174,7 +163,6 @@ See L<OODoc::Text/"Attributes">
 
 =head2 Location
 
-
 $obj-E<gt>B<findEntry>(NAME)
 
 =over 4
@@ -223,7 +211,6 @@ See L<OODoc::Text/"Location">
 =back
 
 =head2 Collected
-
 
 $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
@@ -327,7 +314,6 @@ Returns the list of subroutines which are related to this text object.
 
 =head2 Commonly used functions
 
-
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text::Structure-E<gt>B<filenameToPackage>(FILENAME)
@@ -349,7 +335,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -391,9 +376,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -404,16 +386,10 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Error:> no level defined for structural component
 
-
-
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -422,6 +398,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

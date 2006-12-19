@@ -1,8 +1,6 @@
-
 =head1 NAME
 
 OODoc::Parser::Markov - Parser for the MARKOV syntax
-
 
 =head1 INHERITANCE
 
@@ -10,10 +8,7 @@ OODoc::Parser::Markov - Parser for the MARKOV syntax
    is an OODoc::Parser
    is an OODoc::Object
 
-
 =head1 SYNOPSIS
-
-
 
 =head1 DESCRIPTION
 
@@ -27,16 +22,11 @@ part and a documentation tree.  The code is written to a directory
 where the module distribution is built, the documenation tree is
 later formatted into manual pages.
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
 
@@ -59,7 +49,6 @@ rules.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -69,7 +58,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Parsing a file
-
 
 $obj-E<gt>B<currentManual>([MANUAL])
 
@@ -164,7 +152,6 @@ in.
 
 =head2 Formatting text pieces
 
-
 $obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
 
 =over 4
@@ -174,7 +161,6 @@ See L<OODoc::Parser/"Formatting text pieces">
 =back
 
 =head2 Producing manuals
-
 
 $obj-E<gt>B<cleanupPod>(FORMATTER, MANUAL, STRING)
 
@@ -216,7 +202,6 @@ $obj-E<gt>B<decomposeM>(MANUAL, LINK)
 =back
 
 =head2 Commonly used functions
-
 
 $obj-E<gt>B<cleanupHtml>(FORMATTER, MANUAL, STRING, [IS_HTML])
 
@@ -260,7 +245,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -312,10 +296,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =head2 Commonly used functions
 
-
-
-
-
 =head1 DIAGNOSTICS
 
 I<Warning:> =cut does not terminate any doc in $file line $number
@@ -330,7 +310,6 @@ which means that these debugging lines are clearly visible.  You may
 simply ingnore this warning.
 
 I<Warning:> Manual $manual links to unknown entry "$item" in $manual
-
 
 I<Error:> The formatter type $class is not known for cleanup
 
@@ -378,7 +357,6 @@ Probably you forgot to terminate it with a C<=cut>.
 
 I<Warning:> empty L link in $manual
 
-
 I<Error:> example outside chapter in $file line $number
 
 An example can belong to a subroutine, chapter, section, and subsection.
@@ -417,7 +395,6 @@ NAME... probably a difference in used cases.
 
 I<Warning:> option "$name" unknow for $name() in $package, found in $manual
 
-
 I<Error:> option $name outside subroutine in $file line $number
 
 An option is set, however there is not subroutine in scope (yet).
@@ -433,7 +410,6 @@ I<Error:> section $name outside chapter in $file line $number
 Sections must be contained in chapters.
 
 I<Warning:> subroutine $name is not defined by $package, found in $manual
-
 
 I<Error:> subroutine $name outside chapter in $file line $number
 
@@ -458,9 +434,7 @@ OODoc will try to compile ("require") the named module.  Apparently,
 the module was found, but something else went wrong.  The exact cause
 is not always easy to find.
 
-
 =head1 DETAILS
-
 
 =head2 General Description
 
@@ -495,7 +469,6 @@ Finally, a difference with the standard POD process: the manual-page must
 be preceeded with a C<package> keyword.
 
 =head2 Structural tags
-
 
 =head3 Heading
 
@@ -685,7 +658,6 @@ as is before it was processed for distribution).
 
 I<Example:> how subroutines are documented
 
-
  =chapter FUNCTIONS
 
  =function countCharacters FILE|STRING, OPTIONS
@@ -719,14 +691,10 @@ I<Example:> how subroutines are documented
     ...
  }
 
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -735,6 +703,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

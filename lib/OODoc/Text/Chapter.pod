@@ -1,8 +1,6 @@
-
 =head1 NAME
 
 OODoc::Text::Chapter - collects the information of one chapter
-
 
 =head1 INHERITANCE
 
@@ -11,17 +9,11 @@ OODoc::Text::Chapter - collects the information of one chapter
    is an OODoc::Text
    is an OODoc::Object
 
-
 =head1 SYNOPSIS
-
-
 
 =head1 DESCRIPTION
 
-
-
 =head1 OVERLOADED
-
 
 overload: B<'""' (stringification)>
 
@@ -47,12 +39,9 @@ See L<OODoc::Text/"OVERLOADED">
 
 =back
 
-
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 $obj-E<gt>B<emptyExtension>(CONTAINER)
 
@@ -99,7 +88,6 @@ The manual in which this chapter is described.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -109,7 +97,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<container>([OBJECT])
 
@@ -161,7 +148,6 @@ See L<OODoc::Text/"Attributes">
 
 =head2 Location
 
-
 $obj-E<gt>B<findEntry>(NAME)
 
 =over 4
@@ -203,7 +189,6 @@ See L<OODoc::Text/"Location">
 =back
 
 =head2 Collected
-
 
 $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
@@ -255,7 +240,6 @@ See L<OODoc::Text/"Collected">
 
 =head2 Subroutines
 
-
 $obj-E<gt>B<addSubroutine>(OBJECTS)
 
 =over 4
@@ -290,7 +274,6 @@ See L<OODoc::Text::Structure/"Subroutines">
 
 =head2 Commonly used functions
 
-
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text::Chapter-E<gt>B<filenameToPackage>(FILENAME)
@@ -312,7 +295,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -376,9 +358,6 @@ Returns a list of all sections in this chapter.
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> manual definition requires manual object
@@ -387,15 +366,10 @@ A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual 
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -404,6 +378,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

@@ -1,8 +1,6 @@
-
 =head1 NAME
 
 OODoc::Format::Pod - Produce POD pages from the doc tree
-
 
 =head1 INHERITANCE
 
@@ -13,7 +11,6 @@ OODoc::Format::Pod - Produce POD pages from the doc tree
  OODoc::Format::Pod is extended by
    OODoc::Format::Pod2
 
-
 =head1 SYNOPSIS
 
  my $doc = OODoc->new(...);
@@ -23,23 +20,17 @@ OODoc::Format::Pod - Produce POD pages from the doc tree
    , append         => "extra text\n"
    );
 
-
 =head1 DESCRIPTION
 
 Create manual pages in the POD syntax.  POD is the standard document
 description syntax for Perl.  POD can be translated to many different
 operating system specific manual systems, like the Unix C<man> system.
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Format::Pod-E<gt>B<new>(OPTIONS)
 
@@ -51,7 +42,6 @@ See L<OODoc::Format/"METHODS">
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -61,7 +51,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<manifest>
 
@@ -97,7 +86,6 @@ See L<OODoc::Format/"Attributes">
 
 =head2 Page generation
 
-
 $obj-E<gt>B<chapterInheritance>(OPTIONS)
 
 =over 4
@@ -119,6 +107,18 @@ $obj-E<gt>B<cleanup>(MANUAL, STRING)
 =over 4
 
 See L<OODoc::Format/"Page generation">
+
+=back
+
+$obj-E<gt>B<cleanupPOD>(IN, OUT)
+
+=over 4
+
+The POD is produced in the specified IN filename, but may contain some
+garbage, especially a lot of superfluous blanks lines.  Because it is
+quite complex to track double blank lines in the production process,
+we make an extra pass over the POD to remove it afterwards.  Other
+clean-up activities may be implemented later.
 
 =back
 
@@ -377,7 +377,6 @@ is the header.
 
 =head2 Template::Magic
 
-
 $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 =over 4
@@ -387,7 +386,6 @@ See L<OODoc::Format/"Template::Magic">
 =back
 
 =head2 Commonly used functions
-
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
@@ -410,7 +408,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -460,16 +457,15 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
+
+I<Error:> cannot read prelimary pod from $infn: $!
+
+I<Error:> cannot write final pod to $outfn: $!
 
 I<Error:> cannot write pod manual at $manfile: $!
 
-
 I<Error:> formatter does not know the version.
-
 
 I<Error:> formatter has no project name.
 
@@ -484,15 +480,11 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Warning:> missing required chapter $name in $manual
 
-
 I<Error:> no directory to put pod manual for $name in
 
-
 I<Error:> no package name for pod production
 
-
 I<Error:> no package name for pod production
-
 
 I<Error:> no working directory specified.
 
@@ -501,10 +493,7 @@ directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was 
 
 I<Warning:> unknown subroutine type $type for $name in $manual
 
-
-
 =head1 DETAILS
-
 
 =head2 Configuring
 
@@ -520,7 +509,6 @@ L<showChapter()|OODoc::Format/"Page generation">.  This will help you to produce
 pre-planned changes in layout.
 
 I<Example:> format options
-
 
  use OODoc;
  my $doc = OODoc->new(...);
@@ -543,7 +531,6 @@ a very simple approach simply using L<createManual(append)|OODoc::Format::Pod/"P
 
 I<Example:> appending text to a page
 
-
  use OODoc;
  my $doc = OODoc->new(...);
  $doc->processFiles(...);
@@ -563,7 +550,6 @@ pages.
 
 I<Example:> remove chapter inheritance
 
-
  $doc->create('MyPod', format_options => [...]);
 
  package MyPod;
@@ -574,7 +560,6 @@ The C<MyPod> package is extending the standard POD generator, by overruling
 the default behavior of L<chapterInheritance()|OODoc::Format::Pod/"Page generation"> by producing nothing.
 
 I<Example:> changing the chapter's output
-
 
  $doc->create('MyPod', format_options => [...]);
 
@@ -597,7 +582,6 @@ COMMERCIAL
  }
 
 I<Example:> adding to a chapter's output
-
 
  $doc->create('MyPod', format_options => [...]);
 
@@ -628,7 +612,6 @@ C<Bundle::Template::Magic> to get it to work.
 
 I<Example:> formatting with template
 
-
  use OODoc;
  my $doc = OODoc->new(...);
  $doc->processFiles(...);
@@ -641,7 +624,6 @@ I<Example:> formatting with template
 
 I<Example:> format options within template
 
-
 The template van look like this:
 
  {chapter NAME}
@@ -652,14 +634,10 @@ The template van look like this:
 The formatting options can be added, however the syntax is quite sensitive:
 not quotes, comma's and exactly one blank between the strings.
 
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -668,6 +646,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

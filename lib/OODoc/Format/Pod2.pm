@@ -1,7 +1,7 @@
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.97';
+$VERSION = '0.98';
 use base 'OODoc::Format::Pod';
 
 use strict;
@@ -12,10 +12,6 @@ use File::Spec;
 use IO::Scalar;
 
 use Template::Magic;
-
-
-#-------------------------------------------
-
 
 
 my $default_template;
@@ -29,8 +25,6 @@ sub createManual(@)
     $self->{O_template} = delete $args{template} || \$default_template;
     $self->SUPER::createManual(%args) or return;
 }
-
-#-------------------------------------------
 
 sub formatManual(@)
 {   my ($self, %args) = @_;
@@ -52,8 +46,6 @@ sub formatManual(@)
     my $created = $template->output(\$layout);
     $output->print($$created);
 }
-
-#-------------------------------------------
 
 
 sub templateChapter($$)
@@ -77,16 +69,12 @@ sub templateChapter($$)
     $out;
 }
 
-#-------------------------------------------
-
 sub templateInheritance($$)
 {   my ($self, $zone, $args) = @_;
     my $out   = '';
     $self->chapterInheritance(%$args, output => IO::Scalar->new(\$out));
     $out;
 }
-
-#-------------------------------------------
 
 sub templateDiagnostics($$)
 {   my ($self, $zone, $args) = @_;
@@ -95,16 +83,12 @@ sub templateDiagnostics($$)
     $out;
 }
 
-#-------------------------------------------
-
 sub templateAppend($$)
 {   my ($self, $zone, $args) = @_;
     my $out   = '';
     $self->showAppend(%$args, output => IO::Scalar->new(\$out));
     $out;
 }
-
-#-------------------------------------------
 
 
 1;

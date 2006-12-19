@@ -1,15 +1,12 @@
-
 =head1 NAME
 
 OODoc::Format::Html - Produce HTML pages from the doc tree
-
 
 =head1 INHERITANCE
 
  OODoc::Format::Html
    is an OODoc::Format
    is an OODoc::Object
-
 
 =head1 SYNOPSIS
 
@@ -19,23 +16,17 @@ OODoc::Format::Html - Produce HTML pages from the doc tree
    , format_options => [show_examples => 'NO']
    );
 
-
 =head1 DESCRIPTION
 
 Create manual pages in the HTML syntax, using the Template::Magic
 template system.  Producing HTML is more complicated than producing
 POD, because one manual page may be spread over multiple output files.
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Format::Html-E<gt>B<new>(OPTIONS)
 
@@ -75,7 +66,6 @@ Cascading Style Sheets, and such.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -85,7 +75,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<manifest>
 
@@ -120,7 +109,6 @@ See L<OODoc::Format/"Attributes">
 =back
 
 =head2 Page generation
-
 
 $obj-E<gt>B<cleanup>(MANUAL, STRING)
 
@@ -182,7 +170,6 @@ in the template file.
 
 I<Example:> template specification
 
-
 Default:
 
  template => "html/manual/"
@@ -222,7 +209,6 @@ names and related formatting options.  The FORMAT is an array of options
 which can be overruled by values which the LOCATION is specified as hash.
 
 I<Example:> expanding template specification into files
-
 
  my $exp = $self->expandTemplate("html/manual", [show => 'NO']);
  while(my ($fn,$opts) = each %$exp) {print "$fn @$opts\n"}
@@ -404,7 +390,6 @@ is the header.
 
 =head2 Template::Magic
 
-
 $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 =over 4
@@ -414,7 +399,6 @@ See L<OODoc::Format/"Template::Magic">
 =back
 
 =head2 Template processing
-
 
 $obj-E<gt>B<format>(OPTIONS)
 
@@ -500,7 +484,6 @@ are listed or C<error> for diagnostics.
 =back
 
 I<Example:> use of the template tag "index"
-
 
  <table cellspacing="10">
  <!--{index DIAGNOSTICS type error starting_with A}-->
@@ -595,7 +578,6 @@ and otherwise the project total version.
 
 =head2 Commonly used functions
 
-
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Format::Html-E<gt>B<filenameToPackage>(FILENAME)
@@ -617,7 +599,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -667,13 +648,9 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> cannot find chapter NAME in manual $name
-
 
 I<Error:> cannot find template source $name
 
@@ -684,9 +661,7 @@ error is produced.
 
 I<Error:> cannot write html manual at $filename: $!
 
-
 I<Error:> chapter NAME in manual $name has illegal shape
-
 
 I<Error:> chapter without name in template.
 
@@ -695,9 +670,7 @@ erroneous, because it requires a chapter name.
 
 I<Error:> html source directory $source does not exist.
 
-
 I<Error:> illegal value to show_sections: $show_sec
-
 
 I<Error:> manual definition requires manual object
 
@@ -707,9 +680,7 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Warning:> missing required chapter $name in $manual
 
-
 I<Error:> no directory to put other html pages in.
-
 
 I<Error:> no group named as attribute for index
 
@@ -719,49 +690,32 @@ be built.
 
 I<Error:> no group named as attribute for list
 
-
 I<Warning:> no meaning for container $contained in list block
-
 
 I<Warning:> no meaning for container $container in chapter block
 
-
 I<Warning:> no meaning for container $container in index block
-
 
 I<Error:> no package name for html production
 
-
 I<Error:> not a manual, so no automatic title in $template
-
 
 I<Error:> not a manual, so no manual name for $template
 
-
 I<Error:> not a manual, so no name for $template
-
 
 I<Error:> unknown group $name as list attribute
 
-
 I<Warning:> unknown subroutine type $type for $name in $manual
-
-
 
 =head1 DETAILS
 
-
 =head2 Configuring
-
-
-
-
-
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -770,6 +724,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

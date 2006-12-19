@@ -1,14 +1,10 @@
-
 =head1 NAME
 
 OODoc::Object - base class for all OODoc classes.
 
-
-
 =head1 SYNOPSIS
 
  # Never instantiated directly.
-
 
 =head1 DESCRIPTION
 
@@ -16,16 +12,11 @@ Any object used in the OODoc module is derived from this OODoc::Object
 class.  This means that all functionality in this class is provided
 for all of the other classes.
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Object-E<gt>B<new>(OPTIONS)
 
@@ -43,7 +34,6 @@ options when used with many other method defined by OODoc.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -55,7 +45,6 @@ is not supported here.
 =back
 
 =head2 Commonly used functions
-
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
@@ -137,9 +126,6 @@ Returns the names of all defined packages.
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Warning:> Unknown option $name
@@ -158,15 +144,10 @@ A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual 
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -175,6 +156,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

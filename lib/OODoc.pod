@@ -1,14 +1,11 @@
-
 =head1 NAME
 
 OODoc - object oriented production of code related documentation
-
 
 =head1 INHERITANCE
 
  OODoc
    is an OODoc::Object
-
 
 =head1 SYNOPSIS
 
@@ -20,7 +17,6 @@ OODoc - object oriented production of code related documentation
  $doc->create('html', workdir => '/tmp/html');
 
 or use the oodist script
-
 
 =head1 DESCRIPTION
 
@@ -63,16 +59,11 @@ get started.  Please contribute ideas.  Have a look at the main website
 of this project at L<http://perl.overmeer.net/oodoc/>.  That is also an
 example of the produced output.
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc-E<gt>B<new>(OPTIONS)
 
@@ -126,7 +117,6 @@ or C<VERSION> which contains a number.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -136,7 +126,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<distribution>
 
@@ -163,7 +152,6 @@ Returns the version string for the distribution.
 =back
 
 =head2 Parser
-
 
 $obj-E<gt>B<processFiles>(OPTIONS)
 
@@ -289,7 +277,6 @@ L<processFiles(select)|OODoc/"Parser"> and the LIST are files from a manifest.
 
 =head2 Preparation
 
-
 $obj-E<gt>B<expandManuals>
 
 =over 4
@@ -324,7 +311,6 @@ and L<create()|OODoc/"Formatter">.
 =back
 
 =head2 Formatter
-
 
 $obj-E<gt>B<create>(NAME|CLASS|OBJECT, OPTIONS)
 
@@ -461,7 +447,6 @@ document set.
 
 =head2 Commonly used functions
 
-
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc-E<gt>B<filenameToPackage>(FILENAME)
@@ -483,7 +468,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -533,9 +517,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> Cannot compile $parser class
@@ -543,7 +524,6 @@ I<Error:> Cannot compile $parser class
 The $parser class does not exist or produces compiler errors.
 
 I<Error:> Cannot read version from file $fn: $!
-
 
 I<Error:> Parser $parser could not be instantiated
 
@@ -602,7 +582,6 @@ stuff in that directory.
 
 I<Error:> the destribution must be specified
 
-
 I<Error:> there is no version defined for the source files
 
 Each manual will need a version number.  There are various ways to
@@ -615,9 +594,7 @@ I<Error:> use regex, code reference or array for file selection
 The L<processFiles(select)|OODoc/"Parser"> option is not understood.  You may specify
 an ARRAY, regular expression, or a code reference.
 
-
 =head1 DETAILS
-
 
 =head2 Why use OODoc in stead of POD
 
@@ -732,14 +709,10 @@ can be uploaded to CPAN, and the C<module-version-raw.tar.gz> which
 is for yourself.  The latter contains the whole setup which is used
 to generate the distribution, so the unprocessed files!
 
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -748,6 +721,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 

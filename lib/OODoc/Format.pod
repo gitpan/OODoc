@@ -1,8 +1,6 @@
-
 =head1 NAME
 
 OODoc::Format - base class for all OODoc formatters
-
 
 =head1 INHERITANCE
 
@@ -13,11 +11,9 @@ OODoc::Format - base class for all OODoc formatters
    OODoc::Format::Html
    OODoc::Format::Pod
 
-
 =head1 SYNOPSIS
 
  # Never instantiated directly.
-
 
 =head1 DESCRIPTION
 
@@ -54,16 +50,11 @@ L<Bundle::Template::Magic> and the ability to run cgi scripts.
 
 =back
 
-
 =head1 OVERLOADED
-
-
 
 =head1 METHODS
 
-
 =head2 Constructors
-
 
 OODoc::Format-E<gt>B<new>(OPTIONS)
 
@@ -107,7 +98,6 @@ it will be created for you.
 
 =head2 Inheritance knowledge
 
-
 $obj-E<gt>B<extends>([OBJECT])
 
 =over 4
@@ -117,7 +107,6 @@ See L<OODoc::Object/"Inheritance knowledge">
 =back
 
 =head2 Attributes
-
 
 $obj-E<gt>B<manifest>
 
@@ -155,7 +144,6 @@ the output files.
 =back
 
 =head2 Page generation
-
 
 $obj-E<gt>B<cleanup>(MANUAL, STRING)
 
@@ -601,7 +589,6 @@ attribute list.  The return is a list of key-value pairs with data.
 
 I<Example:> of valid arguments
 
-
  <!--{examples expand NO list ALL}-->   # old style
  <!--{examples expand => NO, list => ALL}-->
  <!--{examples expand => NO,
@@ -610,7 +597,6 @@ I<Example:> of valid arguments
 =back
 
 =head2 Commonly used functions
-
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
@@ -633,7 +619,6 @@ See L<OODoc::Object/"Commonly used functions">
 =back
 
 =head2 Manual Repository
-
 
 $obj-E<gt>B<addManual>(MANUAL)
 
@@ -683,13 +668,9 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-
-
-
 =head1 DIAGNOSTICS
 
 I<Error:> formatter does not know the version.
-
 
 I<Error:> formatter has no project name.
 
@@ -704,7 +685,6 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 I<Warning:> missing required chapter $name in $manual
 
-
 I<Error:> no working directory specified.
 
 The formatter has to know where the output can be written.  This
@@ -712,16 +692,10 @@ directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was 
 
 I<Warning:> unknown subroutine type $type for $name in $manual
 
-
-
-
-
-
-
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.97,
-built on December 13, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.98,
+built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
@@ -730,6 +704,4 @@ Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 See F<http://www.perl.com/perl/misc/Artistic.html>
-
-
 
