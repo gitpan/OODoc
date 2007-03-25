@@ -60,11 +60,11 @@ OODoc::Format-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option  --Defined in     --Default
- manifest                   undef
- project                    <required>
- version                    <required>
- workdir                    <required>
+ Option  --Default
+ manifest  undef
+ project   <required>
+ version   <required>
+ workdir   <required>
 
 . manifest OBJECT
 
@@ -170,12 +170,12 @@ $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
 
- Option        --Defined in     --Default
- append                           undef
- format_options                   []
- manual                           <required>
- project                          <required>
- template                         undef
+ Option        --Default
+ append          undef
+ format_options  []
+ manual          <required>
+ project         <required>
+ template        undef
 
 . append STRING|CODE
 
@@ -224,10 +224,10 @@ the contents of these pages is depends on the formatter.  Some formatters
 simply ignore the functionality of this method as a whole: they do not
 support data-files which are not manuals.
 
- Option --Defined in     --Default
- process                   undef
- source                    undef
- verbose                   0
+ Option --Default
+ process  undef
+ source   undef
+ verbose  0
 
 . process REGEXP
 
@@ -261,13 +261,13 @@ You can pass all OPTIONS about formatting to this method.  They will passed
 to the related methods.  So: the list of options you can pass here is much
 longer: the combination of everything possible for all show* methods.
 
- Option                    --Defined in     --Default
- chapter                                      <required>
- manual                                       <required>
- output                                       <required>
- show_inherited_chapters                      'REFER'
- show_inherited_sections                      'REFER'
- show_inherited_subsections                   'REFER'
+ Option                    --Default
+ chapter                     <required>
+ manual                      <required>
+ output                      <required>
+ show_inherited_chapters     'REFER'
+ show_inherited_sections     'REFER'
+ show_inherited_subsections  'REFER'
 
 . chapter CHAPTER
 
@@ -294,10 +294,10 @@ $obj-E<gt>B<showExamples>(OPTIONS)
 
 =over 4
 
- Option  --Defined in     --Default
- examples                   <required>
- manual                     <required>
- output                     <required>
+ Option  --Default
+ examples  <required>
+ manual    <required>
+ output    <required>
 
 . examples ARRAY
 
@@ -311,11 +311,11 @@ $obj-E<gt>B<showOptionExpand>(OPTIONS)
 
 =over 4
 
- Option --Defined in     --Default
- default                   <required>
- manual                    <required>
- option                    <required>
- output                    <required>
+ Option --Default
+ default  <required>
+ manual   <required>
+ option   <required>
+ output   <required>
 
 . default OBJECT
 
@@ -331,10 +331,10 @@ $obj-E<gt>B<showOptionTable>(OPTIONS)
 
 =over 4
 
- Option --Defined in     --Default
- manual                    <required>
- options                   <required>
- output                    <required>
+ Option --Default
+ manual   <required>
+ options  <required>
+ output   <required>
 
 . manual OBJECT
 
@@ -348,11 +348,11 @@ $obj-E<gt>B<showOptionUse>(OPTIONS)
 
 =over 4
 
- Option --Defined in     --Default
- default                   <required>
- manual                    <required>
- option                    <required>
- output                    <required>
+ Option --Default
+ default  <required>
+ manual   <required>
+ option   <required>
+ output   <required>
 
 . default OBJECT
 
@@ -377,11 +377,11 @@ $obj-E<gt>B<showOptions>(OPTIONS)
 The options shown are B<not> the OPTIONS passed as argument, but the
 options which belong to the subroutine being displayed.
 
- Option                --Defined in     --Default
- manual                                   <required>
- options                                  <required>
- show_described_options                   'EXPAND'
- show_inherited_options                   'USE'
+ Option                --Default
+ manual                  <required>
+ options                 <required>
+ show_described_options  'EXPAND'
+ show_inherited_options  'USE'
 
 . manual OBJECT
 
@@ -403,8 +403,8 @@ $obj-E<gt>B<showStructureExpanded>(OPTIONS)
 
 =over 4
 
- Option               --Defined in--Default
- show_chapter_examples              'EXPAND'
+ Option               --Default
+ show_chapter_examples  'EXPAND'
 
 . show_chapter_examples 'NO'|'EXPAND'
 
@@ -428,18 +428,18 @@ $obj-E<gt>B<showSubroutine>((@))
 
 =over 4
 
- Option                --Defined in     --Default
- last                                     0
- manual                                   <required>
- output                                   <selected filehandle>
- show_described_options                   'EXPAND'
- show_diagnostics                         'NO'
- show_examples                            'EXPAND'
- show_inherited_options                   'USE'
- show_option_table                        'ALL'
- show_sub_description                     'DESCRIBED'
- show_subroutine                          'EXPAND'
- subroutine                               <required>
+ Option                --Default
+ last                    0
+ manual                  <required>
+ output                  <selected filehandle>
+ show_described_options  'EXPAND'
+ show_diagnostics        'NO'
+ show_examples           'EXPAND'
+ show_inherited_options  'USE'
+ show_option_table       'ALL'
+ show_sub_description    'DESCRIBED'
+ show_subroutine         'EXPAND'
+ subroutine              <required>
 
 . last BOOLEAN
 
@@ -490,10 +490,10 @@ $obj-E<gt>B<showSubroutineDescription>(OPTIONS)
 
 =over 4
 
- Option    --Defined in     --Default
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+ Option    --Default
+ manual      <required>
+ output      <required>
+ subroutine  <required>
 
 . manual OBJECT
 
@@ -507,11 +507,11 @@ $obj-E<gt>B<showSubroutineName>(OPTIONS)
 
 =over 4
 
- Option    --Defined in     --Default
- last                         0
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+ Option    --Default
+ last        0
+ manual      <required>
+ output      <required>
+ subroutine  <required>
 
 . last BOOLEAN
 
@@ -527,10 +527,10 @@ $obj-E<gt>B<showSubroutineUse>(OPTIONS)
 
 =over 4
 
- Option    --Defined in     --Default
- manual                       <required>
- output                       <required>
- subroutine                   <required>
+ Option    --Default
+ manual      <required>
+ output      <required>
+ subroutine  <required>
 
 . manual OBJECT
 
@@ -544,16 +544,16 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 =over 4
 
- Option                --Defined in     --Default
- manual                                   <required>
- output                                   <selected filehandle>
- show_described_options                   'EXPAND'
- show_described_subs                      'EXPAND'
- show_inherited_options                   'USE'
- show_inherited_subs                      'USE'
- show_option_table                        'ALL'
- show_subs_index                          'NO'
- subroutines                              []
+ Option                --Default
+ manual                  <required>
+ output                  <selected filehandle>
+ show_described_options  'EXPAND'
+ show_described_subs     'EXPAND'
+ show_inherited_options  'USE'
+ show_inherited_subs     'USE'
+ show_option_table       'ALL'
+ show_subs_index         'NO'
+ subroutines             []
 
 . manual MANUAL
 
@@ -694,12 +694,12 @@ I<Warning:> unknown subroutine type $type for $name in $manual
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.98,
-built on December 19, 2006. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 0.99,
+built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2006 by Mark Overmeer. For contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

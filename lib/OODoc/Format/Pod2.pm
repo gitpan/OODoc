@@ -1,7 +1,11 @@
+# Copyrights 2003-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '0.98';
+$VERSION = '0.99';
 use base 'OODoc::Format::Pod';
 
 use strict;
@@ -102,8 +106,8 @@ __DATA__
 {chapter METHODS}
 {chapter FUNCTIONS}
 {chapter EXPORTS}
-{diagnostics}
 {chapter DETAILS}
+{diagnostics}
 {chapter REFERENCES}
 {chapter COPYRIGHTS}
 {comment In stead of append you can also add texts directly}

@@ -1,7 +1,11 @@
+# Copyrights 2003-2007 by Mark Overmeer.
+# For other contributors see ChangeLog.
+# See the manual pages for details on the licensing terms.
+# Pod stripped from pm file by OODoc 0.99.
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '0.98';
+$VERSION = '0.99';
 use base 'OODoc::Format';
 
 use strict;
@@ -526,7 +530,7 @@ sub writeTable($@)
     my $head   = $args{header} or confess;
     my $output = $args{output} or confess;
 
-    $output->print( qq[<table cellspacing="3" cellpadding="0">\n] );
+    $output->print( qq[<table cellspacing="0" cellpadding="2" border="1">\n] );
 
     local $"   = qq[</th>    <th align="left">];
     $output->print( qq[<tr><th align="left">@$head</th></tr>\n] );

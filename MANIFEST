@@ -1,7 +1,6 @@
 ChangeLog
 LICENSE
 MANIFEST
-META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README
 bin/oodist
@@ -53,3 +52,4 @@ lib/OODoc/Text/Subroutine.pm
 lib/OODoc/Text/Subroutine.pod
 t/00works.t
 t/10nomarkup.t
+META.yml                                 Module meta-data (added by MakeMaker)
