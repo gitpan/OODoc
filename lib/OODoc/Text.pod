@@ -70,7 +70,7 @@ OODoc::Text-E<gt>B<new>(OPTIONS)
  name         undef
  type         <required>
 
-. container OBJECT
+. container => OBJECT
 
 =over 4
 
@@ -78,7 +78,7 @@ All text objects except chapters are contained in some other object.
 
 =back
 
-. description STRING
+. description => STRING
 
 =over 4
 
@@ -87,9 +87,9 @@ is filled in later by L<openDescription()|OODoc::Text/"Collected">.
 
 =back
 
-. linenr INTEGER
+. linenr => INTEGER
 
-. name STRING
+. name => STRING
 
 =over 4
 
@@ -97,7 +97,7 @@ The name contains the main data about the text piece.
 
 =back
 
-. type STRING
+. type => STRING
 
 =over 4
 
@@ -319,12 +319,12 @@ define the elements relative location.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

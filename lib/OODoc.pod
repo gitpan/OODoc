@@ -75,7 +75,7 @@ OODoc-E<gt>B<new>(OPTIONS)
  verbose       0
  version       <from version or VERSION file>
 
-. distribution STRING
+. distribution => STRING
 
 =over 4
 
@@ -83,7 +83,7 @@ The name of the package, as released on CPAN.
 
 =back
 
-. project STRING
+. project => STRING
 
 =over 4
 
@@ -93,7 +93,7 @@ or something which is nicer to read.
 
 =back
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =over 4
 
@@ -102,7 +102,7 @@ will be presented (current useful maximum is 4).
 
 =back
 
-. version STRING
+. version => STRING
 
 =over 4
 
@@ -168,7 +168,7 @@ $obj-E<gt>B<processFiles>(OPTIONS)
  version       <from source directory or OODoc object>
  workdir       <required>
 
-. distribution NAME
+. distribution => NAME
 
 =over 4
 
@@ -177,7 +177,7 @@ documentation.
 
 =back
 
-. manifest FILENAME
+. manifest => FILENAME
 
 =over 4
 
@@ -186,7 +186,7 @@ pods, tests, etc. before the new pod files are created.
 
 =back
 
-. notice STRING
+. notice => STRING
 
 =over 4
 
@@ -195,7 +195,7 @@ pm files.  This notice usually contains the copyright message.
 
 =back
 
-. parser CLASS|OBJECT
+. parser => CLASS|OBJECT
 
 =over 4
 
@@ -203,7 +203,7 @@ The parser CLASS or OBJECT to be used to process the pages.
 
 =back
 
-. select ARRAY|REGEX|CODE
+. select => ARRAY|REGEX|CODE
 
 =over 4
 
@@ -215,7 +215,7 @@ Is your pod real pod or should it also be passed through the parser?
 
 =back
 
-. source DIRECTORY
+. source => DIRECTORY
 
 =over 4
 
@@ -225,7 +225,7 @@ combination with an undefined value for C<workdir>.
 
 =back
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =over 4
 
@@ -234,7 +234,7 @@ the more information you will get.
 
 =back
 
-. version STRING
+. version => STRING
 
 =over 4
 
@@ -248,7 +248,7 @@ seperate version file, that line should contain C<$VERSION = >.
 
 =back
 
-. workdir DIRECTORY
+. workdir => DIRECTORY
 
 =over 4
 
@@ -306,7 +306,7 @@ and L<create()|OODoc/"Formatter">.
  Option --Default
  verbose  <from object>
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =back
 
@@ -339,7 +339,7 @@ or an instantiated formatter.
  verbose          0
  workdir          <required>
 
-. append STRING|CODE
+. append => STRING|CODE
 
 =over 4
 
@@ -348,7 +348,7 @@ but the behavior is formatter dependent.
 
 =back
 
-. format_options ARRAY
+. format_options => ARRAY
 
 =over 4
 
@@ -357,7 +357,7 @@ the formatter which will be used for the possible values.
 
 =back
 
-. manifest FILENAME|undef
+. manifest => FILENAME|undef
 
 =over 4
 
@@ -366,7 +366,7 @@ is given, no file will be written for this.
 
 =back
 
-. manual_format ARRAY
+. manual_format => ARRAY
 
 =over 4
 
@@ -376,7 +376,7 @@ manual page for the possible flags and values.
 
 =back
 
-. manual_template LOCATION
+. manual_template => LOCATION
 
 =over 4
 
@@ -387,7 +387,7 @@ are formatter dependent.
 
 =back
 
-. other_files DIRECTORY
+. other_files => DIRECTORY
 
 =over 4
 
@@ -396,7 +396,7 @@ passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Page generati
 
 =back
 
-. process_files REGEXP
+. process_files => REGEXP
 
 =over 4
 
@@ -406,7 +406,7 @@ passed to L<OODoc::Format::createOtherPages(process)|OODoc::Format/"Page generat
 
 =back
 
-. select CODE|REGEXP
+. select => CODE|REGEXP
 
 =over 4
 
@@ -417,7 +417,7 @@ called with a manual as only argument.
 
 =back
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =over 4
 
@@ -426,7 +426,7 @@ you will have.
 
 =back
 
-. workdir DIRECTORY
+. workdir => DIRECTORY
 
 =over 4
 
@@ -711,12 +711,12 @@ an ARRAY, regular expression, or a code reference.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

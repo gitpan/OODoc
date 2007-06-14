@@ -127,15 +127,15 @@ $obj-E<gt>B<createManual>(OPTIONS)
  project         OODoc::Format    <required>
  template                         <in code>
 
-. append STRING|CODE
+. append => STRING|CODE
 
-. format_options ARRAY
+. format_options => ARRAY
 
-. manual MANUAL
+. manual => MANUAL
 
-. project STRING
+. project => STRING
 
-. template FILENAME
+. template => FILENAME
 
 =over 4
 
@@ -448,12 +448,12 @@ I<Warning:> unknown subroutine type $type for $name in $manual
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -57,15 +57,15 @@ OODoc::Text::Example-E<gt>B<new>(OPTIONS)
  name         OODoc::Text      undef
  type         OODoc::Text      'Example'
 
-. container OBJECT
+. container => OBJECT
 
-. description STRING
+. description => STRING
 
-. linenr INTEGER
+. linenr => INTEGER
 
-. name STRING
+. name => STRING
 
-. type STRING
+. type => STRING
 
 =back
 
@@ -247,12 +247,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

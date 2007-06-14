@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
-# For other contributors see ChangeLog.
+#  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 0.99.
+# Pod stripped from pm file by OODoc 1.00.
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '0.99';
+$VERSION = '1.00';
 use base 'OODoc::Parser';
 
 use strict;
@@ -114,8 +114,6 @@ sub findMatchingRule($)
     ();
 }
 
-#-------------------------------------------
-
 
 sub parse(@)
 {   my ($self, %args) = @_;
@@ -136,10 +134,9 @@ sub parse(@)
     # pure doc files have no package statement included, so it shall
     # be created beforehand.
 
-    my $pure_pod = $input =~ m/\.pod$/;
-
     my ($manual, @manuals);
 
+    my $pure_pod = $input =~ m/\.pod$/;
     if($pure_pod)
     {   $manual = OODoc::Manual->new
          ( package  => $self->filenameToPackage($input)

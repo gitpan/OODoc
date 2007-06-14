@@ -35,7 +35,7 @@ OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
  Option          --Default
  additional_rules  []
 
-. additional_rules ARRAY
+. additional_rules => ARRAY
 
 =over 4
 
@@ -105,11 +105,11 @@ $obj-E<gt>B<parse>(OPTIONS)
  output        devnull
  version       <required>
 
-. distribution STRING
+. distribution => STRING
 
-. input FILENAME
+. input => FILENAME
 
-. notice STRING
+. notice => STRING
 
 =over 4
 
@@ -117,9 +117,9 @@ Block of text added in from of the output file.
 
 =back
 
-. output FILENAME
+. output => FILENAME
 
-. version STRING
+. version => STRING
 
 =back
 
@@ -693,12 +693,12 @@ is not always easy to find.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

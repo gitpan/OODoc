@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
-# For other contributors see ChangeLog.
+#  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 0.99.
+# Pod stripped from pm file by OODoc 1.00.
 
 package OODoc::Format;
 use vars '$VERSION';
-$VERSION = '0.99';
+$VERSION = '1.00';
 use base 'OODoc::Object';
 
 use strict;
@@ -13,12 +13,6 @@ use warnings;
 
 use Carp;
 use OODoc::Manifest;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -64,15 +58,11 @@ sub manifest() {shift->{OF_manifest}}
 
 sub createManual(@) { confess }
 
-#-------------------------------------------
-
 
 sub cleanup($$)
 {   my ($self, $manual, $string) = @_;
     $manual->parser->cleanup($self, $manual, $string);
 }
-
-#-------------------------------------------
 
 
 sub showChapter(@)
@@ -117,8 +107,6 @@ sub showChapter(@)
 
 sub showStructureExpanded(@) {confess}
 
-#-------------------------------------------
-
 
 sub showStructureRefer(@) {confess}
 
@@ -151,8 +139,6 @@ sub showRequiredChapter($@)
     $self->showChapter(chapter => $chapter, %args);
 }
 
-#-------------------------------------------
-
 
 sub showOptionalChapter($@)
 {   my ($self, $name, %args) = @_;
@@ -164,12 +150,8 @@ sub showOptionalChapter($@)
     $self->showChapter(chapter => $chapter, %args);
 }
 
-#-------------------------------------------
-
 
 sub createOtherPages(@) {shift}
-
-#-------------------------------------------
 
 
 sub showSubroutines(@)
@@ -204,8 +186,6 @@ sub showSubroutines(@)
         );
     }
 }
-
-#-------------------------------------------
 
 
 sub showSubroutine(@)
@@ -306,28 +286,17 @@ sub showSubroutine(@)
         if $show_diag eq 'EXPAND';
 }
 
-#-------------------------------------------
-
 
 sub showExamples(@) {shift}
-
-#-------------------------------------------
 
 
 sub showSubroutineUse(@) {shift}
 
 
-#-------------------------------------------
-
-
 sub showSubroutineName(@) {shift}
-
-#-------------------------------------------
 
 
 sub showSubroutineDescription(@) {shift}
-
-#-------------------------------------------
 
 
 sub showOptionTable(@)

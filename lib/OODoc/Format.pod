@@ -66,9 +66,9 @@ OODoc::Format-E<gt>B<new>(OPTIONS)
  version   <required>
  workdir   <required>
 
-. manifest OBJECT
+. manifest => OBJECT
 
-. project STRING
+. project => STRING
 
 =over 4
 
@@ -76,7 +76,7 @@ The short name of this project (module), set by L<OODoc::new(project)|OODoc/"MET
 
 =back
 
-. version STRING
+. version => STRING
 
 =over 4
 
@@ -85,7 +85,7 @@ be any STRING, although blanks are not advised.
 
 =back
 
-. workdir DIRECTORY
+. workdir => DIRECTORY
 
 =over 4
 
@@ -177,9 +177,9 @@ $obj-E<gt>B<createManual>(OPTIONS)
  project         <required>
  template        undef
 
-. append STRING|CODE
+. append => STRING|CODE
 
-. format_options ARRAY
+. format_options => ARRAY
 
 =over 4
 
@@ -188,7 +188,7 @@ for formatting a chapter.
 
 =back
 
-. manual MANUAL
+. manual => MANUAL
 
 =over 4
 
@@ -196,7 +196,7 @@ The manual to be formatted.
 
 =back
 
-. project STRING
+. project => STRING
 
 =over 4
 
@@ -204,7 +204,7 @@ The name of this project, which will appear on many pages.
 
 =back
 
-. template LOCATION
+. template => LOCATION
 
 =over 4
 
@@ -229,7 +229,7 @@ support data-files which are not manuals.
  source   undef
  verbose  0
 
-. process REGEXP
+. process => REGEXP
 
 =over 4
 
@@ -239,7 +239,7 @@ files is formatter dependent.
 
 =back
 
-. source DIRECTORY
+. source => DIRECTORY
 
 =over 4
 
@@ -249,7 +249,7 @@ but only once.
 
 =back
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =back
 
@@ -269,15 +269,15 @@ longer: the combination of everything possible for all show* methods.
  show_inherited_sections     'REFER'
  show_inherited_subsections  'REFER'
 
-. chapter CHAPTER
+. chapter => CHAPTER
 
-. manual MANUAL
+. manual => MANUAL
 
-. output FILE
+. output => FILE
 
-. show_inherited_chapters 'NO'|'REFER'|'EXPAND'
+. show_inherited_chapters => 'NO'|'REFER'|'EXPAND'
 
-. show_inherited_sections 'NO'|'REFER'|'EXPAND'
+. show_inherited_sections => 'NO'|'REFER'|'EXPAND'
 
 =over 4
 
@@ -286,7 +286,7 @@ to the manual page which describes it.
 
 =back
 
-. show_inherited_subsections 'NO'|'REFER'|'EXPAND'
+. show_inherited_subsections => 'NO'|'REFER'|'EXPAND'
 
 =back
 
@@ -299,11 +299,11 @@ $obj-E<gt>B<showExamples>(OPTIONS)
  manual    <required>
  output    <required>
 
-. examples ARRAY
+. examples => ARRAY
 
-. manual MANUAL
+. manual => MANUAL
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -317,13 +317,13 @@ $obj-E<gt>B<showOptionExpand>(OPTIONS)
  option   <required>
  output   <required>
 
-. default OBJECT
+. default => OBJECT
 
-. manual OBJECT
+. manual => OBJECT
 
-. option OBJECT
+. option => OBJECT
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -336,11 +336,11 @@ $obj-E<gt>B<showOptionTable>(OPTIONS)
  options  <required>
  output   <required>
 
-. manual OBJECT
+. manual => OBJECT
 
-. options ARRAY
+. options => ARRAY
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -354,13 +354,13 @@ $obj-E<gt>B<showOptionUse>(OPTIONS)
  option   <required>
  output   <required>
 
-. default OBJECT
+. default => OBJECT
 
-. manual OBJECT
+. manual => OBJECT
 
-. option OBJECT
+. option => OBJECT
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -383,13 +383,13 @@ options which belong to the subroutine being displayed.
  show_described_options  'EXPAND'
  show_inherited_options  'USE'
 
-. manual OBJECT
+. manual => OBJECT
 
-. options ARRAY
+. options => ARRAY
 
-. show_described_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_inherited_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
 =back
 
@@ -406,7 +406,7 @@ $obj-E<gt>B<showStructureExpanded>(OPTIONS)
  Option               --Default
  show_chapter_examples  'EXPAND'
 
-. show_chapter_examples 'NO'|'EXPAND'
+. show_chapter_examples => 'NO'|'EXPAND'
 
 =over 4
 
@@ -441,15 +441,15 @@ $obj-E<gt>B<showSubroutine>((@))
  show_subroutine         'EXPAND'
  subroutine              <required>
 
-. last BOOLEAN
+. last => BOOLEAN
 
-. manual MANUAL
+. manual => MANUAL
 
-. output FILE
+. output => FILE
 
-. show_described_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_diagnostics 'NO'|'EXPAND'
+. show_diagnostics => 'NO'|'EXPAND'
 
 =over 4
 
@@ -460,13 +460,13 @@ chapter per manual page.
 
 =back
 
-. show_examples 'NO'|'EXPAND'
+. show_examples => 'NO'|'EXPAND'
 
-. show_inherited_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_option_table 'NO'|'INHERITED'|'DESCRIBED'|'ALL'
+. show_option_table => 'NO'|'INHERITED'|'DESCRIBED'|'ALL'
 
-. show_sub_description 'NO'|'DESCRIBED'|'REFER'|'ALL'
+. show_sub_description => 'NO'|'DESCRIBED'|'REFER'|'ALL'
 
 =over 4
 
@@ -480,9 +480,9 @@ file as well.
 
 =back
 
-. show_subroutine 'NO'|'NAMES'|'USE'|'EXPAND'
+. show_subroutine => 'NO'|'NAMES'|'USE'|'EXPAND'
 
-. subroutine OBJECT
+. subroutine => OBJECT
 
 =back
 
@@ -495,11 +495,11 @@ $obj-E<gt>B<showSubroutineDescription>(OPTIONS)
  output      <required>
  subroutine  <required>
 
-. manual OBJECT
+. manual => OBJECT
 
-. output FILE
+. output => FILE
 
-. subroutine OBJECT
+. subroutine => OBJECT
 
 =back
 
@@ -513,13 +513,13 @@ $obj-E<gt>B<showSubroutineName>(OPTIONS)
  output      <required>
  subroutine  <required>
 
-. last BOOLEAN
+. last => BOOLEAN
 
-. manual OBJECT
+. manual => OBJECT
 
-. output FILE
+. output => FILE
 
-. subroutine OBJECT
+. subroutine => OBJECT
 
 =back
 
@@ -532,11 +532,11 @@ $obj-E<gt>B<showSubroutineUse>(OPTIONS)
  output      <required>
  subroutine  <required>
 
-. manual OBJECT
+. manual => OBJECT
 
-. output FILE
+. output => FILE
 
-. subroutine OBJECT
+. subroutine => OBJECT
 
 =back
 
@@ -555,23 +555,23 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
  show_subs_index         'NO'
  subroutines             []
 
-. manual MANUAL
+. manual => MANUAL
 
-. output FILE
+. output => FILE
 
-. show_described_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_described_subs 'NO'|'NAMES'|'USE'|'EXPAND'
+. show_described_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
 
-. show_inherited_options 'NO'|'LIST'|'USE'|'EXPAND'
+. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_inherited_subs 'NO'|'NAMES'|'USE'|'EXPAND'
+. show_inherited_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
 
-. show_option_table 'NO'|'DESCRIBED'|'INHERITED'|'ALL'
+. show_option_table => 'NO'|'DESCRIBED'|'INHERITED'|'ALL'
 
-. show_subs_index 'NO'|'NAMES'|'USE'
+. show_subs_index => 'NO'|'NAMES'|'USE'
 
-. subroutines ARRAY
+. subroutines => ARRAY
 
 =back
 
@@ -694,12 +694,12 @@ I<Warning:> unknown subroutine type $type for $name in $manual
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

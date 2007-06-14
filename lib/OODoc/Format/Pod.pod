@@ -96,9 +96,9 @@ Produces the chapter which shows inheritance relationships.
  manual  <required>
  output  <required>
 
-. manual OBJECT
+. manual => OBJECT
 
-. output IO::File
+. output => IO::File
 
 =back
 
@@ -141,7 +141,7 @@ $obj-E<gt>B<createManual>(OPTIONS)
  project         OODoc::Format    <required>
  template        OODoc::Format    undef
 
-. append STRING|CODE
+. append => STRING|CODE
 
 =over 4
 
@@ -150,13 +150,13 @@ See L<formatManual(append)|OODoc::Format::Pod/"Page generation"> for an explanat
 
 =back
 
-. format_options ARRAY
+. format_options => ARRAY
 
-. manual MANUAL
+. manual => MANUAL
 
-. project STRING
+. project => STRING
 
-. template LOCATION
+. template => LOCATION
 
 =back
 
@@ -180,7 +180,7 @@ They are completed with the defaults set by L<createManual(format_options)|OODoc
  manual  <required>
  output  <required>
 
-. append STRING|CODE
+. append => STRING|CODE
 
 =over 4
 
@@ -195,9 +195,9 @@ page.  See L</Configuring>.
 
 =back
 
-. manual MANUAL
+. manual => MANUAL
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -358,7 +358,7 @@ $obj-E<gt>B<writeTable>
  output  <required>
  widths  undef
 
-. ARRAY -OF-ARRAYS
+. ARRAY => -OF-ARRAYS
 
 =over 4
 
@@ -367,11 +367,11 @@ is the header.
 
 =back
 
-. header ARRAY
+. header => ARRAY
 
-. output FILE
+. output => FILE
 
-. widths ARRAY
+. widths => ARRAY
 
 =back
 
@@ -636,12 +636,12 @@ I<Warning:> unknown subroutine type $type for $name in $manual
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

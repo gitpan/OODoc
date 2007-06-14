@@ -41,7 +41,7 @@ OODoc::Format::Html-E<gt>B<new>(OPTIONS)
  version         OODoc::Format    <required>
  workdir         OODoc::Format    <required>
 
-. html_meta_data STRING
+. html_meta_data => STRING
 
 =over 4
 
@@ -50,17 +50,17 @@ Cascading Style Sheets, and such.
 
 =back
 
-. html_root URI
+. html_root => URI
 
-. jump_script URI
+. jump_script => URI
 
-. manifest OBJECT
+. manifest => OBJECT
 
-. project STRING
+. project => STRING
 
-. version STRING
+. version => STRING
 
-. workdir DIRECTORY
+. workdir => DIRECTORY
 
 =back
 
@@ -147,15 +147,15 @@ $obj-E<gt>B<createManual>(OPTIONS)
  project         OODoc::Format    <required>
  template                         "html/manual/"
 
-. append STRING|CODE
+. append => STRING|CODE
 
-. format_options ARRAY
+. format_options => ARRAY
 
-. manual MANUAL
+. manual => MANUAL
 
-. project STRING
+. project => STRING
 
-. template DIRECTORY|HASH
+. template => DIRECTORY|HASH
 
 =over 4
 
@@ -191,11 +191,11 @@ $obj-E<gt>B<createOtherPages>(OPTIONS)
  source   OODoc::Format    "html/other/"
  verbose  OODoc::Format    0
 
-. process REGEXP
+. process => REGEXP
 
-. source DIRECTORY
+. source => DIRECTORY
 
-. verbose INTEGER
+. verbose => INTEGER
 
 =back
 
@@ -373,7 +373,7 @@ $obj-E<gt>B<writeTable>
  header  <required>
  output  <required>
 
-. ARRAY -OF-ARRAYS
+. ARRAY => -OF-ARRAYS
 
 =over 4
 
@@ -382,9 +382,9 @@ is the header.
 
 =back
 
-. header ARRAY
+. header => ARRAY
 
-. output FILE
+. output => FILE
 
 =back
 
@@ -407,7 +407,7 @@ $obj-E<gt>B<format>(OPTIONS)
  Option--Default
  manual  undef
 
-. manual MANUAL
+. manual => MANUAL
 
 =back
 
@@ -454,7 +454,7 @@ container to produce valid html.
  table_columns  2
  type           'ALL'
 
-. starting_with 'ALL'|STRING
+. starting_with => 'ALL'|STRING
 
 =over 4
 
@@ -464,7 +464,7 @@ as any non-word character or underscore.
 
 =back
 
-. table_columns INTEGER
+. table_columns => INTEGER
 
 =over 4
 
@@ -472,7 +472,7 @@ Produce a table with that number of columns.
 
 =back
 
-. type 'ALL'|STRING
+. type => 'ALL'|STRING
 
 =over 4
 
@@ -511,9 +511,9 @@ are interpreted as argument list which overrule the OPTIONS.
  show_subroutines  'LIST'
  subroutine_types  'ALL'
 
-. manual MANUAL
+. manual => MANUAL
 
-. show_sections 'NO'|'NAME'|'LINK'
+. show_sections => 'NO'|'NAME'|'LINK'
 
 =over 4
 
@@ -523,9 +523,9 @@ should the subroutines be listed within the chapter.
 
 =back
 
-. show_subroutines 'NO'|'COUNT'|'LIST'
+. show_subroutines => 'NO'|'COUNT'|'LIST'
 
-. subroutine_types 'ALL'|LIST
+. subroutine_types => 'ALL'|LIST
 
 =over 4
 
@@ -714,12 +714,12 @@ I<Warning:> unknown subroutine type $type for $name in $manual
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 0.99,
-built on March 25, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.00,
+built on June 14, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2007 by Mark Overmeer.For other contributors see ChangeLog.
+Copyrights 2003-2007 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
-# For other contributors see ChangeLog.
+#  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 0.99.
+# Pod stripped from pm file by OODoc 1.00.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '0.99';
+$VERSION = '1.00';
 use base 'OODoc::Object';
 
 use strict;
@@ -180,7 +180,7 @@ sub processFiles(@)
             unless(-e $dn && ( -M $dn < -M $fn ) && ( -s $dn == -s $fn ))
             {   $self->mkdirhier(dirname $dn);
 
-                copy($fn, $dn)
+                copy $fn, $dn
                    or die "ERROR: cannot copy distribution file $fn to $dest: $!\n";
 
                 print "Copied $fn to $dest\n" if $verbose > 2;
@@ -196,7 +196,7 @@ sub processFiles(@)
 
     my $parser = $args{parser} || 'OODoc::Parser::Markov';
     unless(ref $parser)
-    {   eval "{require $parser}";
+    {   eval "require $parser";
         croak "ERROR: Cannot compile $parser class:\n$@"
            if $@;
 
