@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.00.
+# Pod stripped from pm file by OODoc 1.01.
 
 package OODoc::Parser;
 use vars '$VERSION';
-$VERSION = '1.00';
+$VERSION = '1.01';
 use base 'OODoc::Object';
 
 use strict;

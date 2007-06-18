@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                OODoc
-version:             1.00
+version:             1.01
 abstract:            Object Oriented Documentation
 license:             ~
 generated_by:        ExtUtils::MakeMaker version 6.32
@@ -8,6 +8,7 @@ distribution_type:   module
 requires:     
     Bundle::Template::Magic:       0
     File::Slurp:                   9999.12
+    IO::Scalar:                    2.11
     Pod::Man:                      2.12
     Template::Magic::HTML:         1.02
     Test::More:                    0.47
