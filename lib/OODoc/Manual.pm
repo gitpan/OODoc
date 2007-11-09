@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Manual;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Object';
 
 use strict;
@@ -13,12 +13,11 @@ use warnings;
 
 use Carp;
 use List::Util 'first';
+use OODoc::Text::Chapter;
 
 
 use overload '""' => sub { shift->name };
 use overload bool => sub {1};
-
-#-------------------------------------------
 
 
 use overload cmp  => sub {$_[0]->name cmp "$_[1]"};
@@ -34,13 +33,13 @@ sub init($)
        or croak "ERROR: package name is not specified";
 
     $self->{OP_source}   = delete $args->{source}
-       or croak "ERROR: no source filename is specified for manual $name";
+        or croak "ERROR: no source filename is specified for manual $name";
 
     $self->{OP_version}  = delete $args->{version}
-       or croak "ERROR: no version is specified for manual $name";
+        or croak "ERROR: no version is specified for manual $name";
 
     $self->{OP_distr}    = delete $args->{distribution}
-       or croak "ERROR: no distribution is specified for manual $name";
+        or croak "ERROR: no distribution is specified for manual $name";
 
     $self->{OP_parser}   = delete $args->{parser}    or confess;
     $self->{OP_stripped} = delete $args->{stripped};
@@ -60,32 +59,20 @@ sub init($)
 
 sub package() {shift->{OP_package}}
 
-#-------------------------------------------
-
 
 sub parser() {shift->{OP_parser}}
-
-#-------------------------------------------
 
 
 sub source() {shift->{OP_source}}
 
-#-------------------------------------------
-
 
 sub version() {shift->{OP_version}}
-
-#-------------------------------------------
 
 
 sub distribution() {shift->{OP_distr}}
 
-#-------------------------------------------
-
 
 sub stripped() {shift->{OP_stripped}}
-
-#-------------------------------------------
 
 
 sub isPurePod() {shift->{OP_pure_pod}}
@@ -95,24 +82,23 @@ sub isPurePod() {shift->{OP_pure_pod}}
 
 sub chapter($)
 {   my ($self, $it) = @_;
-    return $self->{OP_chapter_hash}{$it} unless ref $it;
+    ref $it
+        or return $self->{OP_chapter_hash}{$it};
 
-    confess "$it is not a chapter"
-       unless $it->isa("OODoc::Text::Chapter");
+    $it->isa("OODoc::Text::Chapter")
+        or confess "ERROR: $it is not a chapter";
 
     my $name = $it->name;
     if(my $old = $self->{OP_chapter_hash}{$name})
     {   my ($fn,   $ln2) = $it->where;
         my (undef, $ln1) = $old->where;
-        die "ERROR: two chapters name $name in $fn line $ln2 and $ln1\n";
+        die "ERROR: two chapters named $name in $fn line $ln2 and $ln1\n";
     }
 
     $self->{OP_chapter_hash}{$name} = $it;
     push @{$self->{OP_chapters}}, $it;
     $it;
 }
-
-#-------------------------------------------
 
 
 sub chapters(@)
@@ -123,8 +109,6 @@ sub chapters(@)
     }
     @{$self->{OP_chapters}};
 }
-
-#-------------------------------------------
 
 
 sub name()
@@ -144,12 +128,8 @@ sub name()
 }
 
 
-#-------------------------------------------
-
 
 sub subroutines() { shift->all('subroutines') }
-
-#-------------------------------------------
 
 
 sub subroutine($)
@@ -169,8 +149,6 @@ sub subroutine($)
     ();
 }
 
-#-------------------------------------------
-
 
 sub examples()
 {   my $self = shift;
@@ -178,8 +156,6 @@ sub examples()
     , map {$_->examples} $self->subroutines
     );
 }
-
-#-------------------------------------------
 
 
 sub diagnostics(@)
@@ -207,15 +183,11 @@ sub superClasses(;@)
     @{$self->{OP_isa}};
 }
 
-#-------------------------------------------
-
 
 sub realizes(;$)
 {   my $self = shift;
     @_ ? ($self->{OP_realizes} = shift) : $self->{OP_realizes};
 }
-
-#-------------------------------------------
 
 
 sub subClasses(;@)
@@ -224,16 +196,12 @@ sub subClasses(;@)
     @{$self->{OP_subclasses}};
 }
 
-#-------------------------------------------
-
 
 sub realizers(;@)
 {   my $self = shift;
     push @{$self->{OP_realizers}}, @_;
     @{$self->{OP_realizers}};
 }
-
-#-------------------------------------------
 
 
 sub extraCode()
@@ -245,20 +213,14 @@ sub extraCode()
     : ();
 }
 
-#-------------------------------------------
-
 
 sub all($@)
 {   my $self = shift;
     map { $_->all(@_) } $self->chapters;
 }
 
-#-------------------------------------------
-
 
 sub inherited($) {$_[0]->name ne $_[1]->manual->name}
-
-#-------------------------------------------
 
 
 sub ownSubroutines
@@ -287,7 +249,6 @@ sub collectPackageRelations()
 
     %return;
 }
-#-------------------------------------------
 
 
 sub expand()
@@ -395,8 +356,6 @@ sub expand()
     $self;
 }
 
-#-------------------------------------------
-
 
 sub mergeStructure(@)
 {   my ($self, %args) = @_;
@@ -437,8 +396,6 @@ sub mergeStructure(@)
     (@joined, @this);
 }
 
-#-------------------------------------------
-
 
 sub mostDetailedLocation($)
 {   my ($self, $thing) = @_;
@@ -464,6 +421,76 @@ sub mostDetailedLocation($)
          if $self eq $thing->manual;
 
    $path1;
+}
+
+
+sub createInheritance()
+{   my $self = shift;
+
+    if($self->name ne $self->package)
+    {   # This is extra code....
+        my $from = $self->package;
+        return "\n $self\n    contains extra code for\n    M<$from>\n";
+    }
+
+    my $output;
+    my @supers  = $self->superClasses;
+
+    if(my $realized = $self->realizes)
+    {   $output .= "\n $self realizes a M<$realized>\n";
+        @supers = $realized->superClasses if ref $realized;
+    }
+
+    if(my @extras = $self->extraCode)
+    {   $output .= "\n $self has extra code in\n";
+        $output .= "   M<$_>\n" foreach sort @extras;
+    }
+
+    foreach my $super (@supers)
+    {   $output .= "\n $self\n";
+        $output .= $self->createSuperSupers($super);
+    }
+
+    if(my @subclasses = $self->subClasses)
+    {   $output .= "\n $self is extended by\n";
+        $output .= "   M<$_>\n" foreach sort @subclasses;
+    }
+
+    if(my @realized = $self->realizers)
+    {   $output .= "\n $self is realized by\n";
+        $output .= "   M<$_>\n" foreach sort @realized;
+    }
+
+    my $chapter = OODoc::Text::Chapter->new
+      ( name        => 'INHERITANCE'
+      , manual      => $self
+      , linenr      => -1
+      , description => $output
+      );
+
+    $self->chapter($chapter);
+}
+
+sub createSuperSupers($)
+{   my ($self, $package) = @_;
+    my $output = "   is a M<$package>\n";
+    return $output
+        unless ref $package;  # only the name of the package is known
+
+    if(my $realizes = $package->realizes)
+    {   $output .= $self->createSuperSupers($realizes);
+        return $output;
+    }
+
+    my @supers = $package->superClasses or return $output;
+    $output   .= $self->createSuperSupers(shift @supers);
+
+    foreach(@supers)
+    {   $output .= "\n\n   $package also extends M<$_>\n";
+        $output .= $self->createSuperSupers($_);
+    }
+
+    $output;
 }
 
 #-------------------------------------------

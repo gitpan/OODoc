@@ -1,12 +1,12 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '1.01';
-use base 'OODoc::Format';
+$VERSION = '1.02';
+use base qw/OODoc::Format OODoc::Format::TemplateMagic/;
 
 use strict;
 use warnings;
@@ -22,12 +22,6 @@ use File::Copy     'copy';
 use POSIX          'strftime';
 
 use Template::Magic;
-
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -241,7 +235,7 @@ sub showStructureExpand(@)
     my $text     = $args{structure} or confess;
 
     my $name     = $text->name;
-    my $level    = $text->level;
+    my $level    = $text->level +1;  # header level, chapter = H2
     my $output   = $args{output}  or confess;
     my $manual   = $args{manual}  or confess;
 
@@ -547,36 +541,29 @@ sub writeTable($@)
 
 sub showSubroutineDescription(@)
 {   my ($self, %args) = @_;
-    my $manual  = $args{manual}                   or confess;
-    my $subroutine = $args{subroutine}            or confess;
+    my $manual     = $args{manual}     or confess;
+    my $subroutine = $args{subroutine} or confess;
 
-    my $text    = $self->cleanup($manual, $subroutine->description);
+    my $text       = $self->cleanup($manual, $subroutine->description);
     return $self unless length $text;
 
-    my $output  = $args{output}                   or confess;
+    my $output     = $args{output}     or confess;
     $output->print($text);
 
-    my $extends = $self->extends                  or return $self;
-    my $refer   = $extends->findDescriptionObject or return $self;
+    my $extends    = $self->extends    or return $self;
+    my $refer      = $extends->findDescriptionObject or return $self;
 
     $output->print("<br />\n");
     $self->showSubroutineDescriptionRefer(%args, subroutine => $refer);
 }
 
-#-------------------------------------------
-
 sub showSubroutineDescriptionRefer(@)
 {   my ($self, %args) = @_;
-    my $manual  = $args{manual}                   or confess;
-    my $subroutine = $args{subroutine}            or confess;
-    my $output  = $args{output}                   or confess;
+    my $manual     = $args{manual}     or confess;
+    my $subroutine = $args{subroutine} or confess;
+    my $output     = $args{output}     or confess;
     $output->print("\nSee ", $self->link($manual, $subroutine), "\n");
 }
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 our %producers =
@@ -617,15 +604,11 @@ sub format(@)
     $output->print($$created);
 }
 
-#-------------------------------------------
-
 
 sub templateProject($$)
 {   my ($self, $zone, $args) = @_;
     $self->project;
 }
-
-#-------------------------------------------
 
 
 sub templateTitle($$)
@@ -639,8 +622,6 @@ sub templateTitle($$)
     $name;
 }
 
-#-------------------------------------------
-
 
 sub templateManual($$)
 {   my ($self, $zone, $args) = @_;
@@ -651,16 +632,12 @@ sub templateManual($$)
     $self->cleanupString($manual, $manual->name);
 }
 
-#-------------------------------------------
-
 
 sub templateDistribution($$)
 {   my ($self, $zone, $args) = @_;
     my $manual  = $args->{manual};
     defined $manual ? $manual->distribution : '';
 }
-
-#-------------------------------------------
 
 
 sub templateVersion($$)
@@ -669,15 +646,11 @@ sub templateVersion($$)
     defined $manual ? $manual->version : $self->version;
 }
 
-#-------------------------------------------
-
 
 sub templateDate($$)
 {   my ($self, $zone, $args) = @_;
     strftime "%Y/%m/%d", localtime;
 }
-
-#-------------------------------------------
 
 
 sub templateName($$)
@@ -696,8 +669,6 @@ sub templateName($$)
     die "ERROR: chapter NAME in manual $manual has illegal shape\n";
 }
 
-#-------------------------------------------
-
 
 our %path_lookup =
  ( front       => "index.html"
@@ -715,33 +686,37 @@ sub templateHref($$)
     qq[<a href="$self->{OFH_html}/$path" target="_top">];
 }
 
-#-------------------------------------------
-
 
 sub templateMeta($$)
 {   my ($self, $zone, $args) = @_;
     $self->{OFH_meta};
 }
 
-#-------------------------------------------
-
 
 sub templateInheritance(@)
 {   my ($self, $zone, $args) = @_;
 
-    my $manual  = $args->{manual} or confess;
-    my $output  = $self->cleanup($manual, $self->createInheritance($manual));
-    return '' unless length $output;
+    my $manual  = $args->{manual};
+    my $chapter = $manual->chapter('INHERITANCE')
+        or return '';
 
-    for($output)
+    my $out     = '';
+    $self->showChapter
+     ( %$args
+     , chapter => $chapter
+     , output  => IO::Scalar->new(\$out)
+     , $self->zoneGetParameters($zone)
+     );
+
+    for($out)
     {   s#<pre>\s*(.*?)</pre>\n*#\n$1#gs;   # over-eager cleanup
         s#^( +)#'&nbsp;' x length($1)#gme;
         s#$#<br />#gm;
+        s#(</h\d>)(<br />\n?)+#$1\n#;
     }
-    $output;
-}
 
-#-------------------------------------------
+    $out;
+}
 
 
 sub templateChapter($$)
@@ -767,8 +742,6 @@ sub templateChapter($$)
 
     $out;
 }
-
-#-------------------------------------------
 
 
 sub templateIndex($$)
@@ -877,8 +850,6 @@ DIAG
     $output;
 }
 
-#-------------------------------------------
-
 
 sub templateList($$)
 {   my ($self, $zone, $args) = @_;
@@ -980,8 +951,6 @@ sub templateList($$)
 
     $output;
 }
-
-#-------------------------------------------
 
 sub indexListSubroutines(@)
 {   my $self   = shift;

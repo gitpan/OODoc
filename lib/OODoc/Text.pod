@@ -5,7 +5,7 @@ OODoc::Text - text component as found in a manual
 =head1 INHERITANCE
 
  OODoc::Text
-   is an OODoc::Object
+   is a OODoc::Object
 
  OODoc::Text is extended by
    OODoc::Text::Default
@@ -145,7 +145,7 @@ $obj-E<gt>B<name>
 The name of this text element.  Stringification is overloaded to call
 this name method.
 
-I<Example:> 
+example: 
 
  print $text->name;
  print $text;   # via overload
@@ -180,7 +180,7 @@ Returns a unique id for this text item.  This is the easiest way to
 see whether two references to the same (overloaded) objects point to
 the same thing. The ids are numeric.
 
-I<Example:> 
+example: 
 
  if($obj1->unique == $obj2->unique) {...}
  if($obj1 == $obj2) {...}   # same via overload
@@ -232,7 +232,7 @@ $obj-E<gt>B<openDescription>
 Returns a reference to the scalar which will contain the description for
 this object.
 
-I<Example:> 
+example: 
 
  my $descr = $text->openDescription;
  $$descr  .= "add a line\n";
@@ -305,22 +305,30 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> manual definition requires manual object
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Error:> no text container specified for the $type object
+=back
+
+Error: no text container specified for the $type object
+
+=over 4
 
 Each text element is encapsulated by an other text element, except
 chapters.  A value must be known for this C<container> option to
 define the elements relative location.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

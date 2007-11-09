@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Text::Diagnostic;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Text';
 
 use strict;

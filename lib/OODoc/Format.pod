@@ -5,7 +5,7 @@ OODoc::Format - base class for all OODoc formatters
 =head1 INHERITANCE
 
  OODoc::Format
-   is an OODoc::Object
+   is a OODoc::Object
 
  OODoc::Format is extended by
    OODoc::Format::Html
@@ -41,7 +41,15 @@ Object Oriented programmers.
 This formatter uses the same methods to generate the manual page as
 defined by L<OODoc::Format::Pod|OODoc::Format::Pod>, but the general layout of the page
 can be configured using templates.
+
 You have to install L<Bundle::Template::Magic> to use this feature.
+
+=item * L<OODoc::Format::Pod3|OODoc::Format::Pod3>
+
+The whole formatter, implemented as template in L<OODoc::Template|OODoc::Template>, a
+very light weighted template system.
+
+You have to install L<OODoc::Template> to use this feature.
 
 =item * L<OODoc::Format::Html|OODoc::Format::Html>
 
@@ -152,17 +160,6 @@ $obj-E<gt>B<cleanup>(MANUAL, STRING)
 Takes the STRING and cleans it up to be in the right format for the
 current formatter.  The cleaning up is parser dependent, and therefore
 the parser of the manual is addressed to do the work.
-
-=back
-
-$obj-E<gt>B<createInheritance>(MANUAL)
-
-=over 4
-
-Create the text which represents the inheritance relationships of
-a certain package.  More than one MANUAL can be defined for one
-package, and will each produce the same text.  The returned string
-still has to be cleaned-up before inclusion.
 
 =back
 
@@ -549,6 +546,8 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
  output                  <selected filehandle>
  show_described_options  'EXPAND'
  show_described_subs     'EXPAND'
+ show_diagnostics        'NO'
+ show_examples           'EXPAND'
  show_inherited_options  'USE'
  show_inherited_subs     'USE'
  show_option_table       'ALL'
@@ -563,6 +562,10 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 . show_described_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
 
+. show_diagnostics => 'NO'|'EXPAND'
+
+. show_examples => 'NO'|'EXPAND'
+
 . show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
 . show_inherited_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
@@ -572,27 +575,6 @@ $obj-E<gt>B<showSubroutines>(OPTIONS)
 . show_subs_index => 'NO'|'NAMES'|'USE'
 
 . subroutines => ARRAY
-
-=back
-
-=head2 Template::Magic
-
-Support methods for implementations which are based on L<Template::Magic>.
-
-$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
-=over 4
-
-Takes a Template::Magic::Zone object to process the text after the
-tag.  You may also specify a string, for instance a modified
-attribute list.  The return is a list of key-value pairs with data.
-
-I<Example:> of valid arguments
-
- <!--{examples expand NO list ALL}-->   # old style
- <!--{examples expand => NO, list => ALL}-->
- <!--{examples expand => NO,
-         list => ALL}-->
 
 =back
 
@@ -670,32 +652,56 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> formatter does not know the version.
+Error: formatter does not know the version.
 
-I<Error:> formatter has no project name.
+=over 4
+
+=back
+
+Error: formatter has no project name.
+
+=over 4
 
 A formatter was created without a name specified for the project at
 hand.  This should be passed with L<new(project)|OODoc::Format/"METHODS">.
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Warning:> missing required chapter $name in $manual
+=back
 
-I<Error:> no working directory specified.
+Warning: missing required chapter $name in $manual
+
+=over 4
+
+=back
+
+Error: no working directory specified.
+
+=over 4
 
 The formatter has to know where the output can be written.  This
 directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was not specified.
 
-I<Warning:> unknown subroutine type $type for $name in $manual
+=back
+
+Warning: unknown subroutine type $type for $name in $manual
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

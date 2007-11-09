@@ -1,12 +1,15 @@
 =head1 NAME
 
-OODoc::Format::Html - Produce HTML pages from the doc tree
+OODoc::Format::Html - Produce HTML pages using Template::Magic
 
 =head1 INHERITANCE
 
  OODoc::Format::Html
-   is an OODoc::Format
-   is an OODoc::Object
+   is a OODoc::Format
+   is a OODoc::Object
+
+ OODoc::Format::Html
+   is a OODoc::Format::TemplateMagic
 
 =head1 SYNOPSIS
 
@@ -25,6 +28,14 @@ POD, because one manual page may be spread over multiple output files.
 =head1 OVERLOADED
 
 =head1 METHODS
+
+$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
+
+=over 4
+
+See L<OODoc::Format::TemplateMagic/"METHODS">
+
+=back
 
 =head2 Constructors
 
@@ -128,14 +139,6 @@ at all: these simple strings are to be cleaned from paragraph information.
 
 =back
 
-$obj-E<gt>B<createInheritance>(MANUAL)
-
-=over 4
-
-See L<OODoc::Format/"Page generation">
-
-=back
-
 $obj-E<gt>B<createManual>(OPTIONS)
 
 =over 4
@@ -168,7 +171,7 @@ in the template file.
 
 =back
 
-I<Example:> template specification
+example: template specification
 
 Default:
 
@@ -208,7 +211,7 @@ which are specified as LOCATION for templates into hash of filenames
 names and related formatting options.  The FORMAT is an array of options
 which can be overruled by values which the LOCATION is specified as hash.
 
-I<Example:> expanding template specification into files
+example: expanding template specification into files
 
  my $exp = $self->expandTemplate("html/manual", [show => 'NO']);
  while(my ($fn,$opts) = each %$exp) {print "$fn @$opts\n"}
@@ -388,16 +391,6 @@ is the header.
 
 =back
 
-=head2 Template::Magic
-
-$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
-=over 4
-
-See L<OODoc::Format/"Template::Magic">
-
-=back
-
 =head2 Template processing
 
 $obj-E<gt>B<format>(OPTIONS)
@@ -483,7 +476,7 @@ are listed or C<error> for diagnostics.
 
 =back
 
-I<Example:> use of the template tag "index"
+example: use of the template tag "index"
 
  <table cellspacing="10">
  <!--{index DIAGNOSTICS type error starting_with A}-->
@@ -654,68 +647,152 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> cannot find chapter NAME in manual $name
+Error: cannot find chapter NAME in manual $name
 
-I<Error:> cannot find template source $name
+=over 4
+
+=back
+
+Error: cannot find template source $name
+
+=over 4
 
 Somewhere was specified to use $name (a file or directory) as source
 for a template.  However, it does not seem to exist.  Unfortunately,
 the location where the source is specified is not known when the
 error is produced.
 
-I<Error:> cannot write html manual at $filename: $!
+=back
 
-I<Error:> chapter NAME in manual $name has illegal shape
+Error: cannot write html manual at $filename: $!
 
-I<Error:> chapter without name in template.
+=over 4
+
+=back
+
+Error: chapter NAME in manual $name has illegal shape
+
+=over 4
+
+=back
+
+Error: chapter without name in template.
+
+=over 4
 
 In your template file, a {chapter} statement is used, which is
 erroneous, because it requires a chapter name.
 
-I<Error:> html source directory $source does not exist.
+=back
 
-I<Error:> illegal value to show_sections: $show_sec
+Error: html source directory $source does not exist.
 
-I<Error:> manual definition requires manual object
+=over 4
+
+=back
+
+Error: illegal value to show_sections: $show_sec
+
+=over 4
+
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Warning:> missing required chapter $name in $manual
+=back
 
-I<Error:> no directory to put other html pages in.
+Warning: missing required chapter $name in $manual
 
-I<Error:> no group named as attribute for index
+=over 4
+
+=back
+
+Error: no directory to put other html pages in.
+
+=over 4
+
+=back
+
+Error: no group named as attribute for index
+
+=over 4
 
 In your template file, an {index} statement is used without a chapter name
 or 'ALL'.  Therefore, it is unclear which kind of index has to
 be built.
 
-I<Error:> no group named as attribute for list
+=back
 
-I<Warning:> no meaning for container $contained in list block
+Error: no group named as attribute for list
 
-I<Warning:> no meaning for container $container in chapter block
+=over 4
 
-I<Warning:> no meaning for container $container in index block
+=back
 
-I<Error:> no package name for html production
+Warning: no meaning for container $contained in list block
 
-I<Error:> not a manual, so no automatic title in $template
+=over 4
 
-I<Error:> not a manual, so no manual name for $template
+=back
 
-I<Error:> not a manual, so no name for $template
+Warning: no meaning for container $container in chapter block
 
-I<Error:> unknown group $name as list attribute
+=over 4
 
-I<Warning:> unknown subroutine type $type for $name in $manual
+=back
+
+Warning: no meaning for container $container in index block
+
+=over 4
+
+=back
+
+Error: no package name for html production
+
+=over 4
+
+=back
+
+Error: not a manual, so no automatic title in $template
+
+=over 4
+
+=back
+
+Error: not a manual, so no manual name for $template
+
+=over 4
+
+=back
+
+Error: not a manual, so no name for $template
+
+=over 4
+
+=back
+
+Error: unknown group $name as list attribute
+
+=over 4
+
+=back
+
+Warning: unknown subroutine type $type for $name in $manual
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

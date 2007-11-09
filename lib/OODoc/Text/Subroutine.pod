@@ -5,8 +5,8 @@ OODoc::Text::Subroutine - collects information about one documented sub
 =head1 INHERITANCE
 
  OODoc::Text::Subroutine
-   is an OODoc::Text
-   is an OODoc::Object
+   is a OODoc::Text
+   is a OODoc::Object
 
 =head1 SYNOPSIS
 
@@ -346,13 +346,19 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> manual definition requires manual object
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Warning:> subroutine $name extended by different type:
+=back
+
+Warning: subroutine $name extended by different type:
+
+=over 4
 
 Any description of a subroutine classifies it as method, tie, overload or
 whatever.  Apparently, this indicated subroutine is defined being of a
@@ -362,7 +368,11 @@ between these places.
 In very rare cases, this warning can be ignored, but usually these
 situation is errorneous of confusing for the users of the library.
 
-I<Warning:> subroutine $self location conflict: $here $super
+=back
+
+Warning: subroutine $self location conflict: $here $super
+
+=over 4
 
 The location of subroutine descriptions must be consistent over the
 manual pages.  You may change the level of clearness about the
@@ -370,10 +380,12 @@ exact location (place in the chapter in one page, and in a subsection
 in the next), as long as it is not conflicting (the subsection must
 be a part of the chapter).
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

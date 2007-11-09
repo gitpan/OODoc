@@ -5,7 +5,7 @@ OODoc::Manual - one manual about a package
 =head1 INHERITANCE
 
  OODoc::Manual
-   is an OODoc::Object
+   is a OODoc::Object
 
 =head1 SYNOPSIS
 
@@ -33,7 +33,7 @@ String comparison takes place between a manual name and another
 manual name which may be a manual object or any other string or
 stringifyable object.
 
-I<Example:> 
+example: 
 
  if($manual eq 'OODoc') ...
  if($man1 eq $man2) ...
@@ -220,7 +220,7 @@ $obj-E<gt>B<examples>
 All examples of all chapters within this manual together, especially
 useful for counting.
 
-I<Example:> 
+example: 
 
  print scalar $manual->examples;
 
@@ -251,7 +251,7 @@ $obj-E<gt>B<subroutines>
 All subroutines of all chapters within this manual together, especially
 useful for counting.
 
-I<Example:> 
+example: 
 
  print scalar $manual->subroutines;
 
@@ -267,7 +267,7 @@ Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Collected"> on all 
 and PARAMETERS.  In practice, this means that you can simply collect
 kinds of information from various parts within the manual page.
 
-I<Example:> 
+example: 
 
  my @diags = $manual->all('diagnostics');
 
@@ -351,6 +351,17 @@ will be added to the list of superclasses first.
 $obj-E<gt>B<collectPackageRelations>
 
 =over 4
+
+=back
+
+$obj-E<gt>B<createInheritance>
+
+=over 4
+
+Create the text which represents the inheritance relationships of
+a certain package.  More than one MANUAL can be defined for one
+package, and will each produce the same text.  The returned string
+still has to be cleaned-up before inclusion.
 
 =back
 
@@ -503,14 +514,20 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> No chapter NAME in scope of package $pkg in file $source
+Error: No chapter NAME in scope of package $pkg in file $source
+
+=over 4
 
 Each documentation part requires a chapter "NAME" which starts with
 the manual name followed by a dash.  Apparently, this was not found
 in the indicated file.  This chapter description must be anywhere
 after the package statement leading the name-space.
 
-I<Error:> The NAME chapter does not have the right format in $source
+=back
+
+Error: The NAME chapter does not have the right format in $source
+
+=over 4
 
 The NAME chapter is used to figure-out what name the manual page must
 have.  The standard format contains only one line, containing the
@@ -518,33 +535,61 @@ manual's name, one dash ('-'), and then a brief explanation. For instance:
   =chapter NAME
   OODoc::Manual - one manual about a package
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Error:> no distribution is specified for manual $name
+=back
 
-I<Error:> no source filename is specified for manual $name
+Error: no distribution is specified for manual $name
+
+=over 4
+
+=back
+
+Error: no source filename is specified for manual $name
+
+=over 4
 
 You have to specify where you found the information for the manual.  This
 does not need to be the name of an existing file, but usually it will be.
 
-I<Error:> no version is specified for manual $name
+=back
 
-I<Warning:> order conflict "$take" before "$insert" in $file line $number
+Error: no version is specified for manual $name
+
+=over 4
+
+=back
+
+Warning: order conflict "$take" before "$insert" in $file line $number
+
+=over 4
 
 The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
-I<Error:> package name is not specified
+=back
+
+Error: package name is not specified
+
+=over 4
 
 You try to instantiate a manual, but have not specified the name
 of the package which is described in this manual, which is required.
 
-I<Warning:> subroutine $name location conflict: $here and $there
+=back
+
+Warning: subroutine $name location conflict: $here and $there
+
+=over 4
 
 Finding the optimal location to list a subroutine description is
 a harsh job: information from various manual pages is being used.
@@ -561,15 +606,21 @@ is not related to that of the same method in an other page.  For instance,
 in the first page it is listed in chapter "METHODS", and in the second
 in chapter "FUNCTIONS".
 
-I<Error:> two chapters name $name in $filename line $ln1 and $ln2
+=back
+
+Error: two chapters named $name in $filename line $ln1 and $ln2
+
+=over 4
 
 The indicated file contains two chapters with the same name, which
 is not permitted.  Join the contents of both parts.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

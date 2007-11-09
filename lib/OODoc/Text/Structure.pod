@@ -5,13 +5,14 @@ OODoc::Text::Structure - set of paragraphs with examples and subroutines
 =head1 INHERITANCE
 
  OODoc::Text::Structure
-   is an OODoc::Text
-   is an OODoc::Object
+   is a OODoc::Text
+   is a OODoc::Object
 
  OODoc::Text::Structure is extended by
    OODoc::Text::Chapter
    OODoc::Text::Section
    OODoc::Text::SubSection
+   OODoc::Text::SubSubSection
 
 =head1 SYNOPSIS
 
@@ -187,7 +188,7 @@ $obj-E<gt>B<path>
 Represent the location of this chapter, section, or subsection as
 one string, separated by slashes.
 
-I<Example:> 
+example: 
 
  print $subsect->path; 
     # may print:  METHODS/Container/Search
@@ -258,7 +259,7 @@ L<emptyExtension()|OODoc::Text::Structure/"Constructors"> on each sub-class pass
 collect subroutines to be listed.  However, in some cases, nothing
 is to be listed after all, and in that case, this method returns C<true>.
 
-I<Example:> 
+example: 
 
  unless($chapter->isEmpty) ...
 
@@ -281,8 +282,8 @@ $obj-E<gt>B<addSubroutine>(OBJECTS)
 
 =over 4
 
-A subroutine (OODoc::Text::Subroutine object) is added to the chapter,
-section or subsection.
+A subroutine (L<OODoc::Text::Subroutine|OODoc::Text::Subroutine> object) is added to the
+chapter, section, or subsection.
 
 =back
 
@@ -378,18 +379,26 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> manual definition requires manual object
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Error:> no level defined for structural component
+=back
+
+Error: no level defined for structural component
+
+=over 4
+
+=back
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

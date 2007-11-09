@@ -1,47 +1,34 @@
 =head1 NAME
 
-OODoc::Format::Pod2 - Produce POD pages from the doc tree with a template
+OODoc::Format::Pod3 - Produce POD pages using OODoc::Template
 
 =head1 INHERITANCE
 
- OODoc::Format::Pod2
+ OODoc::Format::Pod3
    is a OODoc::Format::Pod
    is a OODoc::Format
    is a OODoc::Object
-
- OODoc::Format::Pod2
-   is a OODoc::Format::TemplateMagic
 
 =head1 SYNOPSIS
 
  my $doc = OODoc->new(...);
  $doc->create
-   ( 'pod2'   # or 'OODoc::Format::Pod2'
+   ( 'pod3'   # or 'OODoc::Format::Pod3'
    , format_options => [show_examples => 'NO']
    );
 
 =head1 DESCRIPTION
 
-Create manual pages in the POD syntax, using the Template::Magic
-template system.  It may be a bit simpler to configure the outcome
-using the template, than using L<OODoc::Format::Pod|OODoc::Format::Pod>, however you
-first need to install L<Bundle::Template::Magic>.
+Create manual pages in the POD syntax, using the L<OODoc::Template|OODoc::Template>
+template system.
 
 =head1 OVERLOADED
 
 =head1 METHODS
 
-$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
-=over 4
-
-See L<OODoc::Format::TemplateMagic/"METHODS">
-
-=back
-
 =head2 Constructors
 
-OODoc::Format::Pod2-E<gt>B<new>(OPTIONS)
+OODoc::Format::Pod3-E<gt>B<new>(OPTIONS)
 
 =over 4
 
@@ -135,7 +122,7 @@ $obj-E<gt>B<createManual>(OPTIONS)
 =over 4
 
 The default template is included in the DATA segment of
-L<OODoc::Format::Pod2|OODoc::Format::Pod2>.  You may start your own template
+L<OODoc::Format::Pod3|OODoc::Format::Pod3>.  You may start your own template
 by copying it to a file.
 
 =back
@@ -310,19 +297,11 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =back
 
-=head2 Template processing
-
-$obj-E<gt>B<templateChapter>
-
-=over 4
-
-=back
-
 =head2 Commonly used functions
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Format::Pod2-E<gt>B<filenameToPackage>(FILENAME)
+OODoc::Format::Pod3-E<gt>B<filenameToPackage>(FILENAME)
 
 =over 4
 
@@ -332,7 +311,7 @@ See L<OODoc::Object/"Commonly used functions">
 
 $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Format::Pod2-E<gt>B<mkdirhier>(DIRECTORY)
+OODoc::Format::Pod3-E<gt>B<mkdirhier>(DIRECTORY)
 
 =over 4
 
@@ -390,6 +369,8 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
+=head2 Template processing
+
 =head1 DETAILS
 
 =head1 DIAGNOSTICS
@@ -403,15 +384,6 @@ Error: cannot read prelimary pod from $infn: $!
 Error: cannot write final pod to $outfn: $!
 
 =over 4
-
-=back
-
-Error: chapter without name in template.
-
-=over 4
-
-In your template file, a {chapter} statement is used, which is
-erroneous, because it requires a chapter name.
 
 =back
 
@@ -447,12 +419,6 @@ Warning: missing required chapter $name in $manual
 =back
 
 Error: no directory to put pod manual for $name in
-
-=over 4
-
-=back
-
-Warning: no meaning for container $container in chapter block
 
 =over 4
 

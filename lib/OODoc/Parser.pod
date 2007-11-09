@@ -5,7 +5,7 @@ OODoc::Parser - base class for all OODoc parsers.
 =head1 INHERITANCE
 
  OODoc::Parser
-   is an OODoc::Object
+   is a OODoc::Object
 
  OODoc::Parser is extended by
    OODoc::Parser::Markov
@@ -177,32 +177,48 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> The formatter type $class is not known for cleanup
+Error: The formatter type $class is not known for cleanup
+
+=over 4
 
 Text blocks have to get the finishing touch in the final formatting
 phase.  The parser has to fix the text block segments to create a
 formatter dependent output.  Only a few formatters are predefined.
 
-I<Warning:> Unknown option $name
+=back
+
+Warning: Unknown option $name
+
+=over 4
 
 You have used the option with $name, which is not defined with the
 instantiation (the C<new> method) of this object.
 
-I<Warning:> Unknown options @names
+=back
+
+Warning: Unknown options @names
+
+=over 4
 
 You have used more than one option which is not defined to instantiate
 the object.
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

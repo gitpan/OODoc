@@ -5,8 +5,8 @@ OODoc::Text::Example - one example for the use of a subroutine
 =head1 INHERITANCE
 
  OODoc::Text::Example
-   is an OODoc::Text
-   is an OODoc::Object
+   is a OODoc::Text
+   is a OODoc::Object
 
 =head1 SYNOPSIS
 
@@ -239,16 +239,20 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> manual definition requires manual object
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

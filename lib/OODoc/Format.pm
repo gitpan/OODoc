@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Format;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Object';
 
 use strict;
@@ -114,6 +114,7 @@ sub showStructureRefer(@) {confess}
 
 sub chapterName(@)        {shift->showRequiredChapter(NAME        => @_)}
 sub chapterSynopsis(@)    {shift->showOptionalChapter(SYNOPSIS    => @_)}
+sub chapterInheritance(@) {shift->showOptionalChapter(INHERITANCE => @_)}
 sub chapterDescription(@) {shift->showRequiredChapter(DESCRIPTION => @_)}
 sub chapterOverloaded(@)  {shift->showOptionalChapter(OVERLOADED  => @_)}
 sub chapterMethods(@)     {shift->showOptionalChapter(METHODS     => @_)}
@@ -163,12 +164,15 @@ sub showSubroutines(@)
     my $manual = $args{manual} or confess;
     my $output = $args{output}    || select;
 
-    $args{show_subs_index}        ||= 'NO';
-    $args{show_inherited_subs}    ||= 'USE';
-    $args{show_described_subs}    ||= 'EXPAND';
-    $args{show_option_table}      ||= 'ALL';
-    $args{show_inherited_options} ||= 'USE';
+    # list is also in ::Pod3
     $args{show_described_options} ||= 'EXPAND';
+    $args{show_described_subs}    ||= 'EXPAND';
+    $args{show_diagnostics}       ||= 'NO';
+    $args{show_examples}          ||= 'EXPAND';
+    $args{show_inherited_options} ||= 'USE';
+    $args{show_inherited_subs}    ||= 'USE';
+    $args{show_option_table}      ||= 'ALL';
+    $args{show_subs_index}        ||= 'NO';
 
     $self->showSubsIndex(%args, subroutines => \@subs);
 
@@ -192,8 +196,8 @@ sub showSubroutine(@)
 {   my ($self, %args) = @_;
 
     my $subroutine = $args{subroutine} or confess;
-    my $manual = $args{manual}         or confess;
-    my $output = $args{output}    || select;
+    my $manual = $args{manual} or confess;
+    my $output = $args{output} || select;
 
     #
     # Method use
@@ -335,8 +339,6 @@ sub showOptionTable(@)
     $self
 }
 
-#-------------------------------------------
-
 
 sub showOptions(@)
 {   my ($self, %args) = @_;
@@ -360,101 +362,11 @@ sub showOptions(@)
     $self;
 }
 
-#-------------------------------------------
-
 
 sub showOptionUse(@) {shift}
 
-#-------------------------------------------
-
 
 sub showOptionExpand(@) {shift}
-
-#-------------------------------------------
-
-
-sub createInheritance($)
-{   my ($self, $package) = @_;
-
-    if($package->name ne $package->package)
-    {   # This is extra code....
-        my $from = $package->package;
-        return "\n $package\n    contains extra code for\n    M<$from>\n";
-    }
-
-    my $output;
-    my @supers  = $package->superClasses;
-
-    if(my $realized = $package->realizes)
-    {   $output .= "\n $package realizes a M<$realized>\n";
-        @supers = $realized->superClasses if ref $realized;
-    }
-
-    if(my @extras = $package->extraCode)
-    {   $output .= "\n $package has extra code in\n";
-        $output .= "   M<$_>\n" foreach sort @extras;
-    }
-
-    foreach (@supers)
-    {   $output .= "\n $package\n";
-        $output .= $self->showSuperSupers($_);
-    }
-
-    if(my @subclasses = $package->subClasses)
-    {   $output .= "\n $package is extended by\n";
-        $output .= "   M<$_>\n" foreach sort @subclasses;
-    }
-
-    if(my @realized = $package->realizers)
-    {   $output .= "\n $package is realized by\n";
-        $output .= "   M<$_>\n" foreach sort @realized;
-    }
-
-    $output;
-}
-
-sub showSuperSupers($)
-{   my ($self, $package) = @_;
-    my $output = "   is a M<$package>\n";
-    return $output
-        unless ref $package;  # only the name of the package is known
-
-    if(my $realizes = $package->realizes)
-    {   $output .= $self->showSuperSupers($realizes);
-        return $output;
-    }
-
-    my @supers = $package->superClasses or return $output;
-    $output .= $self->showSuperSupers(shift @supers);
-
-    foreach(@supers)
-    {   $output .= "\n\n   $package also extends M<$_>\n";
-        $output .= $self->showSuperSupers($_);
-    }
-
-    $output;
-}
-
-#-------------------------------------------
-
-
-sub zoneGetParameters($)
-{   my ($self, $zone) = @_;
-    my $param = ref $zone ? $zone->attributes : $zone;
-    $param =~ s/^\s+//;
-    $param =~ s/\s+$//;
-
-    return () unless length $param;
-
-    return split / /, $param       # old style
-       unless $param =~ m/[^\s\w]/;
-
-    # new style
-    my @params = split /\s*\,\s*/, $param;
-    map { (split /\s*\=\>\s*/, $_, 2) } @params;
-}
-
-#-------------------------------------------
 
 
 1;

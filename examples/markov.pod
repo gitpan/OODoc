@@ -2,6 +2,13 @@
 
 My::Name::Space - just an example
 
+=head1 INHERITANCE
+
+=head1 SYNOPSIS
+
+ my $obj = My::Name::Space->new;
+ $obj->print;
+
 =head1 DESCRIPTION
 
 General description of the module.  Some people make this very long,
@@ -10,6 +17,8 @@ preference is to explain only the really really important stuff which
 should be read by everyone.  All less import things are kept in a
 chapter named DETAILS after the explanation of functions and stuff such
 that important things come first.
+
+=head1 OVERLOADED
 
 =head1 METHODS
 
@@ -55,8 +64,8 @@ Again: do not forget the next line!!!
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

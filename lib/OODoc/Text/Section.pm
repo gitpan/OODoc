@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Text::Section;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Text::Structure';
 
 use strict;
@@ -32,14 +32,10 @@ sub init($)
 
 sub chapter() { shift->container }
 
-#-------------------------------------------
-
 sub path()
 {   my $self = shift;
     $self->chapter->path . '/' . $self->name;
 }
-
-#-------------------------------------------
 
 sub findSubroutine($)
 {   my ($self, $name) = @_;
@@ -54,16 +50,12 @@ sub findSubroutine($)
     undef;
 }
 
-#-------------------------------------------
-
 sub findEntry($)
 {   my ($self, $name) = @_;
     return $self if $self->name eq $name;
     my $subsect = $self->subsection($name);
     defined $subsect ? $subsect : ();
 }
-
-#-------------------------------------------
 
 sub all($@)
 {   my $self = shift;
@@ -84,8 +76,6 @@ sub subsection($)
     first {$_->name eq $thing} $self->subsections;
 }
 
-#-------------------------------------------
-
 
 sub subsections(;@)
 {   my $self = shift;
@@ -96,8 +86,6 @@ sub subsections(;@)
 
     @{$self->{OTS_subsections}};
 }
-
-#-------------------------------------------
 
 
 1;

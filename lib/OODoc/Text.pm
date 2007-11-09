@@ -1,20 +1,17 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Text;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Object';
 
 use strict;
 use warnings;
 
 use Carp;
-
-
-#-------------------------------------------
 
 
 use overload '=='   => sub {$_[0]->unique == $_[1]->unique}
@@ -51,17 +48,10 @@ sub init($)
 #-------------------------------------------
 
 
-#-------------------------------------------
-
-
 sub name() {shift->{OT_name}}
-
-#-------------------------------------------
 
 
 sub type() {shift->{OT_type}}
-
-#-------------------------------------------
 
 
 sub description()
@@ -72,15 +62,11 @@ sub description()
     join '', @lines;
 }
 
-#-------------------------------------------
-
 
 sub container(;$)
 {   my $self = shift;
     @_ ? ($self->{OT_container} = shift) : $self->{OT_container};
 }
-
-#-------------------------------------------
 
 
 sub manual(;$)
@@ -89,12 +75,8 @@ sub manual(;$)
        : $self->container->manual;
 }
 
-#-------------------------------------------
-
 
 sub unique() {shift->{OT_unique}}
-
-#-------------------------------------------
 
 
 sub where()
@@ -107,8 +89,6 @@ sub where()
 
 sub openDescription() { \shift->{OT_descr} }
 
-#-------------------------------------------
-
 
 sub findDescriptionObject()
 {   my $self   = shift;
@@ -118,8 +98,6 @@ sub findDescriptionObject()
     wantarray ? @descr : $descr[0];
 }
 
-#-------------------------------------------
-
 
 sub example($)
 {   my ($self, $example) = @_;
@@ -127,13 +105,10 @@ sub example($)
     $example;
 }
 
-#-------------------------------------------
-
 
 sub examples() { @{shift->{OT_examples}} }
 
 #-------------------------------------------
-
 
 
 1;

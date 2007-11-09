@@ -2,6 +2,16 @@
 
 OODoc::Object - base class for all OODoc classes.
 
+=head1 INHERITANCE
+
+ OODoc::Object is extended by
+   OODoc
+   OODoc::Format
+   OODoc::Manifest
+   OODoc::Manual
+   OODoc::Parser
+   OODoc::Text
+
 =head1 SYNOPSIS
 
  # Never instantiated directly.
@@ -52,7 +62,7 @@ OODoc::Object-E<gt>B<filenameToPackage>(FILENAME)
 
 =over 4
 
-I<Example:> 
+example: 
 
  print $self->filenameToPackage('Mail/Box.pm'); # prints Mail::Box
 
@@ -128,26 +138,38 @@ Returns the names of all defined packages.
 
 =head1 DIAGNOSTICS
 
-I<Warning:> Unknown option $name
+Warning: Unknown option $name
+
+=over 4
 
 You have used the option with $name, which is not defined with the
 instantiation (the C<new> method) of this object.
 
-I<Warning:> Unknown options @names
+=back
+
+Warning: Unknown options @names
+
+=over 4
 
 You have used more than one option which is not defined to instantiate
 the object.
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

@@ -20,6 +20,10 @@ lib/OODoc/Format/Pod.pm
 lib/OODoc/Format/Pod.pod
 lib/OODoc/Format/Pod2.pm
 lib/OODoc/Format/Pod2.pod
+lib/OODoc/Format/Pod3.pm
+lib/OODoc/Format/Pod3.pod
+lib/OODoc/Format/TemplateMagic.pm
+lib/OODoc/Format/TemplateMagic.pod
 lib/OODoc/Manifest.pm
 lib/OODoc/Manifest.pod
 lib/OODoc/Manual.pm
@@ -48,6 +52,8 @@ lib/OODoc/Text/Structure.pm
 lib/OODoc/Text/Structure.pod
 lib/OODoc/Text/SubSection.pm
 lib/OODoc/Text/SubSection.pod
+lib/OODoc/Text/SubSubSection.pm
+lib/OODoc/Text/SubSubSection.pod
 lib/OODoc/Text/Subroutine.pm
 lib/OODoc/Text/Subroutine.pod
 t/00works.t

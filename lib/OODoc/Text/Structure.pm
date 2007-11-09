@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Text::Structure;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Text';
 
 use strict;
@@ -13,9 +13,6 @@ use warnings;
 
 use Carp;
 use List::Util 'first';
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -27,8 +24,6 @@ sub init($)
 
     $self;
 }
-
-#-------------------------------------------
 
 
 sub emptyExtension($)
@@ -49,8 +44,6 @@ sub emptyExtension($)
 
 sub level() {shift->{OTS_level}}
 
-#-------------------------------------------
-
 
 sub niceName()
 {   my $name = shift->name;
@@ -61,8 +54,6 @@ sub niceName()
 
 
 sub path() { confess "Not implemented" }
-
-#-------------------------------------------
 
 
 sub findEntry($) { confess "Not implemented" }
@@ -75,25 +66,23 @@ sub all($@)
     $self->$method(@_);
 }
 
-#-------------------------------------------
-
 
 sub isEmpty()
 {   my $self = shift;
 
-    return 1 if $self->description =~ m/^\s*$/;
+    return 0 if $self->description !~ m/^\s*$/;
     return 0 if $self->examples || $self->subroutines;
 
-    my @nested = $self->isa('OODoc::Text::Capter')  ? $self->sections
-               : $self->isa('OODoc::Text::Section') ? $self->subsections
-               :                                      ();
-    first { ! $_->isEmpty } @nested;
+    my @nested
+      = $self->isa('OODoc::Text::Chapter')    ? $self->sections
+      : $self->isa('OODoc::Text::Section')    ? $self->subsections
+      : $self->isa('OODoc::Text::SubSection') ? $self->subsubsections
+      : return 1;
+
+    foreach (@nested) { return 0 if $_->isEmpty }
+
+    1;
 }
-
-#-------------------------------------------
-
-
-#-------------------------------------------
 
 
 sub addSubroutine(@)

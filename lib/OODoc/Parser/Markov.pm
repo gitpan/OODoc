@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Parser';
 
 use strict;
@@ -14,6 +14,7 @@ use warnings;
 use OODoc::Text::Chapter;
 use OODoc::Text::Section;
 use OODoc::Text::SubSection;
+use OODoc::Text::SubSubSection;
 use OODoc::Text::Subroutine;
 use OODoc::Text::Option;
 use OODoc::Text::Default;
@@ -31,14 +32,12 @@ my $url_coderoot  = 'CODE';
 
 #-------------------------------------------
 
-
-#-------------------------------------------
-
 my @default_rules =
  ( [ '=cut'        => 'docCut'        ]
  , [ '=chapter'    => 'docChapter'    ]
  , [ '=section'    => 'docSection'    ]
  , [ '=subsection' => 'docSubSection' ]
+ , [ '=subsubsection' => 'docSubSubSection' ]
  , [ '=method'     => 'docSubroutine' ]
  , [ '=i_method'   => 'docSubroutine' ]
  , [ '=c_method'   => 'docSubroutine' ]
@@ -209,6 +208,9 @@ sub parse(@)
             }
             $$block  .= $line;
         }
+        elsif($line eq "__DATA__\n")  # flush rest file
+        {   $out->print($line, $in->getlines);
+        }
         else
         {   $out->print($line);
         }
@@ -344,8 +346,8 @@ sub docSubSection($$$$)
     $self->closeSubSection;
 
     my $section = $self->{OPM_section};
-    die "ERROR: subsection $line outside section in $fn line $ln\n"
-       unless defined $section;
+    defined $section
+        or die "ERROR: subsection $line outside section in $fn line $ln\n";
 
     my $subsection = $self->{OPM_subsection} = OODoc::Text::SubSection->new
      ( name     => $line
@@ -361,6 +363,40 @@ sub docSubSection($$$$)
 sub closeSubSection()
 {   my $self       = shift;
     my $subsection = delete $self->{OPM_subsection};
+    $self;
+}
+
+
+#-------------------------------------------
+# SUBSECTION
+
+
+sub docSubSubSection($$$$)
+{   my ($self, $match, $line, $fn, $ln) = @_;
+    $line =~ s/^\=(subsubsection|head4)\s+//;
+    $line =~ s/\s+$//;
+
+    $self->closeSubSubSection;
+
+    my $subsection = $self->{OPM_subsection};
+    defined $subsection
+       or die "ERROR: subsubsection $line outside subsection in $fn line $ln\n";
+
+    my $subsubsection
+      = $self->{OPM_subsubsection} = OODoc::Text::SubSubSection->new
+      ( name       => $line
+      , subsection => $subsection
+      , linenr     => $ln
+      );
+
+    $subsection->subsubsection($subsubsection);
+    $self->setBlock($subsubsection->openDescription);
+    $subsubsection;
+}
+
+sub closeSubSubSection()
+{   my $self = shift;
+    delete $self->{OPM_subsubsection};
     $self;
 }
 
@@ -463,8 +499,6 @@ sub docDefault($$$$)
     $sub;
 }
 
-#-------------------------------------------
-
 sub docRequires($$$$)
 {   my ($self, $match, $line, $fn, $ln) = @_;
 
@@ -521,6 +555,7 @@ sub docExample($$$$)
     $line =~ s/^\#.*//;
 
     my $container = $self->{OPM_subroutine}
+                 || $self->{OPM_subsubsection}
                  || $self->{OPM_subsection}
                  || $self->{OPM_section}
                  || $self->{OPM_chapter};
@@ -562,9 +597,6 @@ sub forgotCut($$$$)
 
     undef;
 }
-
-#-------------------------------------------
-
 
 #-------------------------------------------
 
@@ -630,8 +662,6 @@ sub decomposeM($$)
     ($location, $opt);
 }
 
-#-------------------------------------------
-
 
 sub decomposeL($$)
 {   my ($self, $manual, $link) = @_;
@@ -680,8 +710,6 @@ sub decomposeL($$)
 
     ($man, $dest, undef, $text);
 }
-
-#-------------------------------------------
 
 
 sub cleanupPod($$$)
@@ -736,16 +764,12 @@ sub cleanupPod($$$)
     @lines ? join('', @lines) : '';
 }
 
-#-------------------------------------------
-
 
 sub cleanupPodM($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
     my ($toman, $to) = $self->decomposeM($manual, $link);
     ref $to ? $formatter->link($toman, $to, $link) : $to;
 }
-
-#-------------------------------------------
 
 
 sub cleanupPodL($$$)
@@ -836,16 +860,12 @@ sub cleanupHtml($$$;$)
     $string;
 }
 
-#-------------------------------------------
-
 
 sub cleanupHtmlM($$$)
 {   my ($self, $formatter, $manual, $link) = @_;
     my ($toman, $to) = $self->decomposeM($manual, $link);
     ref $to ? $formatter->link($toman, $to, $link) : $to;
 }
-
-#-------------------------------------------
 
 
 sub cleanupHtmlL($$$)

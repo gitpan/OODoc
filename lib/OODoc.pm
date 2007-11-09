@@ -1,11 +1,11 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '1.01';
+$VERSION = '1.02';
 use base 'OODoc::Object';
 
 use strict;
@@ -259,12 +259,17 @@ sub prepare(@)
     $self->getPackageRelations;
 
     print "Expand manual contents.\n" if $verbose >1;
-    $self->expandManuals;
+    foreach my $manual ($self->manuals)
+    {   $manual->expand;
+    }
+
+    print "Create inheritance chapter.\n" if $verbose >1;
+    foreach my $manual ($self->manuals)
+    {   $manual->createInheritance;
+    }
 
     $self;
 }
-
-#-------------------------------------------
 
 
 sub getPackageRelations()
@@ -312,14 +317,10 @@ sub getPackageRelations()
 #-------------------------------------------
 
 
-sub expandManuals() { $_->expand foreach shift->manuals }
-
-#-------------------------------------------
-
-
 our %formatters =
  ( pod  => 'OODoc::Format::Pod'
  , pod2 => 'OODoc::Format::Pod2'
+ , pod3 => 'OODoc::Format::Pod3'
  , html => 'OODoc::Format::Html'
  );
 
@@ -400,8 +401,6 @@ sub create($@)
     $format;
 }
 
-#-------------------------------------------
-
 
 sub stats()
 {   my $self = shift;
@@ -410,7 +409,7 @@ sub stats()
     my $realpkg  = $self->packageNames;
 
     my $subs     = map {$_->subroutines} @manuals;
-my @options = map { map {$_->options} $_->subroutines } @manuals;
+    my @options  = map { map {$_->options} $_->subroutines } @manuals;
     my $options  = @options;
     my $examples = map {$_->examples}    @manuals;
 

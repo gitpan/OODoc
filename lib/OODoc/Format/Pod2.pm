@@ -1,12 +1,12 @@
 # Copyrights 2003-2007 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.01.
+# Pod stripped from pm file by OODoc 1.02.
 
 package OODoc::Format::Pod2;
 use vars '$VERSION';
-$VERSION = '1.01';
-use base 'OODoc::Format::Pod';
+$VERSION = '1.02';
+use base qw/OODoc::Format::Pod OODoc::Format::TemplateMagic/;
 
 use strict;
 use warnings;
@@ -36,7 +36,6 @@ sub formatManual(@)
 
     my %permitted =
      ( chapter     => sub {$self->templateChapter(shift, \%args) }
-     , inheritance => sub {$self->templateInheritance(shift, \%args) }
      , diagnostics => sub {$self->templateDiagnostics(shift, \%args) }
      , append      => sub {$self->templateAppend(shift, \%args) }
      , comment     => sub { '' }
@@ -73,16 +72,9 @@ sub templateChapter($$)
     $out;
 }
 
-sub templateInheritance($$)
-{   my ($self, $zone, $args) = @_;
-    my $out   = '';
-    $self->chapterInheritance(%$args, output => IO::Scalar->new(\$out));
-    $out;
-}
-
 sub templateDiagnostics($$)
 {   my ($self, $zone, $args) = @_;
-    my $out   = '';
+    my $out = '';
     $self->chapterDiagnostics(%$args, output => IO::Scalar->new(\$out));
     $out;
 }
@@ -99,7 +91,7 @@ sub templateAppend($$)
 
 __DATA__
 {chapter NAME}
-{inheritance}
+{chapter INHERITANCE}
 {chapter SYNOPSIS}
 {chapter DESCRIPTION}
 {chapter OVERLOADED}

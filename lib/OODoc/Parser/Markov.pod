@@ -5,8 +5,8 @@ OODoc::Parser::Markov - Parser for the MARKOV syntax
 =head1 INHERITANCE
 
  OODoc::Parser::Markov
-   is an OODoc::Parser
-   is an OODoc::Object
+   is a OODoc::Parser
+   is a OODoc::Object
 
 =head1 SYNOPSIS
 
@@ -76,7 +76,7 @@ Check the list of rules whether this LINE matches one of them.  This
 is an ordered evaluation.  Returned is the matched string and the required
 action.  If the line fails to match anything, an empty list is returned.
 
-I<Example:> 
+example: 
 
   if(my($match, $action) = $parser->findMatchingRule($line))
   {  # do something with it
@@ -294,8 +294,6 @@ See L<OODoc::Object/"Manual Repository">
 
 =back
 
-=head2 Commonly used functions
-
 =head1 DETAILS
 
 =head2 General Description
@@ -334,9 +332,10 @@ be preceeded with a C<package> keyword.
 
 =head3 Heading
 
- =chapter    STRING
- =section    STRING
- =subsection STRING
+ =chapter       STRING
+ =section       STRING
+ =subsection    STRING
+ =subsubsection STRING
 
 These text structures are used to group descriptive text and subroutines.
 You can use any name for a chapter, but the formatter expects certain
@@ -372,9 +371,9 @@ overrule the one in a subclass.
 
 =head3 Include examples
 
-Examples can be added to chapters, sections, subsections and subroutines.
-They run until the next markup line, so can only come at the end of the
-documentation pieces.
+Examples can be added to chapters, sections, subsections, subsubsections,
+and subroutines.  They run until the next markup line, so can only come
+at the end of the documentation pieces.
 
  =example
  =examples
@@ -397,10 +396,10 @@ manual page.
 
 For comfort, all POD markups are supported as well
 
- =head1 Heading Text          (same as =chapter)
- =head2 Heading Text          (same as =section)
- =head3 Heading Text          (same as =subsection)
- =head4 Heading Text
+ =head1 Heading Text   (same as =chapter)
+ =head2 Heading Text   (same as =section)
+ =head3 Heading Text   (same as =subsection)
+ =head4 Heading Text   (same as =subsubsection)
  =over indentlevel
  =item stuff
  =back
@@ -455,6 +454,7 @@ The following syntaxes are supported:
  L E<lt> /"subsection" E<gt>
  L E<lt> "section" E<gt>
  L E<lt> "subsection" E<gt>
+ L E<lt> "subsubsection" E<gt>
  L E<lt> unix-manual E<gt>
  L E<lt> url E<gt>
  
@@ -474,9 +474,9 @@ in the html version of these manual pages:
 
 =head2 Grouping subroutines
 
-Subroutine descriptions can be grouped in a chapter, section, or subsection.
-It is very common to have a large number of subroutines, so some structure
-has to be imposed here.
+Subroutine descriptions can be grouped in a chapter, section,
+subsection, or subsubsection.  It is very common to have a large number
+of subroutines, so some structure has to be imposed here.
 
 If you document the same routine in more than one manual page with an
 inheritance relationship, the documentation location shall not conflict.
@@ -518,7 +518,7 @@ in front of the printed C<=>, which will disappear once printed.
 You may also take a look at the raw code archive for OODoc (the text
 as is before it was processed for distribution).
 
-I<Example:> how subroutines are documented
+example: how subroutines are documented
 
  =chapter FUNCTIONS
 
@@ -555,146 +555,263 @@ I<Example:> how subroutines are documented
 
 =head1 DIAGNOSTICS
 
-I<Warning:> =cut does not terminate any doc in $file line $number
+Warning: =cut does not terminate any doc in $file line $number
+
+=over 4
 
 There is no document to end here.
 
-I<Warning:> Debugging remains in $filename line $number
+=back
+
+Warning: Debugging remains in $filename line $number
+
+=over 4
 
 The author's way of debugging is by putting warn/die/carp etc on the
 first position of a line.  Other lines in a method are always indented,
 which means that these debugging lines are clearly visible.  You may
 simply ingnore this warning.
 
-I<Warning:> Manual $manual links to unknown entry "$item" in $manual
+=back
 
-I<Error:> The formatter type $class is not known for cleanup
+Warning: Manual $manual links to unknown entry "$item" in $manual
+
+=over 4
+
+=back
+
+Error: The formatter type $class is not known for cleanup
+
+=over 4
 
 Text blocks have to get the finishing touch in the final formatting
 phase.  The parser has to fix the text block segments to create a
 formatter dependent output.  Only a few formatters are predefined.
 
-I<Warning:> You may have accidentally captured code in doc file $fn line $number
+=back
+
+Warning: You may have accidentally captured code in doc file $fn line $number
+
+=over 4
 
 Some keywords on the first position of a line are very common for code.
 However, code within doc should start with a blank to indicate pre-formatted
 lines.  This warning may be false.
 
-I<Error:> cannot read document from $input: $!
+=back
+
+Error: cannot read document from $input: $!
+
+=over 4
 
 The document file can not be processed because it can not be read.  Reading
 is required to be able to build a documentation tree.
 
-I<Error:> chapter $name before package statement in $file line $number
+=back
+
+Error: chapter $name before package statement in $file line $number
+
+=over 4
 
 A package file can contain more than one package: more than one
 name space.  The docs are sorted after the name space.  Therefore,
 each chapter must be preceeded by a package statement in the file
 to be sure that the correct name space is used.
 
-I<Error:> default for option $name outside subroutine in $file line $number
+=back
+
+Error: default for option $name outside subroutine in $file line $number
+
+=over 4
 
 A default is set, however there is not subroutine in scope (yet).  It
 is plausible that the option does not exist either, but that will
 be checked later.
 
-I<Warning:> default line incorrect in $file line $number: $line
+=back
+
+Warning: default line incorrect in $file line $number: $line
+
+=over 4
 
 The shown $line is not in the right format: it should contain at least
 two words being the option name and the default value.
 
-I<Error:> diagnostic $type outside subroutine in $file line $number
+=back
+
+Error: diagnostic $type outside subroutine in $file line $number
+
+=over 4
 
 It is unclear to which subroutine this diagnostic message belongs.
 
-I<Warning:> doc did not end in $input
+=back
+
+Warning: doc did not end in $input
+
+=over 4
 
 When the whole $input was parsed, the documentation part was still open.
 Probably you forgot to terminate it with a C<=cut>.
 
-I<Warning:> empty L link in $manual
+=back
 
-I<Error:> example outside chapter in $file line $number
+Warning: empty L link in $manual
+
+=over 4
+
+=back
+
+Error: example outside chapter in $file line $number
+
+=over 4
 
 An example can belong to a subroutine, chapter, section, and subsection.
 Apparently, this example was found before the first chapter started in
 the file.
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-I<Warning:> module $name is not on your system, but linked to in $manual
+=back
+
+Warning: module $name is not on your system, but linked to in $manual
+
+=over 4
 
 The module can not be found.  This may be an error at your part (usually
 a typo) or you didn't install the module on purpose.  This message will
 also be produced if some defined package is stored in one file together
 with an other module or when compilation errors are encountered.
 
-I<Warning:> no diagnostic message supplied in $file line $number
+=back
+
+Warning: no diagnostic message supplied in $file line $number
+
+=over 4
 
 The start of a diagnostics message was indicated, however not provided
 on the same line.
 
-I<Error:> no input file to parse specified
+=back
+
+Error: no input file to parse specified
+
+=over 4
 
 The parser needs the name of a file to be read, otherwise it can not
 work.
 
-I<Warning:> no manual for $package (correct casing?)
+=back
+
+Warning: no manual for $package (correct casing?)
+
+=over 4
 
 The manual for $package cannot be found.  If you have a module named this
 way, this may indicate that the NAME chapter of the manual page in that
 module differs from the package name.  Often, this is a typo in the
 NAME... probably a difference in used cases.
 
-I<Warning:> option "$name" unknow for $name() in $package, found in $manual
+=back
 
-I<Error:> option $name outside subroutine in $file line $number
+Warning: option "$name" unknow for $name() in $package, found in $manual
+
+=over 4
+
+=back
+
+Error: option $name outside subroutine in $file line $number
+
+=over 4
 
 An option is set, however there is not subroutine in scope (yet).
 
-I<Warning:> option line incorrect in $file line $number: $line
+=back
+
+Warning: option line incorrect in $file line $number: $line
+
+=over 4
 
 The shown $line is not in the right format: it should contain at least
 two words being the option name and an abstract description of possible
 values.
 
-I<Error:> section $name outside chapter in $file line $number
+=back
+
+Error: section $name outside chapter in $file line $number
+
+=over 4
 
 Sections must be contained in chapters.
 
-I<Warning:> subroutine $name is not defined by $package, found in $manual
+=back
 
-I<Error:> subroutine $name outside chapter in $file line $number
+Warning: subroutine $name is not defined by $package, found in $manual
+
+=over 4
+
+=back
+
+Error: subroutine $name outside chapter in $file line $number
+
+=over 4
 
 Subroutine descriptions (method, function, tie, ...) can only be used
 within a restricted set of chapters.  You have not started any
 chapter yet.
 
-I<Error:> subsection $name outside section in $file line $number
+=back
+
+Error: subsection $name outside section in $file line $number
+
+=over 4
 
 Subsections are only allowed in a chapter when it is nested within
 a section.
 
-I<Warning:> unknown markup in $file line $number: $line
+=back
+
+Error: subsubsection $name outside subsection in $file line $number
+
+=over 4
+
+Subsubsections are only allowed in a chapter when it is nested within
+a subsection.
+
+=back
+
+Warning: unknown markup in $file line $number: $line
+
+=over 4
 
 The standard pod and the extensions made by this parser define a long
 list of markup keys, but yours is not one of these predefined names.
 
-I<Warning:> use problem for module $link in $module; $@
+=back
+
+Warning: use problem for module $link in $module; $@
+
+=over 4
 
 In an attempt to check the correctness of your naming of a module,
 OODoc will try to compile ("require") the named module.  Apparently,
 the module was found, but something else went wrong.  The exact cause
 is not always easy to find.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

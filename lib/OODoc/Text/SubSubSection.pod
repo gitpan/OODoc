@@ -1,10 +1,11 @@
 =head1 NAME
 
-OODoc::Text::Diagnostic - one explanation of a problem report
+OODoc::Text::SubSubSection - collects the text of one subsubsection within a subsection
 
 =head1 INHERITANCE
 
- OODoc::Text::Diagnostic
+ OODoc::Text::SubSubSection
+   is a OODoc::Text::Structure
    is a OODoc::Text
    is a OODoc::Object
 
@@ -12,9 +13,9 @@ OODoc::Text::Diagnostic - one explanation of a problem report
 
 =head1 DESCRIPTION
 
-Each L<OODoc::Text::Subroutine|OODoc::Text::Subroutine> can have a list of warning and 
-error messages, which are each captured in a separate object as described
-in this manual page.
+A subsubsection (or head4) is the fourth level of refining document
+hierarchies.  A subsubsection must be a part of a subsection, which is
+part of a section.
 
 =head1 OVERLOADED
 
@@ -46,31 +47,42 @@ See L<OODoc::Text/"OVERLOADED">
 
 =head2 Constructors
 
-OODoc::Text::Diagnostic-E<gt>B<new>(OPTIONS)
+$obj-E<gt>B<emptyExtension>(CONTAINER)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Constructors">
+
+=back
+
+OODoc::Text::SubSubSection-E<gt>B<new>(OPTIONS)
 
 =over 4
 
  Option     --Defined in     --Default
- container    OODoc::Text      new(subroutine)
+ container    OODoc::Text      new(subsection)
  description  OODoc::Text      ''
+ level        OODoc::Text::Structure  3
  linenr       OODoc::Text      <required>
  name         OODoc::Text      undef
- subroutine                    <required>
- type         OODoc::Text      'Diagnostic'
+ subsection                    <required>
+ type         OODoc::Text      'Subsubsection'
 
 . container => OBJECT
 
 . description => STRING
 
+. level => INTEGER
+
 . linenr => INTEGER
 
 . name => STRING
 
-. subroutine => OBJECT
+. subsection => OBJECT
 
 =over 4
 
-The subroutine in which this option lives.
+The section in which this sub-section lives.
 
 =back
 
@@ -106,6 +118,14 @@ See L<OODoc::Text/"Attributes">
 
 =back
 
+$obj-E<gt>B<level>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Attributes">
+
+=back
+
 $obj-E<gt>B<name>
 
 =over 4
@@ -114,11 +134,11 @@ See L<OODoc::Text/"Attributes">
 
 =back
 
-$obj-E<gt>B<subroutine>
+$obj-E<gt>B<niceName>
 
 =over 4
 
-Returns the subroutine object for this option.
+See L<OODoc::Text::Structure/"Attributes">
 
 =back
 
@@ -132,11 +152,43 @@ See L<OODoc::Text/"Attributes">
 
 =head2 Location
 
+$obj-E<gt>B<chapter>
+
+=over 4
+
+Returns the chapter object for this subsection.
+
+=back
+
+$obj-E<gt>B<findEntry>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
+
+=back
+
 $obj-E<gt>B<manual>([NAME])
 
 =over 4
 
 See L<OODoc::Text/"Location">
+
+=back
+
+$obj-E<gt>B<path>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Location">
+
+=back
+
+$obj-E<gt>B<subsection>
+
+=over 4
+
+Returns the subsection object for this subsubsection.
 
 =back
 
@@ -157,6 +209,14 @@ See L<OODoc::Text/"Location">
 =back
 
 =head2 Collected
+
+$obj-E<gt>B<all>(METHOD, PARAMETERS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
+
+=back
 
 $obj-E<gt>B<example>(OBJECT)
 
@@ -182,6 +242,14 @@ See L<OODoc::Text/"Collected">
 
 =back
 
+$obj-E<gt>B<isEmpty>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Collected">
+
+=back
+
 $obj-E<gt>B<openDescription>
 
 =over 4
@@ -190,11 +258,45 @@ See L<OODoc::Text/"Collected">
 
 =back
 
+=head2 Subroutines
+
+$obj-E<gt>B<addSubroutine>(OBJECTS)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<setSubroutines>(ARRAY)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutine>(NAME)
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
+$obj-E<gt>B<subroutines>
+
+=over 4
+
+See L<OODoc::Text::Structure/"Subroutines">
+
+=back
+
 =head2 Commonly used functions
 
 $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Text::Diagnostic-E<gt>B<filenameToPackage>(FILENAME)
+OODoc::Text::SubSubSection-E<gt>B<filenameToPackage>(FILENAME)
 
 =over 4
 
@@ -204,7 +306,7 @@ See L<OODoc::Object/"Commonly used functions">
 
 $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Text::Diagnostic-E<gt>B<mkdirhier>(DIRECTORY)
+OODoc::Text::SubSubSection-E<gt>B<mkdirhier>(DIRECTORY)
 
 =over 4
 

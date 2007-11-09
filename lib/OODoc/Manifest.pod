@@ -5,7 +5,7 @@ OODoc::Manifest - maintain the information inside a manifest file.
 =head1 INHERITANCE
 
  OODoc::Manifest
-   is an OODoc::Object
+   is a OODoc::Object
 
 =head1 SYNOPSIS
 
@@ -195,27 +195,39 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-I<Error:> Cannot read manifest file $filename: $!
+Error: Cannot read manifest file $filename: $!
+
+=over 4
 
 The manifest file could not be opened for reading.
 
-I<Warning:> MANIFEST file $name lists filename outside (sub)directory: $file
+=back
+
+Warning: MANIFEST file $name lists filename outside (sub)directory: $file
+
+=over 4
 
 The MANIFEST file of a distributed package should be located in the top
 directory of that packages.  All files of the distribution are in that
 same directory, or one of its sub-directories, otherwise they will not
 be packaged.
 
-I<Error:> manual definition requires manual object
+=back
+
+Error: manual definition requires manual object
+
+=over 4
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
+=back
+
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.01,
-built on June 18, 2007. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.02,
+built on November 09, 2007. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
