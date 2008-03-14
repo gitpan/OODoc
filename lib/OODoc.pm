@@ -1,11 +1,11 @@
-# Copyrights 2003-2007 by Mark Overmeer.
+# Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.02.
+# Pod stripped from pm file by OODoc 1.03.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '1.02';
+$VERSION = '1.03';
 use base 'OODoc::Object';
 
 use strict;
@@ -256,7 +256,7 @@ sub prepare(@)
     my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
     print "Collect package relations.\n" if $verbose >1;
-    $self->getPackageRelations;
+    $self->getPackageRelations($verbose);
 
     print "Expand manual contents.\n" if $verbose >1;
     foreach my $manual ($self->manuals)
@@ -272,23 +272,31 @@ sub prepare(@)
 }
 
 
-sub getPackageRelations()
-{   my $self     = shift;
+sub getPackageRelations($)
+{   my ($self, $verbose) = @_;
     my @manuals  = $self->manuals;  # all
 
     #
     # load all distributions (which are not loaded yet)
     #
 
+    print "Compile all packages\n" if $verbose;
+
     foreach my $manual (@manuals)
     {    next if $manual->isPurePod;
+         print "  require package $manual\n" if $verbose > 1;
+
          eval "require $manual";
-         warn "WARNING: errors from $manual\n"
-            if $@ && $@ !~ /Can't locate/;
+         warn "WARNING: errors from $manual; $@\n"
+            if $@ && $@ !~ /can't locate/i && $@ !~ /attempt to reload/i;
     }
+
+    print "Detect inheritance relationships\n" if $verbose;
 
     foreach my $manual (@manuals)
     {
+         print "  relations for $manual\n" if $verbose > 1;
+
         if($manual->name ne $manual->package)  # autoloaded code
         {   my $main = $self->mainManual("$manual");
             $main->extraCode($manual) if defined $main;

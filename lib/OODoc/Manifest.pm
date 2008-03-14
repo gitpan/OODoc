@@ -1,11 +1,11 @@
-# Copyrights 2003-2007 by Mark Overmeer.
+# Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.02.
+# Pod stripped from pm file by OODoc 1.03.
 
 package OODoc::Manifest;
 use vars '$VERSION';
-$VERSION = '1.02';
+$VERSION = '1.03';
 use base 'OODoc::Object';
 
 use strict;
@@ -107,8 +107,12 @@ sub DESTROY() { shift->write }
 
 sub relative($)
 {   my ($self, $filename) = @_;
+
     my $dir = dirname $self->filename;
     return $filename if $dir eq '.';
+
+    # normalize path for windows
+    s!\\!/!g for $filename, $dir;
 
     if(substr($filename, 0, length($dir)+1) eq "$dir/")
     {   substr $filename, 0, length($dir)+1, '';

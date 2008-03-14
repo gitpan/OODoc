@@ -1,11 +1,11 @@
-# Copyrights 2003-2007 by Mark Overmeer.
+# Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.02.
+# Pod stripped from pm file by OODoc 1.03.
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '1.02';
+$VERSION = '1.03';
 use base qw/OODoc::Format OODoc::Format::TemplateMagic/;
 
 use strict;
@@ -55,9 +55,15 @@ sub link($$;$)
 {   my ($self, $manual, $object, $text) = @_;
     $text = $object->name unless defined $text;
 
-    my $jump
-      = $object->isa('OODoc::Manual') ? "$self->{OFH_html}/$object/index.html"
-      :   $self->{OFH_jump}.'?'.$manual->name.'&'.$object->unique;
+    my $jump;
+    if($object->isa('OODoc::Manual'))
+    {   (my $manname = $object->name) =~ s!\:\:!_!g;
+        $jump = "$self->{OFH_html}/$manname/index.html";
+    }
+    else
+    {   (my $manname = $manual->name) =~ s!\:\:!_!g;
+        $jump = $self->{OFH_jump}.'?'.$manname.'&'.$object->unique;
+    }
 
     qq[<a href="$jump" target="_top">$text</a>];
 }
@@ -67,6 +73,7 @@ sub link($$;$)
 
 sub mark($$)
 {   my ($self, $manual, $id) = @_;
+    $manual =~ s/\:\:/_/g;
     $self->{OFH_markers}->print("$id $manual $self->{OFH_filename}\n");
 }
 
@@ -84,7 +91,8 @@ sub createManual($@)
     my $template = $args{template} || File::Spec->catdir('html', 'manual');
     my %template = $self->expandTemplate($template, $options);
 
-    my $dest = File::Spec->catdir($self->workdir, "$manual");
+    (my $manfile  = "$manual") =~ s!\:\:!_!g;
+    my $dest = File::Spec->catdir($self->workdir, $manfile);
     $self->mkdirhier($dest);
 
     # File to trace markers must be open.
@@ -166,7 +174,7 @@ sub createOtherPages(@)
 
     my $manifest = $self->manifest;
     foreach my $raw (@sources)
-    {   (my $cooked = $raw) =~ s/$source/$dest/;
+    {   (my $cooked = $raw) =~ s/\Q$source\E/$dest/;
 
         print "create $cooked\n" if $verbose > 2;
         $manifest->add($cooked);
@@ -665,7 +673,7 @@ sub templateName($$)
     my $descr   = $chapter->description;
 
     return $1 if $descr =~ m/^\s*\S+\s*\-\s*(.*?)\s*$/;
-   
+
     die "ERROR: chapter NAME in manual $manual has illegal shape\n";
 }
 

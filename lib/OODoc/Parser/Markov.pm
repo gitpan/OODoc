@@ -1,11 +1,11 @@
-# Copyrights 2003-2007 by Mark Overmeer.
+# Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.02.
+# Pod stripped from pm file by OODoc 1.03.
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '1.02';
+$VERSION = '1.03';
 use base 'OODoc::Parser';
 
 use strict;
@@ -314,7 +314,7 @@ sub docSection($$$$)
     $self->closeSection;
 
     my $chapter = $self->{OPM_chapter};
-    die "ERROR: section $line outside chapter in $fn line $ln\n"
+    die "ERROR: section `$line' outside chapter in $fn line $ln\n"
        unless defined $chapter;
 
     my $section = $self->{OPM_section} = OODoc::Text::Section->new
@@ -347,7 +347,7 @@ sub docSubSection($$$$)
 
     my $section = $self->{OPM_section};
     defined $section
-        or die "ERROR: subsection $line outside section in $fn line $ln\n";
+        or die "ERROR: subsection `$line' outside section in $fn line $ln\n";
 
     my $subsection = $self->{OPM_subsection} = OODoc::Text::SubSection->new
      ( name     => $line
@@ -380,7 +380,7 @@ sub docSubSubSection($$$$)
 
     my $subsection = $self->{OPM_subsection};
     defined $subsection
-       or die "ERROR: subsubsection $line outside subsection in $fn line $ln\n";
+     or die "ERROR: subsubsection `$line' outside subsection in $fn line $ln\n";
 
     my $subsubsection
       = $self->{OPM_subsubsection} = OODoc::Text::SubSubSection->new
@@ -613,7 +613,7 @@ sub decomposeM($$)
     elsif(defined($man = $self->manual($link))) { ; }
     else
     {   eval "no warnings; require $link";
-        if(! $@)  { ; }
+        if(! $@ || $@ =~ m/attempt to reload/i) { ; }
         elsif($@ =~ m/Can't locate/ )
         {  warn "WARNING: module $link is not on your system, found in $manual\n";
         }
