@@ -1,11 +1,12 @@
 # Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.03.
+# Pod stripped from pm file by OODoc 1.04.
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '1.03';
+$VERSION = '1.04';
+
 use base 'OODoc::Parser';
 
 use strict;
@@ -68,8 +69,6 @@ my @default_rules =
          )
        /x => 'forgotCut' ]
  );
-
-#-------------------------------------------
 
 
 sub init($)
@@ -161,8 +160,12 @@ sub parse(@)
     while(my $line = $in->getline)
     {   my $ln = $in->input_line_number;
 
-        if($line =~ m/^\s*package\s*([\w\-\:]+)\;/ && ! $self->inDoc)
-        {   my $package = $1;
+        if(!$self->inDoc && $line =~ s/^(\s*package\s*([\w\-\:]+)\;)//)
+        {   $out->print($1);
+            my $package = $2;
+            $out->print("\nuse vars '\$VERSION';\n\$VERSION = '$version';\n");
+            $out->print($line);
+
             $manual = OODoc::Manual->new
              ( package  => $package
              , source   => $input
@@ -174,8 +177,6 @@ sub parse(@)
              );
             push @manuals, $manual;
             $self->currentManual($manual);
-            $out->print($line);
-            $out->print("use vars '\$VERSION';\n\$VERSION = '$version';\n");
         }
         elsif(my($match, $action) = $self->findMatchingRule($line))
         {
@@ -613,7 +614,10 @@ sub decomposeM($$)
     elsif(defined($man = $self->manual($link))) { ; }
     else
     {   eval "no warnings; require $link";
-        if(! $@ || $@ =~ m/attempt to reload/i) { ; }
+        if(  ! $@
+          || $@ =~ m/attempt to reload/i
+          || $self->skipManualLink($link)
+          ) { ; }
         elsif($@ =~ m/Can't locate/ )
         {  warn "WARNING: module $link is not on your system, found in $manual\n";
         }

@@ -32,8 +32,9 @@ OODoc::Parser::Markov-E<gt>B<new>(OPTIONS)
 
 =over 4
 
- Option          --Default
- additional_rules  []
+ Option          --Defined in     --Default
+ additional_rules                   []
+ skip_links        OODoc::Parser    undef
 
 . additional_rules => ARRAY
 
@@ -44,6 +45,8 @@ as accepted by L<rule()|OODoc::Parser::Markov/"Parsing a file">.  These rules ge
 rules.
 
 =back
+
+. skip_links => ARRAY|REGEXP|STRING
 
 =back
 
@@ -153,6 +156,14 @@ in.
 =head2 Formatting text pieces
 
 $obj-E<gt>B<cleanup>(FORMATTER, MANUAL, STRING)
+
+=over 4
+
+See L<OODoc::Parser/"Formatting text pieces">
+
+=back
+
+$obj-E<gt>B<skipManualLink>(PACKAGE)
 
 =over 4
 
@@ -810,8 +821,8 @@ is not always easy to find.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.03,
-built on March 14, 2008. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.04,
+built on June 12, 2008. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

@@ -1,13 +1,14 @@
 # Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.03.
+# Pod stripped from pm file by OODoc 1.04.
 use strict;
 use warnings;
 
 package OODoc::Format::Pod3;
 use vars '$VERSION';
-$VERSION = '1.03';
+$VERSION = '1.04';
+
 use base 'OODoc::Format::Pod';
 
 use OODoc::Template;

@@ -163,6 +163,7 @@ $obj-E<gt>B<processFiles>(OPTIONS)
  notice        ''
  parser        OODoc::Parser::Markov
  select        qr/\.(pod|pm)$/
+ skip_links    []
  source        '.'
  verbose       <from object>
  version       <from source directory or OODoc object>
@@ -212,6 +213,14 @@ a list of filenames as array reference, a REGEX which is used to select
 names from the manifest file, or a CODE reference which is used to
 select elements from the manifest (filename passed as first argument).
 Is your pod real pod or should it also be passed through the parser?
+
+=back
+
+. skip_links => ARRAY|STRING|REGEXP
+
+=over 4
+
+Passed to L<OODoc::Parser::new(skip_links)|OODoc::Parser/"Constructors">.
 
 =back
 
@@ -758,8 +767,8 @@ an ARRAY, regular expression, or a code reference.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.03,
-built on March 14, 2008. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.04,
+built on June 12, 2008. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 

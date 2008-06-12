@@ -1,11 +1,12 @@
 # Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.03.
+# Pod stripped from pm file by OODoc 1.04.
 
 package OODoc::Format::Html;
 use vars '$VERSION';
-$VERSION = '1.03';
+$VERSION = '1.04';
+
 use base qw/OODoc::Format OODoc::Format::TemplateMagic/;
 
 use strict;
@@ -734,7 +735,12 @@ sub templateChapter($$)
         if defined $contained && length $contained;
 
     my $attr    = $zone->attributes;
-    my $name    = $attr =~ s/^\s*(\w+)\s*\,?\s*// ? $1 : undef;
+    my $name
+      = $attr =~ s/^\s*(\w+)\s*\,?\s*//       ? $1
+      : $attr =~ s/^\s*\"([^"]*)\"\s*\,?\s*// ? $1
+      : $attr =~ s/^\s*\'([^']*)\'\s*\,?\s*// ? $1
+      : undef;
+
     my @attrs   = $self->zoneGetParameters($attr);
 
     croak "ERROR: chapter without name in template"

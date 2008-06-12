@@ -1,11 +1,12 @@
 # Copyrights 2003-2008 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.03.
+# Pod stripped from pm file by OODoc 1.04.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '1.03';
+$VERSION = '1.04';
+
 use base 'OODoc::Object';
 
 use strict;
@@ -64,12 +65,8 @@ sub init($)
 
 sub distribution() {shift->{O_distribution}}
 
-#-------------------------------------------
-
 
 sub version() {shift->{O_version}}
-
-#-------------------------------------------
 
 
 sub project() {shift->{O_project}}
@@ -96,8 +93,6 @@ sub selectFiles($@)
 
     ( \@process, \@copy );
 }
-
-#-------------------------------------------
 
 
 sub processFiles(@)
@@ -195,12 +190,14 @@ sub processFiles(@)
     #
 
     my $parser = $args{parser} || 'OODoc::Parser::Markov';
+    my $skip_links = delete $args{skip_links};
+
     unless(ref $parser)
     {   eval "require $parser";
         croak "ERROR: Cannot compile $parser class:\n$@"
            if $@;
 
-        $parser = $parser->new
+        $parser = $parser->new(skip_links => $skip_links)
            or croak "ERROR: Parser $parser could not be instantiated";
     }
 

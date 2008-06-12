@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                OODoc
-version:             1.03
+version:             1.04
 abstract:            Object Oriented Documentation
 license:             perl
 author:              
