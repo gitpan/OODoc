@@ -1,11 +1,11 @@
-# Copyrights 2003-2008 by Mark Overmeer.
+# Copyrights 2003-2009 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.04.
+# Pod stripped from pm file by OODoc 1.05.
 
 package OODoc::Parser::Markov;
 use vars '$VERSION';
-$VERSION = '1.04';
+$VERSION = '1.05';
 
 use base 'OODoc::Parser';
 
@@ -695,8 +695,10 @@ sub decomposeL($$)
            $text .= " entry $item" if defined $item && length $item;
         }
 
-        $dest = "$url_modsearch$man"
-           unless $man =~ m/\(\d.*\)\s*$/;
+        if($man !~ m/\(\d.*\)\s*$/)
+        {   (my $escaped = $man) =~ s/\W+/_/g;
+            $dest = "$url_modsearch$escaped";
+        }
     }
     elsif(!defined $item)
     {   $dest  = $man;
