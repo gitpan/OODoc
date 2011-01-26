@@ -25,9 +25,9 @@ More than one manual can be related to a single package.
 
 =head1 OVERLOADED
 
-overload: B<cmp>
-
 =over 4
+
+=item overload: B<cmp>
 
 String comparison takes place between a manual name and another
 manual name which may be a manual object or any other string or
@@ -39,11 +39,7 @@ example:
  if($man1 eq $man2) ...
  my @sorted = sort @manuals;    # implicit calls to cmp
 
-=back
-
-overload: B<stringification>
-
-=over 4
+=item overload: B<stringification>
 
 Used in string context, a manual produces its name.
 
@@ -53,121 +49,81 @@ Used in string context, a manual produces its name.
 
 =head2 Constructors
 
-OODoc::Manual-E<gt>B<new>(OPTIONS)
-
 =over 4
 
- Option      --Default
- distribution  <required>
- package       <required>
- parser        <required>
- pure_pod      <false>
- source        <required>
- stripped      undef
- version       <required>
+=item OODoc::Manual-E<gt>B<new>(OPTIONS)
 
-. distribution => STRING
+ -Option      --Default
+  distribution  <required>
+  package       <required>
+  parser        <required>
+  pure_pod      <false>
+  source        <required>
+  stripped      undef
+  version       <required>
 
-. package => STRING
+=over 2
 
-=over 4
+=item distribution => STRING
+
+=item package => STRING
 
 The name of the package which is described by this manual.
 
-=back
-
-. parser => OBJECT
-
-=over 4
+=item parser => OBJECT
 
 The parser which produces this manual page.  This parameter is needed
 to be able to low-level format the text blocks.
 
-=back
-
-. pure_pod => BOOLEAN
-
-=over 4
+=item pure_pod => BOOLEAN
 
 Some documentation is stored in files which look like a module,
 but do not contain any code.  Their filenames usually end with C<.pod>.
 
-=back
-
-. source => STRING
-
-=over 4
+=item source => STRING
 
 The file where the manual was found in, or in some cases some other
 string which explains where the data came from.
 
-=back
-
-. stripped => STRING
-
-=over 4
+=item stripped => STRING
 
 The file where the stripped code is written to.
 
-=back
+=item version => STRING
 
-. version => STRING
+=back
 
 =back
 
 =head2 Attributes
 
-$obj-E<gt>B<distribution>
-
 =over 4
+
+=item $obj-E<gt>B<distribution>
 
 Returns the distribution which includes this manual.
 
-=back
-
-$obj-E<gt>B<isPurePod>
-
-=over 4
+=item $obj-E<gt>B<isPurePod>
 
 Returns whether this package has real code related to it.
 
-=back
-
-$obj-E<gt>B<package>
-
-=over 4
+=item $obj-E<gt>B<package>
 
 Returns the package of the manual.
 
-=back
-
-$obj-E<gt>B<parser>
-
-=over 4
+=item $obj-E<gt>B<parser>
 
 Returns the parser which has produced this manual object.
 
-=back
-
-$obj-E<gt>B<source>
-
-=over 4
+=item $obj-E<gt>B<source>
 
 Returns the source of this manual information.
 
-=back
-
-$obj-E<gt>B<stripped>
-
-=over 4
+=item $obj-E<gt>B<stripped>
 
 The name of the produced stripped package file.
 
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
+=item $obj-E<gt>B<version>
 
 Returns the version of this manual information.
 
@@ -175,47 +131,35 @@ Returns the version of this manual information.
 
 =head2 Collected
 
-$obj-E<gt>B<chapter>(NAME|OBJECT)
-
 =over 4
+
+=item $obj-E<gt>B<chapter>(NAME|OBJECT)
 
 When a NAME (a string) given, the chapter with that name is returned, or
 C<undef> when it is not known.  With an OBJECT, that object is added to
 the list of chapters.
 
-=back
-
-$obj-E<gt>B<chapters>([CHAPTERS])
-
-=over 4
+=item $obj-E<gt>B<chapters>([CHAPTERS])
 
 Returns the ordered list of chapter object for this manual.
 
-=back
-
-$obj-E<gt>B<diagnostics>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<diagnostics>(OPTIONS)
 
 All diagnostic messages of all chapters for this manual together.
 
- Option--Default
- select  []
+ -Option--Default
+  select  []
 
-. select => ARRAY
+=over 2
 
-=over 4
+=item select => ARRAY
 
 Select only the diagnostic message of the specified types (case
 insensitive).  Without any type, all are selected.
 
 =back
 
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
+=item $obj-E<gt>B<examples>
 
 All examples of all chapters within this manual together, especially
 useful for counting.
@@ -224,29 +168,17 @@ example:
 
  print scalar $manual->examples;
 
-=back
-
-$obj-E<gt>B<name>
-
-=over 4
+=item $obj-E<gt>B<name>
 
 Returns the name of the manual, which is found in the NAME chapter.
 
-=back
-
-$obj-E<gt>B<subroutine>(NAME)
-
-=over 4
+=item $obj-E<gt>B<subroutine>(NAME)
 
 Returns the subroutine with the specified NAME as object reference.  When
 the manual is part of a package description which is spread over multiple
 manuals, then these other manuals will be searched as well.
 
-=back
-
-$obj-E<gt>B<subroutines>
-
-=over 4
+=item $obj-E<gt>B<subroutines>
 
 All subroutines of all chapters within this manual together, especially
 useful for counting.
@@ -259,9 +191,9 @@ example:
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<all>(METHOD, PARAMETERS)
-
 =over 4
+
+=item $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
 Call L<OODoc::Text::Structure::all()|OODoc::Text::Structure/"Collected"> on all chapters, passing the METHOD
 and PARAMETERS.  In practice, this means that you can simply collect
@@ -271,75 +203,43 @@ example:
 
  my @diags = $manual->all('diagnostics');
 
-=back
-
-$obj-E<gt>B<extends>([OBJECT])
-
-=over 4
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
-=back
-
-$obj-E<gt>B<extraCode>
-
-=over 4
+=item $obj-E<gt>B<extraCode>
 
 Returns a list of manuals which contain extra code for this package.
 
-=back
-
-$obj-E<gt>B<inherited>(SUBROUTINE|OPTION)
-
-=over 4
+=item $obj-E<gt>B<inherited>(SUBROUTINE|OPTION)
 
 Returns whether the SUBROUTINE or OPTION was defined by this manual page,
 or inherited from it.
 
-=back
-
-$obj-E<gt>B<ownSubroutines>
-
-=over 4
+=item $obj-E<gt>B<ownSubroutines>
 
 Returns only the subroutines which are described in this manual page
 itself.  L<subroutines()|OODoc::Manual/"Collected"> returns them all.
 
-=back
-
-$obj-E<gt>B<realizers>([PACKAGES])
-
-=over 4
+=item $obj-E<gt>B<realizers>([PACKAGES])
 
 Returns a list of packages which can realize into this object
 using Object::Realize::Later magic.  When PACKAGES (names or objects)
 are specified, they are added first.
 
-=back
-
-$obj-E<gt>B<realizes>([PACKAGE])
-
-=over 4
+=item $obj-E<gt>B<realizes>([PACKAGE])
 
 Returns the class into which this class can be realized.  This is
 a trick of the Object::Realize::Later module.  The PACKAGE (name or
 object) will be set first, if specified.
 
-=back
-
-$obj-E<gt>B<subClasses>([PACKAGES])
-
-=over 4
+=item $obj-E<gt>B<subClasses>([PACKAGES])
 
 Returns the names of all sub-classes (extensions) of this package.
 When PACKAGES (names or objects) are specified, they are first added
 to the list.
 
-=back
-
-$obj-E<gt>B<superClasses>([PACKAGES])
-
-=over 4
+=item $obj-E<gt>B<superClasses>([PACKAGES])
 
 Returns the super classes for this package.  PACKAGES (names or objects)
 will be added to the list of superclasses first.
@@ -348,34 +248,22 @@ will be added to the list of superclasses first.
 
 =head2 Processing
 
-$obj-E<gt>B<collectPackageRelations>
-
 =over 4
 
-=back
+=item $obj-E<gt>B<collectPackageRelations>
 
-$obj-E<gt>B<createInheritance>
-
-=over 4
+=item $obj-E<gt>B<createInheritance>
 
 Create the text which represents the inheritance relationships of
 a certain package.  More than one MANUAL can be defined for one
 package, and will each produce the same text.  The returned string
 still has to be cleaned-up before inclusion.
 
-=back
-
-$obj-E<gt>B<expand>
-
-=over 4
+=item $obj-E<gt>B<expand>
 
 Add the information of lower level manuals into this one.
 
-=back
-
-$obj-E<gt>B<mergeStructure>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<mergeStructure>(OPTIONS)
 
 Merge two lists of structured text objects: "this" list and "super" list.
 The "this" objects are defined on this level of inheritance, where the
@@ -386,44 +274,40 @@ preferably included before the new ones.
 Merging is a complicated task, because the order of both lists should be
 kept as well as possible.
 
- Option   --Default
- container  <required>
- equal      sub {"$_[0]" eq "$_[1]"}
- merge      sub {$_[0]}
- super      []
- this       []
+ -Option   --Default
+  container  <required>
+  equal      sub {"$_[0]" eq "$_[1]"}
+  merge      sub {$_[0]}
+  super      []
+  this       []
 
-. container => OBJECT
+=over 2
 
-. equal => CODE
+=item container => OBJECT
 
-=over 4
+The object which administers this level of documentation nesting,
+which may be a manual, chapter, and such.
+
+=item equal => CODE
 
 Define how can be determined that two objects are the same.  By default,
 the stringification of both objects are compared.
 
-=back
-
-. merge => CODE
-
-=over 4
+=item merge => CODE
 
 What to call if both lists contain the same object.  These two objects
-will be passed as argument to the code reference.
+will be passed as argument to the code reference. By default, the second
+gets ignored.
+
+=item super => ARRAY
+
+=item this => ARRAY
 
 =back
 
-. super => ARRAY
+=item $obj-E<gt>B<mostDetailedLocation>(OBJECT)
 
-. this => ARRAY
-
-=back
-
-$obj-E<gt>B<mostDetailedLocation>(OBJECT)
-
-=over 4
-
-The OBJECT (a text element) is lccated in some subsection, section or
+The OBJECT (a text element) is located in some subsection, section or
 chapter.  But the OBJECT may also be an extension to a piece of
 documentation which is described in a super class with a location in
 more detail.  The most detailed location for the description is returned.
@@ -432,9 +316,18 @@ more detail.  The most detailed location for the description is returned.
 
 =head2 Tracing
 
-$obj-E<gt>B<stats>
-
 =over 4
+
+=item $obj-E<gt>B<index>
+
+Returns a string which can be used as index of headings used in this
+manual page.
+
+example: 
+
+  print $manual->index;
+
+=item $obj-E<gt>B<stats>
 
 Returns a string which displays some stats about the manual.
 
@@ -442,21 +335,17 @@ Returns a string which displays some stats about the manual.
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Manual-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Manual-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -464,49 +353,29 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -514,20 +383,16 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-Error: No chapter NAME in scope of package $pkg in file $source
-
 =over 4
+
+=item Error: No chapter NAME in scope of package $pkg in file $source
 
 Each documentation part requires a chapter "NAME" which starts with
 the manual name followed by a dash.  Apparently, this was not found
 in the indicated file.  This chapter description must be anywhere
 after the package statement leading the name-space.
 
-=back
-
-Error: The NAME chapter does not have the right format in $source
-
-=over 4
+=item Error: The NAME chapter does not have the right format in $source
 
 The NAME chapter is used to figure-out what name the manual page must
 have.  The standard format contains only one line, containing the
@@ -535,61 +400,33 @@ manual's name, one dash ('-'), and then a brief explanation. For instance:
   =chapter NAME
   OODoc::Manual - one manual about a package
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-=back
+=item Error: no distribution is specified for manual $name
 
-Error: no distribution is specified for manual $name
-
-=over 4
-
-=back
-
-Error: no source filename is specified for manual $name
-
-=over 4
+=item Error: no source filename is specified for manual $name
 
 You have to specify where you found the information for the manual.  This
 does not need to be the name of an existing file, but usually it will be.
 
-=back
+=item Error: no version is specified for manual $name
 
-Error: no version is specified for manual $name
-
-=over 4
-
-=back
-
-Warning: order conflict "$take" before "$insert" in $file line $number
-
-=over 4
+=item Warning: order conflict "$take" before "$insert" in $file line $number
 
 The order of the objects in a sub-class shall be the same as that of
 the super class, otherwise the result of merging of the information
 received from both classes is undertermined.
 
-=back
-
-Error: package name is not specified
-
-=over 4
+=item Error: package name is not specified
 
 You try to instantiate a manual, but have not specified the name
 of the package which is described in this manual, which is required.
 
-=back
-
-Warning: subroutine $name location conflict: $here and $there
-
-=over 4
+=item Warning: subroutine $name location conflict: $here and $there
 
 Finding the optimal location to list a subroutine description is
 a harsh job: information from various manual pages is being used.
@@ -606,11 +443,7 @@ is not related to that of the same method in an other page.  For instance,
 in the first page it is listed in chapter "METHODS", and in the second
 in chapter "FUNCTIONS".
 
-=back
-
-Error: two chapters named $name in $filename line $ln1 and $ln2
-
-=over 4
+=item Error: two chapters named $name in $filename line $ln1 and $ln2
 
 The indicated file contains two chapters with the same name, which
 is not permitted.  Join the contents of both parts.
@@ -619,12 +452,12 @@ is not permitted.  Join the contents of both parts.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

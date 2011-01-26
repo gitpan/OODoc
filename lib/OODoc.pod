@@ -59,52 +59,38 @@ get started.  Please contribute ideas.  Have a look at the main website
 of this project at L<http://perl.overmeer.net/oodoc/>.  That is also an
 example of the produced output.
 
-=head1 OVERLOADED
-
 =head1 METHODS
 
 =head2 Constructors
 
-OODoc-E<gt>B<new>(OPTIONS)
-
 =over 4
 
- Option      --Default
- distribution  <required>
- project       <distribution>
- verbose       0
- version       <from version or VERSION file>
+=item OODoc-E<gt>B<new>(OPTIONS)
 
-. distribution => STRING
+ -Option      --Default
+  distribution  <required>
+  project       <distribution>
+  verbose       0
+  version       <from version or VERSION file>
 
-=over 4
+=over 2
+
+=item distribution => STRING
 
 The name of the package, as released on CPAN.
 
-=back
-
-. project => STRING
-
-=over 4
+=item project => STRING
 
 A short description of the distribution, as will be shown on many places
 in the produced manual pages and code.  You can use the main package name,
 or something which is nicer to read.
 
-=back
-
-. verbose => INTEGER
-
-=over 4
+=item verbose => INTEGER
 
 Verbosity during the process.  The higher the number, the more information
 will be presented (current useful maximum is 4).
 
-=back
-
-. version => STRING
-
-=over 4
+=item version => STRING
 
 The version number as automatically included in all packages after
 each package statement and on many places in the documentation. By
@@ -117,9 +103,9 @@ or C<VERSION> which contains a number.
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -127,25 +113,17 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<distribution>
-
 =over 4
+
+=item $obj-E<gt>B<distribution>
 
 Returns the nice name for the distribution.
 
-=back
-
-$obj-E<gt>B<project>
-
-=over 4
+=item $obj-E<gt>B<project>
 
 Returns the general project description, by default the distribution name.
 
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
+=item $obj-E<gt>B<version>
 
 Returns the version string for the distribution.
 
@@ -153,60 +131,44 @@ Returns the version string for the distribution.
 
 =head2 Parser
 
-$obj-E<gt>B<processFiles>(OPTIONS)
-
 =over 4
 
- Option      --Default
- distribution  <from main OODoc object>
- manifest      <source/>'MANIFEST'
- notice        ''
- parser        OODoc::Parser::Markov
- select        qr/\.(pod|pm)$/
- skip_links    []
- source        '.'
- verbose       <from object>
- version       <from source directory or OODoc object>
- workdir       <required>
+=item $obj-E<gt>B<processFiles>(OPTIONS)
 
-. distribution => NAME
+ -Option      --Default
+  distribution  <from main OODoc object>
+  manifest      <source/>'MANIFEST'
+  notice        ''
+  parser        OODoc::Parser::Markov
+  select        qr/\.(pod|pm)$/
+  skip_links    []
+  source        '.'
+  verbose       <from object>
+  version       <from source directory or OODoc object>
+  workdir       <required>
 
-=over 4
+=over 2
+
+=item distribution => NAME
 
 Useful when more than one distribution is merged into one set of
 documentation.
 
-=back
-
-. manifest => FILENAME
-
-=over 4
+=item manifest => FILENAME
 
 The manifest file lists all files which belong to this distribution: packages,
 pods, tests, etc. before the new pod files are created.
 
-=back
-
-. notice => STRING
-
-=over 4
+=item notice => STRING
 
 Include the string (which may consist of multiple lines) to each of the
 pm files.  This notice usually contains the copyright message.
 
-=back
-
-. parser => CLASS|OBJECT
-
-=over 4
+=item parser => CLASS|OBJECT
 
 The parser CLASS or OBJECT to be used to process the pages.
 
-=back
-
-. select => ARRAY|REGEX|CODE
-
-=over 4
+=item select => ARRAY|REGEX|CODE
 
 The files which contain documentation to be processed.  You can provide
 a list of filenames as array reference, a REGEX which is used to select
@@ -214,38 +176,22 @@ names from the manifest file, or a CODE reference which is used to
 select elements from the manifest (filename passed as first argument).
 Is your pod real pod or should it also be passed through the parser?
 
-=back
-
-. skip_links => ARRAY|STRING|REGEXP
-
-=over 4
+=item skip_links => ARRAY|STRING|REGEXP
 
 Passed to L<OODoc::Parser::new(skip_links)|OODoc::Parser/"Constructors">.
 
-=back
-
-. source => DIRECTORY
-
-=over 4
+=item source => DIRECTORY
 
 The location where the files are located.  This is useful when you collect
 the documentation of other distributions into the main one.  Usually in
 combination with an undefined value for C<workdir>.
 
-=back
-
-. verbose => INTEGER
-
-=over 4
+=item verbose => INTEGER
 
 Tell more about each stage of the processing.  The higher the number,
 the more information you will get.
 
-=back
-
-. version => STRING
-
-=over 4
+=item version => STRING
 
 The version of the distribution.  If not specified, the C<source>
 directory is scanned for a file named C<version> or C<VERSION>. The
@@ -255,11 +201,7 @@ main OODoc object needs to provide the version.
 To make C<Makefile.PL> option C<VERSION_FROM> to work with this
 seperate version file, that line should contain C<$VERSION = >.
 
-=back
-
-. workdir => DIRECTORY
-
-=over 4
+=item workdir => DIRECTORY
 
 Specify the directory where the stripped pm-files and the pod files
 will be written to.  Probably the whole distribution is collected on
@@ -272,11 +214,7 @@ created.
 
 =back
 
-=back
-
-$obj-E<gt>B<selectFiles>(WHICH, LIST)
-
-=over 4
+=item $obj-E<gt>B<selectFiles>(WHICH, LIST)
 
 Returns two array references: the first with files to process, and the second
 with files which do not need to be processed.  WHICH comes from
@@ -286,35 +224,35 @@ L<processFiles(select)|OODoc/"Parser"> and the LIST are files from a manifest.
 
 =head2 Preparation
 
-$obj-E<gt>B<getPackageRelations>(VERBOSITY)
-
 =over 4
+
+=item $obj-E<gt>B<getPackageRelations>(VERBOSITY)
 
 Compile all files which contain packages, and then try to find-out
 how they are related.
 
-=back
-
-$obj-E<gt>B<prepare>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<prepare>(OPTIONS)
 
 Add information to the documentation tree about inheritance relationships
 of the packages.  C<prepare> must be called between L<processFiles()|OODoc/"Parser">
 and L<create()|OODoc/"Formatter">.
 
- Option --Default
- verbose  <from object>
+ -Option --Default
+  verbose  <from object>
 
-. verbose => INTEGER
+=over 2
+
+=item verbose => INTEGER
+
+=back
 
 =back
 
 =head2 Formatter
 
-$obj-E<gt>B<create>(NAME|CLASS|OBJECT, OPTIONS)
-
 =over 4
+
+=item $obj-E<gt>B<create>(NAME|CLASS|OBJECT, OPTIONS)
 
 Create a manual for the set of manuals read so far.  The manuals are
 produced by different formatters which produce one page at a time.
@@ -327,118 +265,78 @@ and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and L<OODoc::F
 respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
- Option         --Default
- append           undef
- format_options   []
- manifest         <workdir>/MANIFEST
- manual_format    []
- manual_template  undef
- other_files      undef
- process_files    <formatter dependent>
- select           undef
- verbose          0
- workdir          <required>
+ -Option         --Default
+  append           undef
+  format_options   []
+  manifest         <workdir>/MANIFEST
+  manual_format    []
+  manual_template  undef
+  other_files      undef
+  process_files    <formatter dependent>
+  select           undef
+  verbose          0
+  workdir          <required>
 
-. append => STRING|CODE
+=over 2
 
-=over 4
+=item append => STRING|CODE
 
 The value is passed on to L<OODoc::Format::createManual(append)|OODoc::Format/"Page generation">,
 but the behavior is formatter dependent.
 
-=back
-
-. format_options => ARRAY
-
-=over 4
+=item format_options => ARRAY
 
 Formatter dependent initialization options.  See the documentation of
 the formatter which will be used for the possible values.
 
-=back
-
-. manifest => FILENAME|undef
-
-=over 4
+=item manifest => FILENAME|undef
 
 The names of the produced files are appended to this file.  When undef
 is given, no file will be written for this.
 
-=back
-
-. manual_format => ARRAY
-
-=over 4
+=item manual_format => ARRAY
 
 Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"Page generation"> when
 a manual page has to be produced.  See the applicable formatter
 manual page for the possible flags and values.
 
-=back
-
-. manual_template => LOCATION
-
-=over 4
+=item manual_template => LOCATION
 
 Passed to L<OODoc::Format::createManual(template)|OODoc::Format/"Page generation">, and defines the
 location of the set of pages which has to be created for each manual
 page.  Some formatters do not support templates and the valid values
 are formatter dependent.
 
-=back
-
-. other_files => DIRECTORY
-
-=over 4
+=item other_files => DIRECTORY
 
 Other files which have to be copied
 passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Page generation">.
 
-=back
-
-. process_files => REGEXP
-
-=over 4
+=item process_files => REGEXP
 
 Selects the files which are to be processed for special markup information.
 Other files, like image files, will be simply copied.  The value will be
 passed to L<OODoc::Format::createOtherPages(process)|OODoc::Format/"Page generation">.
 
-=back
-
-. select => CODE|REGEXP
-
-=over 4
+=item select => CODE|REGEXP
 
 Produce only the indicated manuals, which is useful in case of merging
 manuals from different distributions.  When a REGEXP is provided, it
 will be checked against the manual name.  The CODE reference will be
 called with a manual as only argument.
 
-=back
-
-. verbose => INTEGER
-
-=over 4
+=item verbose => INTEGER
 
 Debug level, the higher the number, the more details about the process
 you will have.
 
-=back
-
-. workdir => DIRECTORY
-
-=over 4
+=item workdir => DIRECTORY
 
 The directory where the output is going to.
 
 =back
 
-=back
-
-$obj-E<gt>B<stats>
-
-=over 4
+=item $obj-E<gt>B<stats>
 
 Returns a string which contains some statistics about the whole parsed
 document set.
@@ -447,21 +345,17 @@ document set.
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -469,49 +363,29 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -541,13 +415,6 @@ distributions, but is much more needed when programs grow larger.
 
 =head2 How OODoc works
 
-Like with POD, you simply mix your documentation with your code.  When
-the module is distributed, this information is stripped from the files
-by a I<parser>, and translated into an object tree.  This tree is then
-optimized: items combined, reorganized, etc, to collect all information
-required to produce useable manual pages.  Then, a I<formatter> is called
-to generate the manual pages.
-
 =head3 The parser
 
 The parser reads the package files, and (by default) strip them from all
@@ -575,6 +442,13 @@ manual page generators.
 The final phase can be called more than once: based on the same object
 tree, documents can be produced in various formats.  The initial
 implementation produces POD and HTML.
+
+Like with POD, you simply mix your documentation with your code.  When
+the module is distributed, this information is stripped from the files
+by a I<parser>, and translated into an object tree.  This tree is then
+optimized: items combined, reorganized, etc, to collect all information
+required to produce useable manual pages.  Then, a I<formatter> is called
+to generate the manual pages.
 
 =head2 Getting Started from scratch
 
@@ -634,90 +508,54 @@ to generate the distribution, so the unprocessed files!
 
 =head1 DIAGNOSTICS
 
-Error: Cannot compile $parser class
-
 =over 4
+
+=item Error: Cannot compile $parser class
 
 The $parser class does not exist or produces compiler errors.
 
-=back
+=item Error: Cannot read version from file $fn: $!
 
-Error: Cannot read version from file $fn: $!
-
-=over 4
-
-=back
-
-Error: Parser $parser could not be instantiated
-
-=over 4
+=item Error: Parser $parser could not be instantiated
 
 Something went wrong while starting the parser object.  Probably there is
 an other error message which will tell you the exact cause.
 
-=back
-
-Error: cannot copy distribution file $fn to $dest: $!
-
-=over 4
+=item Error: cannot copy distribution file $fn to $dest: $!
 
 For some reason, a plain file from can not be copied from your source
 tree to the location where the distribution is made.
 
-=back
-
-Error: formatter $name has compilation errors: $@
-
-=over 4
+=item Error: formatter $name has compilation errors: $@
 
 The formatter which is specified does not compile, so can not be used.
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-=back
-
-Warning: no file $fn to include in the distribution
-
-=over 4
+=item Warning: no file $fn to include in the distribution
 
 Probably your MANIFEST file lists this file which does not exist.  The file
 will be skipped for now, but may cause problems later on.
 
-=back
-
-Error: no version specified for distribution "$name"
-
-=over 4
+=item Error: no version specified for distribution "$name"
 
 Version information will be added to all packages and all manual
 pages.  You need to specify a version and be sure that it changes
 with each release, or create a file named C<version> or C<VERSION>
 which contains that data.
 
-=back
-
-Error: problems compiling $code for package $name: $@
-
-=over 4
+=item Error: problems compiling $code for package $name: $@
 
 Syntax error in your code, or a problem caused by stripping the file.
 You can run your test-scripts before the files get stripped as long
 as you do not use C<make test>, because that will try to produce
 manual-pages as well...
 
-=back
-
-Error: requires a directory to write the distribution to
-
-=over 4
+=item Error: requires a directory to write the distribution to
 
 You have to give a value to C<workdir>, which may be C<undef>.  This
 option is enforced to avoid the accidental omission of the parameter.
@@ -727,38 +565,22 @@ to a temporary directory.  The packages are first stripped from
 their pseudo doc, and then written to the same directory.  That
 directory will be the place where C<make dist> is run later.
 
-=back
-
-Error: requires a directory to write the manuals to
-
-=over 4
+=item Error: requires a directory to write the manuals to
 
 You have to give a value to C<workdir>, which will be used as top directory
 for the produced output.  It does not matter whether there is already some
 stuff in that directory.
 
-=back
+=item Error: the destribution must be specified
 
-Error: the destribution must be specified
-
-=over 4
-
-=back
-
-Error: there is no version defined for the source files
-
-=over 4
+=item Error: there is no version defined for the source files
 
 Each manual will need a version number.  There are various ways to
 specify one.  For instance, create a file named C<version> or C<VERSION>
 in the top source directory of your distribution, or specify a version
 as argument to L<OODoc::new()|OODoc/"METHODS"> or L<OODoc::processFiles()|OODoc/"Parser">.
 
-=back
-
-Error: use regex, code reference or array for file selection
-
-=over 4
+=item Error: use regex, code reference or array for file selection
 
 The L<processFiles(select)|OODoc/"Parser"> option is not understood.  You may specify
 an ARRAY, regular expression, or a code reference.
@@ -767,12 +589,12 @@ an ARRAY, regular expression, or a code reference.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

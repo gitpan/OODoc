@@ -1,11 +1,11 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 package OODoc::Text::Chapter;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Text::Structure';
 
@@ -27,6 +27,14 @@ sub init($)
     $self->{OTC_sections} = [];
 
     $self;
+}
+
+sub emptyExtension($)
+{   my ($self, $container) = @_;
+    my $empty = $self->SUPER::emptyExtension($container);
+    my @sections = map {$_->emptyExtension($empty)} $self->sections;
+    $empty->sections(@sections);
+    $empty;
 }
 
 sub manual() {shift->container}

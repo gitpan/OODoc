@@ -11,13 +11,11 @@ OODoc::Manifest - maintain the information inside a manifest file.
 
  my $manifest = OODoc::Manifest->new(filename => ...);
 
-=head1 DESCRIPTION
-
 =head1 OVERLOADED
 
-overload: B<@{}>
-
 =over 4
+
+=item overload: B<@{}>
 
 Referencing this object as array will produce all filenames from the
 manifest.
@@ -28,16 +26,16 @@ manifest.
 
 =head2 Constructors
 
-OODoc::Manifest-E<gt>B<new>(OPTIONS)
-
 =over 4
 
- Option  --Default
- filename  undef
+=item OODoc::Manifest-E<gt>B<new>(OPTIONS)
 
-. filename => FILENAME
+ -Option  --Default
+  filename  undef
 
-=over 4
+=over 2
+
+=item filename => FILENAME
 
 The filename where the manifest is in.  When the name is not defined,
 the data will not be written.
@@ -48,9 +46,9 @@ the data will not be written.
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -58,9 +56,9 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<filename>
-
 =over 4
+
+=item $obj-E<gt>B<filename>
 
 The name of the file which is read or will be written.
 
@@ -68,17 +66,13 @@ The name of the file which is read or will be written.
 
 =head2 The manifest list
 
-$obj-E<gt>B<add>(FILENAMES)
-
 =over 4
+
+=item $obj-E<gt>B<add>(FILENAMES)
 
 Adds the FILENAMES to the manifest, doubles are ignored.
 
-=back
-
-$obj-E<gt>B<files>
-
-=over 4
+=item $obj-E<gt>B<files>
 
 Returns an unsorted list with all filenames in this manifest.
 
@@ -86,35 +80,23 @@ Returns an unsorted list with all filenames in this manifest.
 
 =head2 Internals
 
-$obj-E<gt>B<modified>([BOOLEAN])
-
 =over 4
+
+=item $obj-E<gt>B<modified>([BOOLEAN])
 
 Whether filenames have been added to the list after initiation.
 
-=back
-
-$obj-E<gt>B<read>
-
-=over 4
+=item $obj-E<gt>B<read>
 
 Read the MANIFEST file.  The comments are stripped from the lines.
 
-=back
-
-$obj-E<gt>B<relative>(FILENAME)
-
-=over 4
+=item $obj-E<gt>B<relative>(FILENAME)
 
 Returns the name of the file relative to the location of the MANIFEST
 file.  The MANIFEST file should always be in top of the directory tree,
 so the FILENAME should be in the same directory and below.
 
-=back
-
-$obj-E<gt>B<write>
-
-=over 4
+=item $obj-E<gt>B<write>
 
 Write the MANIFEST file if it has changed.  The file will automatically
 be written when the object leaves scope.
@@ -123,21 +105,17 @@ be written when the object leaves scope.
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Manifest-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Manifest-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -145,49 +123,29 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -195,28 +153,20 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-Error: Cannot read manifest file $filename: $!
-
 =over 4
+
+=item Error: Cannot read manifest file $filename: $!
 
 The manifest file could not be opened for reading.
 
-=back
-
-Warning: MANIFEST file $name lists filename outside (sub)directory: $file
-
-=over 4
+=item Warning: MANIFEST file $name lists filename outside (sub)directory: $file
 
 The MANIFEST file of a distributed package should be located in the top
 directory of that packages.  All files of the distribution are in that
 same directory, or one of its sub-directories, otherwise they will not
 be packaged.
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
@@ -226,12 +176,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

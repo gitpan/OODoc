@@ -1,11 +1,11 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 package OODoc::Text::Section;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Text::Structure';
 
@@ -26,6 +26,14 @@ sub init($)
 
     $self->{OTS_subsections} = [];
     $self;
+}
+
+sub emptyExtension($)
+{   my ($self, $container) = @_;
+    my $empty = $self->SUPER::emptyExtension($container);
+    my @subsections = map {$_->emptyExtension($empty)} $self->subsections;
+    $empty->subsections(@subsections);
+    $empty;
 }
 
 #-------------------------------------------
@@ -68,7 +76,6 @@ sub all($@)
 
 sub subsection($)
 {   my ($self, $thing) = @_;
-
     if(ref $thing)
     {   push @{$self->{OTS_subsections}}, $thing;
         return $thing;

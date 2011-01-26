@@ -1,14 +1,14 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 use strict;
 use warnings;
 
 package OODoc::Format::TemplateMagic;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 
 

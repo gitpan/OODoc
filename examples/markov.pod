@@ -2,8 +2,6 @@
 
 My::Name::Space - just an example
 
-=head1 INHERITANCE
-
 =head1 SYNOPSIS
 
  my $obj = My::Name::Space->new;
@@ -18,12 +16,7 @@ should be read by everyone.  All less import things are kept in a
 chapter named DETAILS after the explanation of functions and stuff such
 that important things come first.
 
-=head1 OVERLOADED
-
 =head1 METHODS
-
-take whatever you need in the order you wish to define it (order of the
-chapters is only determined by the output templates of the formatter)
 
 =head2 Constructors
 
@@ -32,17 +25,13 @@ of them grows large.  The methods and functions will get sorted
 alphabetically, and you do not want the "new" to disappear far down in
 the list.
 
-$obj-E<gt>B<clone>
-
 =over 4
+
+=item $obj-E<gt>B<clone>
 
 Make a copy of the object.
 
-=back
-
-$obj-E<gt>B<new>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<new>(OPTIONS)
 
 Create a new object.  Read all about the =option, =default, =example, and
 so on in the manual-page of the OODoc::Parser::Markov.
@@ -53,7 +42,8 @@ so on in the manual-page of the OODoc::Parser::Markov.
 
 And so on.  Do not forget the C<=cut>'s!
 
-=head1 FUNCTIONS
+take whatever you need in the order you wish to define it (order of the
+chapters is only determined by the output templates of the formatter)
 
 =head1 DETAILS
 
@@ -64,12 +54,12 @@ Again: do not forget the next line!!!
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

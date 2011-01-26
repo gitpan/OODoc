@@ -22,15 +22,13 @@ Any object used in the OODoc module is derived from this OODoc::Object
 class.  This means that all functionality in this class is provided
 for all of the other classes.
 
-=head1 OVERLOADED
-
 =head1 METHODS
 
 =head2 Constructors
 
-OODoc::Object-E<gt>B<new>(OPTIONS)
-
 =over 4
+
+=item OODoc::Object-E<gt>B<new>(OPTIONS)
 
 Create a new object (instantiation).  All objects in OODoc are created
 the same way: they carry a list of key-value pairs as option.  For
@@ -44,9 +42,9 @@ options when used with many other method defined by OODoc.
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 Close to all elements used within OODoc can have an inheritance relation.
 The returned object is extended by the current object.  Multiple inheritance
@@ -56,23 +54,19 @@ is not supported here.
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Object-E<gt>B<filenameToPackage>(FILENAME)
-
-=over 4
 
 example: 
 
  print $self->filenameToPackage('Mail/Box.pm'); # prints Mail::Box
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Object-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 Creates this DIRECTORY and all its non-existing parents.
 
@@ -83,54 +77,34 @@ Creates this DIRECTORY and all its non-existing parents.
 All manuals can be reached everywhere in the program: it is a global
 collection.
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 The MANUAL will be added to the list of known manuals.  The same package
 name can appear in more than one manual.  This OBJECT shall be of type
 L<OODoc::Manual|OODoc::Manual>.
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 Returns the manual of the named package which contains the primar
 documentation for the code of the package NAME.
 
-=back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manual>(NAME)
 
 Returns the manual with the specified name, or else C<undef>.
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 All manuals are returned.
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 Returns a list package objects which are related to the specified NAME.
 One NAME can appear in more than one file, and therefore a list is
 returned.
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 Returns the names of all defined packages.
 
@@ -138,27 +112,19 @@ Returns the names of all defined packages.
 
 =head1 DIAGNOSTICS
 
-Warning: Unknown option $name
-
 =over 4
+
+=item Warning: Unknown option $name
 
 You have used the option with $name, which is not defined with the
 instantiation (the C<new> method) of this object.
 
-=back
-
-Warning: Unknown options @names
-
-=over 4
+=item Warning: Unknown options @names
 
 You have used more than one option which is not defined to instantiate
 the object.
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
@@ -168,12 +134,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -1,10 +1,10 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 package OODoc::Format::Pod;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Format';
 
@@ -153,22 +153,22 @@ sub chapterDescription(@)
 
 sub chapterDiagnostics(@)
 {   my ($self, %args) = @_;
-
     my $manual  = $args{manual} or confess;
-    my $diags   = $manual->chapter('DIAGNOSTICS');
 
+    my $diags   = $manual->chapter('DIAGNOSTICS');
     $self->showChapter(chapter => $diags, %args)
         if defined $diags;
 
     my @diags   = map {$_->diagnostics} $manual->subroutines;
     return unless @diags;
 
-    unless($diags)
-    {   my $output = $args{output} or confess;
-        $output->print("\n=head1 DIAGNOSTICS\n");
-    }
+    my $output  = $args{output} or confess;
+    $diags
+        or $output->print("\n=head1 DIAGNOSTICS\n");
 
+    $output->print("\n=over 4\n\n");
     $self->showDiagnostics(%args, diagnostics => \@diags);
+    $output->print("\n=back\n\n");
     $self;
 }
 
@@ -198,6 +198,7 @@ sub showExamples(@)
     {   my $name    = $self->cleanup($manual, $example->name);
         $output->print("\nexample: $name\n\n");
         $output->print($self->cleanup($manual, $example->description));
+        $output->print("\n");
     }
     $self;
 }
@@ -213,11 +214,23 @@ sub showDiagnostics(@)
     foreach my $diag (sort @$diagnostics)
     {   my $name    = $self->cleanup($manual, $diag->name);
         my $type    = $diag->type;
-        $output->print("\n$type: $name\n\n=over 4\n\n");
+        $output->print("\n=item $type: $name\n\n");
         $output->print($self->cleanup($manual, $diag->description));
-        $output->print("\n\n=back\n\n");
+        $output->print("\n");
     }
     $self;
+}
+
+sub showSubroutines(@)
+{   my ($self, %args) = @_;
+    my $subs = $args{subroutines} || [];
+    @$subs or return;
+
+    my $output = $args{output} or confess;
+
+    $output->print("\n=over 4\n\n");
+    $self->SUPER::showSubroutines(%args);
+    $output->print("\n=back\n\n");
 }
 
 sub showSubroutine(@)
@@ -226,7 +239,7 @@ sub showSubroutine(@)
 
     my %args   = @_;
     my $output = $args{output} or confess;
-    $output->print("\n=back\n");
+    $output->print("\n");
     $self;
 }
 
@@ -238,9 +251,9 @@ sub showSubroutineUse(@)
 
     my $use        = $self->subroutineUse($manual, $subroutine);
 
-    $output->print( qq[\n$use\n\n=over 4\n] );
+    $output->print("=item $use\n\n");
 
-    $output->print("\nSee ". $self->link($manual, $subroutine)."\n")
+    $output->print("See ". $self->link($manual, $subroutine)."\n\n")
         if $manual->inherited($subroutine);
 
     $self;
@@ -288,17 +301,26 @@ sub showSubroutineName(@)
      );
 }
 
+sub showOptions(@)
+{   my ($self, %args) = @_;
+    my $output = $args{output} or confess;
+    $output->print("\n=over 2\n\n");
+    $self->SUPER::showOptions(%args);
+    $output->print("\n=back\n\n");
+}
+
 sub showOptionUse(@)
 {   my ($self, %args) = @_;
     my $output = $args{output} or confess;
     my $option = $args{option} or confess;
+    my $manual = $args{manual}  or confess;
 
     my $params = $option->parameters;
     $params    =~ s/\s+$//;
     $params    =~ s/^\s+//;
-    $params    = " => $params" if length $params;
+    $params    = " => ".$self->cleanup($manual, $params) if length $params;
  
-    $output->print("\n. $option$params\n");
+    $output->print("=item $option$params\n\n");
     $self;
 }
 
@@ -312,8 +334,8 @@ sub showOptionExpand(@)
 
     my $where = $option->findDescriptionObject or return $self;
     my $descr = $self->cleanup($manual, $where->description);
-    $output->print("\n=over 4\n\n$descr\n=back\n")
-       if length $descr;
+    $output->print("\n$descr\n\n")
+        if length $descr;
 
     $self;
 }
@@ -350,11 +372,11 @@ sub writeTable($@)
     pop @w;   # ignore width of last column
 
     # Table head
-    my $headf  = " ".join("--", map { "\%-${_}s" } @w)."--%s\n";
+    my $headf  = " -".join("--", map { "\%-${_}s" } @w)."--%s\n";
     $output->printf($headf, @$head);
 
     # Table body
-    my $format = " ".join("  ", map { "\%-${_}s" } @w)."  %s\n";
+    my $format = "  ".join("  ", map { "\%-${_}s" } @w)."  %s\n";
     $output->printf($format, @$_)
        for @rows;
 }

@@ -1,11 +1,11 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 package OODoc::Manual;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Object';
 
@@ -83,6 +83,8 @@ sub isPurePod() {shift->{OP_pure_pod}}
 
 sub chapter($)
 {   my ($self, $it) = @_;
+    $it or return;
+
     ref $it
         or return $self->{OP_chapter_hash}{$it};
 
@@ -274,38 +276,38 @@ sub expand()
 
     my @chapters = $self->chapters;
 
-    my $merge_subsections =
-        sub {  my ($section, $inherit) = @_;
-               $section->extends($inherit);
-               $section->subsection($self->mergeStructure
-                ( this      => [ $section->subsections ]
-                , super     => [ $inherit->subsections ]
-                , merge     => sub { $_[0]->extends($_[1]) }
-                , container => $section
-                ));
-               $section;
-            };
+    my $merge_subsections = sub
+      { my ($section, $inherit) = @_;
+        $section->extends($inherit);
+        $section->subsections($self->mergeStructure
+          ( this      => [ $section->subsections ]
+          , super     => [ $inherit->subsections ]
+          , merge     => sub { $_[0]->extends($_[1]); $_[0] }
+          , container => $section
+          ));
+        $section;
+      };
 
-    my $merge_sections =
-        sub {  my ($chapter, $inherit) = @_;
-               $chapter->extends($inherit);
-               $chapter->sections($self->mergeStructure
-                ( this      => [ $chapter->sections ]
-                , super     => [ $inherit->sections ]
-                , merge     => $merge_subsections
-                , container => $chapter
-                ));
-               $chapter;
-            };
+    my $merge_sections = sub
+      { my ($chapter, $inherit) = @_;
+        $chapter->extends($inherit);
+        $chapter->sections($self->mergeStructure
+          ( this      => [ $chapter->sections ]
+          , super     => [ $inherit->sections ]
+          , merge     => $merge_subsections
+          , container => $chapter
+          ));
+        $chapter;
+      };
 
     foreach my $super (@supers)
     {
         $self->chapters($self->mergeStructure
-         ( this      => \@chapters
-         , super     => [ $super->chapters ]
-         , merge     => $merge_sections
-         , container => $self
-         ));
+          ( this      => \@chapters
+          , super     => [ $super->chapters ]
+          , merge     => $merge_sections
+          , container => $self
+          ));
     }
 
     #
@@ -315,7 +317,8 @@ sub expand()
     my %extended  = map { ($_->name => $_) }
                        map { $_->subroutines }
                           ($self, $self->extraCode);
-    my %used;  # items can be used more than once, collecting mulitple inherit
+
+    my %used;  # items can be used more than once, collecting multiple inherit
 
     my @inherited = map { $_->subroutines  } @supers;
     my %location;
@@ -323,14 +326,17 @@ sub expand()
     foreach my $inherited (@inherited)
     {   my $name        = $inherited->name;
         if(my $extended = $extended{$name})
-        {   $extended->extends($inherited);
+        {   # on this page and upper pages
+            $extended->extends($inherited);
+
             unless($used{$name}++)    # add only at first appearance
             {   my $path = $self->mostDetailedLocation($extended);
                 push @{$location{$path}}, $extended;
             }
         }
         else
-        {   my $path = $self->mostDetailedLocation($inherited);
+        {   # only defined on higher level manual pages
+            my $path = $self->mostDetailedLocation($inherited);
             push @{$location{$path}}, $inherited;
         }
     }
@@ -344,14 +350,16 @@ sub expand()
     {   $chapter->setSubroutines(delete $location{$chapter->path});
         foreach my $section ($chapter->sections)
         {   $section->setSubroutines(delete $location{$section->path});
-            foreach ($section->subsections)
-            {   $_->setSubroutines(delete $location{$_->path});
+            foreach my $subsect ($section->subsections)
+            {   $subsect->setSubroutines(delete $location{$subsect->path});
             }
         }
     }
 
     warn "ERROR: Section without location in $self: $_\n"
         for keys %location;
+die $self->index
+  if keys %location;
 
     $self->{OP_is_expanded} = 1;
     $self;
@@ -372,7 +380,8 @@ sub mergeStructure(@)
     while(@super)
     {   my $take = shift @super;
         unless(first {$equal->($take, $_)} @this)
-        {   push @joined, $take->emptyExtension($container);
+        {   push @joined, $take->emptyExtension($container)
+                unless @joined && $joined[-1]->path eq $take->path;
             next;
         }
 
@@ -388,9 +397,9 @@ sub mergeStructure(@)
                 warn "WARNING: order conflict \"$take\" before \"$insert\" in $fn line $ln\n";
             }
 
-            push @joined, $insert;
+            push @joined, $insert
+                unless @joined && $joined[-1]->path eq $insert->path;
         }
-
         push @joined, $merge->($insert, $take);
     }
 
@@ -404,24 +413,24 @@ sub mostDetailedLocation($)
     my $inherit = $thing->extends
        or return $thing->path;
 
-   my $path1    = $thing->path;
-   my $path2    = $self->mostDetailedLocation($inherit);
-   my ($lpath1, $lpath2) = (length($path1), length($path2));
+    my $path1   = $thing->path;
+    my $path2   = $self->mostDetailedLocation($inherit);
+    my ($lpath1, $lpath2) = (length($path1), length($path2));
 
-   return $path1 if $path1 eq $path2;
+    return $path1 if $path1 eq $path2;
 
-   return $path2
-      if $lpath1 < $lpath2 && substr($path2, 0, $lpath1+1) eq "$path1/";
+    return $path2
+       if $lpath1 < $lpath2 && substr($path2, 0, $lpath1+1) eq "$path1/";
 
-   return $path1
-      if $lpath2 < $lpath1 && substr($path1, 0, $lpath2+1) eq "$path2/";
+    return $path1
+       if $lpath2 < $lpath1 && substr($path1, 0, $lpath2+1) eq "$path2/";
 
-   warn "WARNING: subroutine $thing location conflict:\n"
-      , "   $path1 in ",$thing->manual, "\n"
-      , "   $path2 in ",$inherit->manual, "\n"
-         if $self eq $thing->manual;
+    warn "WARNING: subroutine $thing location conflict:\n"
+       , "   $path1 in ",$thing->manual, "\n"
+       , "   $path2 in ",$inherit->manual, "\n"
+          if $self eq $thing->manual;
 
-   $path1;
+    $path1;
 }
 
 
@@ -467,7 +476,7 @@ sub createInheritance()
       , manual      => $self
       , linenr      => -1
       , description => $output
-      );
+      ) if $output && $output =~ /\S/;
 
     $self->chapter($chapter);
 }
@@ -520,6 +529,22 @@ $head
    documented diagnostics: $diags
    shown examples:         $examples
 STATS
+}
+
+
+sub index()
+{   my $self  = shift;
+    my @lines;
+    foreach my $chapter ($self->chapters)
+    {  push @lines, $chapter->name;
+       foreach my $section ($chapter->sections)
+       {   push @lines, "  ".$section->name;
+           foreach ($section->subsections)
+           {   push @lines, "    ".$_->name;
+           }
+       }
+    }
+    join "\n", @lines, '';
 }
 
 #-------------------------------------------

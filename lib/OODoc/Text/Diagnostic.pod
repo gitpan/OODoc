@@ -8,8 +8,6 @@ OODoc::Text::Diagnostic - one explanation of a problem report
    is a OODoc::Text
    is a OODoc::Object
 
-=head1 SYNOPSIS
-
 =head1 DESCRIPTION
 
 Each L<OODoc::Text::Subroutine|OODoc::Text::Subroutine> can have a list of warning and 
@@ -18,25 +16,17 @@ in this manual page.
 
 =head1 OVERLOADED
 
-overload: B<'""' (stringification)>
-
 =over 4
+
+=item overload: B<'""' (stringification)>
 
 See L<OODoc::Text/"OVERLOADED">
 
-=back
-
-overload: B<'==' and '!='>
-
-=over 4
+=item overload: B<'==' and '!='>
 
 See L<OODoc::Text/"OVERLOADED">
 
-=back
-
-overload: B<'cmp' (string comparison)>
-
-=over 4
+=item overload: B<'cmp' (string comparison)>
 
 See L<OODoc::Text/"OVERLOADED">
 
@@ -46,43 +36,43 @@ See L<OODoc::Text/"OVERLOADED">
 
 =head2 Constructors
 
-OODoc::Text::Diagnostic-E<gt>B<new>(OPTIONS)
-
 =over 4
 
- Option     --Defined in     --Default
- container    OODoc::Text      new(subroutine)
- description  OODoc::Text      ''
- linenr       OODoc::Text      <required>
- name         OODoc::Text      undef
- subroutine                    <required>
- type         OODoc::Text      'Diagnostic'
+=item OODoc::Text::Diagnostic-E<gt>B<new>(OPTIONS)
 
-. container => OBJECT
+ -Option     --Defined in     --Default
+  container    OODoc::Text      new(subroutine)
+  description  OODoc::Text      ''
+  linenr       OODoc::Text      <required>
+  name         OODoc::Text      undef
+  subroutine                    <required>
+  type         OODoc::Text      'Diagnostic'
 
-. description => STRING
+=over 2
 
-. linenr => INTEGER
+=item container => OBJECT
 
-. name => STRING
+=item description => STRING
 
-. subroutine => OBJECT
+=item linenr => INTEGER
 
-=over 4
+=item name => STRING
+
+=item subroutine => OBJECT
 
 The subroutine in which this option lives.
 
-=back
+=item type => STRING
 
-. type => STRING
+=back
 
 =back
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -90,41 +80,25 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<container>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<container>([OBJECT])
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<description>
-
-=over 4
+=item $obj-E<gt>B<description>
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<name>
-
-=over 4
+=item $obj-E<gt>B<name>
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<subroutine>
-
-=over 4
+=item $obj-E<gt>B<subroutine>
 
 Returns the subroutine object for this option.
 
-=back
-
-$obj-E<gt>B<type>
-
-=over 4
+=item $obj-E<gt>B<type>
 
 See L<OODoc::Text/"Attributes">
 
@@ -132,25 +106,17 @@ See L<OODoc::Text/"Attributes">
 
 =head2 Location
 
-$obj-E<gt>B<manual>([NAME])
-
 =over 4
+
+=item $obj-E<gt>B<manual>([NAME])
 
 See L<OODoc::Text/"Location">
 
-=back
-
-$obj-E<gt>B<unique>
-
-=over 4
+=item $obj-E<gt>B<unique>
 
 See L<OODoc::Text/"Location">
 
-=back
-
-$obj-E<gt>B<where>
-
-=over 4
+=item $obj-E<gt>B<where>
 
 See L<OODoc::Text/"Location">
 
@@ -158,33 +124,21 @@ See L<OODoc::Text/"Location">
 
 =head2 Collected
 
-$obj-E<gt>B<example>(OBJECT)
-
 =over 4
+
+=item $obj-E<gt>B<example>(OBJECT)
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
+=item $obj-E<gt>B<examples>
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<findDescriptionObject>
-
-=over 4
+=item $obj-E<gt>B<findDescriptionObject>
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<openDescription>
-
-=over 4
+=item $obj-E<gt>B<openDescription>
 
 See L<OODoc::Text/"Collected">
 
@@ -192,21 +146,17 @@ See L<OODoc::Text/"Collected">
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text::Diagnostic-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Text::Diagnostic-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -214,41 +164,25 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -256,9 +190,9 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-Error: manual definition requires manual object
-
 =over 4
+
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
@@ -268,12 +202,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

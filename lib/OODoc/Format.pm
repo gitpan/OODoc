@@ -1,11 +1,11 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 package OODoc::Format;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Object';
 
@@ -349,15 +349,15 @@ sub showOptions(@)
 
     foreach (@$options)
     {   my ($option, $default) = @$_;
-        my $show
-         = $manual->inherited($option) ? $args{show_inherited_options}
-         :                               $args{show_described_options};
+        my $show = $manual->inherited($option)
+          ? $args{show_inherited_options}
+          : $args{show_described_options};
 
         my $action
-         = $show eq 'USE'   ? 'showOptionUse'
-         : $show eq 'EXPAND'? 'showOptionExpand'
-         : croak "ERROR: illegal show option choice $show";
-
+          = $show eq 'USE'   ? 'showOptionUse'
+          : $show eq 'EXPAND'? 'showOptionExpand'
+          : croak "ERROR: illegal show option choice $show";
+ 
         $self->$action(%args, option => $option, default => $default);
     }
     $self;

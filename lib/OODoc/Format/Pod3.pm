@@ -1,13 +1,13 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 use strict;
 use warnings;
 
 package OODoc::Format::Pod3;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Format::Pod';
 
@@ -35,7 +35,7 @@ sub formatManual(@)
      , manual_obj => delete $args{manual}
      , chapter_order =>
          [ qw/NAME INHERITANCE SYNOPSIS DESCRIPTION OVERLOADED METHODS
-              FUNCTIONS EXPORTS DETAILS DIAGNOSTICS REFERENCES COPYRIGHTS/
+              FUNCTIONS EXPORTS DIAGNOSTICS DETAILS REFERENCES COPYRIGHTS/
          ]
      , %args
      );
@@ -159,8 +159,9 @@ sub subroutines($$$$$$)
       );
 
     close OUT;
-    $out =~ s/\n*$/\n\n/;
+    length $out or return;
 
+    $out =~ s/\n*$/\n\n/;
     ($out);
 }
 

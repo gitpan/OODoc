@@ -19,29 +19,19 @@ OODoc::Text::Section - collects the text of one section within a chapter
  my $index   = OODoc::Text::SubSection->new(...);
  $section->subsection($index);           # add subsection
 
-=head1 DESCRIPTION
-
 =head1 OVERLOADED
 
-overload: B<'""' (stringification)>
-
 =over 4
+
+=item overload: B<'""' (stringification)>
 
 See L<OODoc::Text/"OVERLOADED">
 
-=back
-
-overload: B<'==' and '!='>
-
-=over 4
+=item overload: B<'==' and '!='>
 
 See L<OODoc::Text/"OVERLOADED">
 
-=back
-
-overload: B<'cmp' (string comparison)>
-
-=over 4
+=item overload: B<'cmp' (string comparison)>
 
 See L<OODoc::Text/"OVERLOADED">
 
@@ -51,48 +41,48 @@ See L<OODoc::Text/"OVERLOADED">
 
 =head2 Constructors
 
-$obj-E<gt>B<emptyExtension>(CONTAINER)
-
 =over 4
+
+=item $obj-E<gt>B<emptyExtension>(CONTAINER)
 
 See L<OODoc::Text::Structure/"Constructors">
 
+=item OODoc::Text::Section-E<gt>B<new>(OPTIONS)
+
+ -Option     --Defined in     --Default
+  chapter                       <required>
+  container    OODoc::Text      new(chapter)
+  description  OODoc::Text      ''
+  level        OODoc::Text::Structure  2
+  linenr       OODoc::Text      <required>
+  name         OODoc::Text      undef
+  type         OODoc::Text      'Section'
+
+=over 2
+
+=item chapter => OBJECT
+
+=item container => OBJECT
+
+=item description => STRING
+
+=item level => INTEGER
+
+=item linenr => INTEGER
+
+=item name => STRING
+
+=item type => STRING
+
 =back
-
-OODoc::Text::Section-E<gt>B<new>(OPTIONS)
-
-=over 4
-
- Option     --Defined in     --Default
- chapter                       <required>
- container    OODoc::Text      new(chapter)
- description  OODoc::Text      ''
- level        OODoc::Text::Structure  2
- linenr       OODoc::Text      <required>
- name         OODoc::Text      undef
- type         OODoc::Text      'Section'
-
-. chapter => OBJECT
-
-. container => OBJECT
-
-. description => STRING
-
-. level => INTEGER
-
-. linenr => INTEGER
-
-. name => STRING
-
-. type => STRING
 
 =back
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -100,49 +90,29 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<container>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<container>([OBJECT])
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<description>
-
-=over 4
+=item $obj-E<gt>B<description>
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<level>
-
-=over 4
+=item $obj-E<gt>B<level>
 
 See L<OODoc::Text::Structure/"Attributes">
 
-=back
-
-$obj-E<gt>B<name>
-
-=over 4
+=item $obj-E<gt>B<name>
 
 See L<OODoc::Text/"Attributes">
 
-=back
-
-$obj-E<gt>B<niceName>
-
-=over 4
+=item $obj-E<gt>B<niceName>
 
 See L<OODoc::Text::Structure/"Attributes">
 
-=back
-
-$obj-E<gt>B<type>
-
-=over 4
+=item $obj-E<gt>B<type>
 
 See L<OODoc::Text/"Attributes">
 
@@ -150,49 +120,29 @@ See L<OODoc::Text/"Attributes">
 
 =head2 Location
 
-$obj-E<gt>B<chapter>
-
 =over 4
+
+=item $obj-E<gt>B<chapter>
 
 Returns the chapter object for this section.
 
-=back
-
-$obj-E<gt>B<findEntry>(NAME)
-
-=over 4
+=item $obj-E<gt>B<findEntry>(NAME)
 
 See L<OODoc::Text::Structure/"Location">
 
-=back
-
-$obj-E<gt>B<manual>([NAME])
-
-=over 4
+=item $obj-E<gt>B<manual>([NAME])
 
 See L<OODoc::Text/"Location">
 
-=back
-
-$obj-E<gt>B<path>
-
-=over 4
+=item $obj-E<gt>B<path>
 
 See L<OODoc::Text::Structure/"Location">
 
-=back
-
-$obj-E<gt>B<unique>
-
-=over 4
+=item $obj-E<gt>B<unique>
 
 See L<OODoc::Text/"Location">
 
-=back
-
-$obj-E<gt>B<where>
-
-=over 4
+=item $obj-E<gt>B<where>
 
 See L<OODoc::Text/"Location">
 
@@ -200,49 +150,29 @@ See L<OODoc::Text/"Location">
 
 =head2 Collected
 
-$obj-E<gt>B<all>(METHOD, PARAMETERS)
-
 =over 4
+
+=item $obj-E<gt>B<all>(METHOD, PARAMETERS)
 
 See L<OODoc::Text::Structure/"Collected">
 
-=back
-
-$obj-E<gt>B<example>(OBJECT)
-
-=over 4
+=item $obj-E<gt>B<example>(OBJECT)
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<examples>
-
-=over 4
+=item $obj-E<gt>B<examples>
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<findDescriptionObject>
-
-=over 4
+=item $obj-E<gt>B<findDescriptionObject>
 
 See L<OODoc::Text/"Collected">
 
-=back
-
-$obj-E<gt>B<isEmpty>
-
-=over 4
+=item $obj-E<gt>B<isEmpty>
 
 See L<OODoc::Text::Structure/"Collected">
 
-=back
-
-$obj-E<gt>B<openDescription>
-
-=over 4
+=item $obj-E<gt>B<openDescription>
 
 See L<OODoc::Text/"Collected">
 
@@ -250,33 +180,21 @@ See L<OODoc::Text/"Collected">
 
 =head2 Subroutines
 
-$obj-E<gt>B<addSubroutine>(OBJECTS)
-
 =over 4
+
+=item $obj-E<gt>B<addSubroutine>(OBJECTS)
 
 See L<OODoc::Text::Structure/"Subroutines">
 
-=back
-
-$obj-E<gt>B<setSubroutines>(ARRAY)
-
-=over 4
+=item $obj-E<gt>B<setSubroutines>(ARRAY)
 
 See L<OODoc::Text::Structure/"Subroutines">
 
-=back
-
-$obj-E<gt>B<subroutine>(NAME)
-
-=over 4
+=item $obj-E<gt>B<subroutine>(NAME)
 
 See L<OODoc::Text::Structure/"Subroutines">
 
-=back
-
-$obj-E<gt>B<subroutines>
-
-=over 4
+=item $obj-E<gt>B<subroutines>
 
 See L<OODoc::Text::Structure/"Subroutines">
 
@@ -284,19 +202,15 @@ See L<OODoc::Text::Structure/"Subroutines">
 
 =head2 Subsections
 
-$obj-E<gt>B<subsection>(NAME|OBJECT)
-
 =over 4
+
+=item $obj-E<gt>B<subsection>(NAME|OBJECT)
 
 With a NAME, the subsection within this section with that name is
-returned.  With an OBJECT (which must be a OODoc::Text::SubSection),
+returned.  With an OBJECT (which must be a L<OODoc::Text::SubSection|OODoc::Text::SubSection>),
 a new subsection is added to the end of the list.
 
-=back
-
-$obj-E<gt>B<subsections>([SUBSECTIONS])
-
-=over 4
+=item $obj-E<gt>B<subsections>([SUBSECTIONS])
 
 Returns a list of all subsections in this chapter.
 
@@ -304,21 +218,17 @@ Returns a list of all subsections in this chapter.
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Text::Section-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Text::Section-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -326,41 +236,25 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -368,9 +262,9 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-Error: manual definition requires manual object
-
 =over 4
+
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
@@ -380,12 +274,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

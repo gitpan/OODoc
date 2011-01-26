@@ -58,44 +58,34 @@ L<Bundle::Template::Magic> and the ability to run cgi scripts.
 
 =back
 
-=head1 OVERLOADED
-
 =head1 METHODS
 
 =head2 Constructors
 
-OODoc::Format-E<gt>B<new>(OPTIONS)
-
 =over 4
 
- Option  --Default
- manifest  undef
- project   <required>
- version   <required>
- workdir   <required>
+=item OODoc::Format-E<gt>B<new>(OPTIONS)
 
-. manifest => OBJECT
+ -Option  --Default
+  manifest  undef
+  project   <required>
+  version   <required>
+  workdir   <required>
 
-. project => STRING
+=over 2
 
-=over 4
+=item manifest => OBJECT
+
+=item project => STRING
 
 The short name of this project (module), set by L<OODoc::new(project)|OODoc/"METHODS">.
 
-=back
-
-. version => STRING
-
-=over 4
+=item version => STRING
 
 Many manual pages will contain the version of the project.  This can
 be any STRING, although blanks are not advised.
 
-=back
-
-. workdir => DIRECTORY
-
-=over 4
+=item workdir => DIRECTORY
 
 The DIRECTORY where the output will be placed.  If it does not exist,
 it will be created for you.
@@ -106,9 +96,9 @@ it will be created for you.
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -116,35 +106,23 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<manifest>
-
 =over 4
+
+=item $obj-E<gt>B<manifest>
 
 Returns the L<OODoc::Manifest|OODoc::Manifest> object which maintains the names
 of created files.
 
-=back
-
-$obj-E<gt>B<project>
-
-=over 4
+=item $obj-E<gt>B<project>
 
 Returns the name of this project.
 
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
+=item $obj-E<gt>B<version>
 
 Returns the version string of this project.  This version may
 contains any character, so should be handled with care.
 
-=back
-
-$obj-E<gt>B<workdir>
-
-=over 4
+=item $obj-E<gt>B<workdir>
 
 Returns the name of the work directory: the top location for all
 the output files.
@@ -153,259 +131,219 @@ the output files.
 
 =head2 Page generation
 
-$obj-E<gt>B<cleanup>(MANUAL, STRING)
-
 =over 4
+
+=item $obj-E<gt>B<cleanup>(MANUAL, STRING)
 
 Takes the STRING and cleans it up to be in the right format for the
 current formatter.  The cleaning up is parser dependent, and therefore
 the parser of the manual is addressed to do the work.
 
-=back
+=item $obj-E<gt>B<createManual>(OPTIONS)
 
-$obj-E<gt>B<createManual>(OPTIONS)
+ -Option        --Default
+  append          undef
+  format_options  []
+  manual          <required>
+  project         <required>
+  template        undef
 
-=over 4
+=over 2
 
- Option        --Default
- append          undef
- format_options  []
- manual          <required>
- project         <required>
- template        undef
+=item append => STRING|CODE
 
-. append => STRING|CODE
-
-. format_options => ARRAY
-
-=over 4
+=item format_options => ARRAY
 
 An ARRAY which contains a list of options which are the defaults
 for formatting a chapter.
 
-=back
-
-. manual => MANUAL
-
-=over 4
+=item manual => MANUAL
 
 The manual to be formatted.
 
-=back
-
-. project => STRING
-
-=over 4
+=item project => STRING
 
 The name of this project, which will appear on many pages.
 
-=back
-
-. template => LOCATION
-
-=over 4
+=item template => LOCATION
 
 Some formatters support templates to descibe the output of the pages.
 The valid values for this option differs per formatter.
 
 =back
 
-=back
-
-$obj-E<gt>B<createOtherPages>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<createOtherPages>(OPTIONS)
 
 Create other pages which come with the set of formatted manuals.  What
 the contents of these pages is depends on the formatter.  Some formatters
 simply ignore the functionality of this method as a whole: they do not
 support data-files which are not manuals.
 
- Option --Default
- process  undef
- source   undef
- verbose  0
+ -Option --Default
+  process  undef
+  source   undef
+  verbose  0
 
-. process => REGEXP
+=over 2
 
-=over 4
+=item process => REGEXP
 
 Selects files to be processed from the source directory.  Other files
 are copied without modification.  What happens with the selected
 files is formatter dependent.
 
-=back
-
-. source => DIRECTORY
-
-=over 4
+=item source => DIRECTORY
 
 The location of the DIRECTORY which contains files which are part of
 the produced set of documentation, but not copied per manual page
 but only once.
 
-=back
-
-. verbose => INTEGER
+=item verbose => INTEGER
 
 =back
 
-$obj-E<gt>B<showChapter>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showChapter>(OPTIONS)
 
 You can pass all OPTIONS about formatting to this method.  They will passed
 to the related methods.  So: the list of options you can pass here is much
 longer: the combination of everything possible for all show* methods.
 
- Option                    --Default
- chapter                     <required>
- manual                      <required>
- output                      <required>
- show_inherited_chapters     'REFER'
- show_inherited_sections     'REFER'
- show_inherited_subsections  'REFER'
+ -Option                    --Default
+  chapter                     <required>
+  manual                      <required>
+  output                      <required>
+  show_inherited_chapters     'REFER'
+  show_inherited_sections     'REFER'
+  show_inherited_subsections  'REFER'
 
-. chapter => CHAPTER
+=over 2
 
-. manual => MANUAL
+=item chapter => CHAPTER
 
-. output => FILE
+=item manual => MANUAL
 
-. show_inherited_chapters => 'NO'|'REFER'|'EXPAND'
+=item output => FILE
 
-. show_inherited_sections => 'NO'|'REFER'|'EXPAND'
+=item show_inherited_chapters => 'NO'|'REFER'|'EXPAND'
 
-=over 4
+=item show_inherited_sections => 'NO'|'REFER'|'EXPAND'
 
 REFER means that inherited sections are simply listed as reference
 to the manual page which describes it.
 
-=back
-
-. show_inherited_subsections => 'NO'|'REFER'|'EXPAND'
+=item show_inherited_subsections => 'NO'|'REFER'|'EXPAND'
 
 =back
 
-$obj-E<gt>B<showExamples>(OPTIONS)
+=item $obj-E<gt>B<showExamples>(OPTIONS)
 
-=over 4
+ -Option  --Default
+  examples  <required>
+  manual    <required>
+  output    <required>
 
- Option  --Default
- examples  <required>
- manual    <required>
- output    <required>
+=over 2
 
-. examples => ARRAY
+=item examples => ARRAY
 
-. manual => MANUAL
+=item manual => MANUAL
 
-. output => FILE
-
-=back
-
-$obj-E<gt>B<showOptionExpand>(OPTIONS)
-
-=over 4
-
- Option --Default
- default  <required>
- manual   <required>
- option   <required>
- output   <required>
-
-. default => OBJECT
-
-. manual => OBJECT
-
-. option => OBJECT
-
-. output => FILE
+=item output => FILE
 
 =back
 
-$obj-E<gt>B<showOptionTable>(OPTIONS)
+=item $obj-E<gt>B<showOptionExpand>(OPTIONS)
 
-=over 4
+ -Option --Default
+  default  <required>
+  manual   <required>
+  option   <required>
+  output   <required>
 
- Option --Default
- manual   <required>
- options  <required>
- output   <required>
+=over 2
 
-. manual => OBJECT
+=item default => OBJECT
 
-. options => ARRAY
+=item manual => OBJECT
 
-. output => FILE
+=item option => OBJECT
 
-=back
-
-$obj-E<gt>B<showOptionUse>(OPTIONS)
-
-=over 4
-
- Option --Default
- default  <required>
- manual   <required>
- option   <required>
- output   <required>
-
-. default => OBJECT
-
-. manual => OBJECT
-
-. option => OBJECT
-
-. output => FILE
+=item output => FILE
 
 =back
 
-$obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
+=item $obj-E<gt>B<showOptionTable>(OPTIONS)
 
-=over 4
+ -Option --Default
+  manual   <required>
+  options  <required>
+  output   <required>
+
+=over 2
+
+=item manual => OBJECT
+
+=item options => ARRAY
+
+=item output => FILE
 
 =back
 
-$obj-E<gt>B<showOptions>(OPTIONS)
+=item $obj-E<gt>B<showOptionUse>(OPTIONS)
 
-=over 4
+ -Option --Default
+  default  <required>
+  manual   <required>
+  option   <required>
+  output   <required>
+
+=over 2
+
+=item default => OBJECT
+
+=item manual => OBJECT
+
+=item option => OBJECT
+
+=item output => FILE
+
+=back
+
+=item $obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
+
+=item $obj-E<gt>B<showOptions>(OPTIONS)
 
 The options shown are B<not> the OPTIONS passed as argument, but the
 options which belong to the subroutine being displayed.
 
- Option                --Default
- manual                  <required>
- options                 <required>
- show_described_options  'EXPAND'
- show_inherited_options  'USE'
+ -Option                --Default
+  manual                  <required>
+  options                 <required>
+  show_described_options  'EXPAND'
+  show_inherited_options  'USE'
 
-. manual => OBJECT
+=over 2
 
-. options => ARRAY
+=item manual => OBJECT
 
-. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
+=item options => ARRAY
 
-. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
+=item show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-=back
-
-$obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
-
-=over 4
+=item show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
 =back
 
-$obj-E<gt>B<showStructureExpanded>(OPTIONS)
+=item $obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
 
-=over 4
+=item $obj-E<gt>B<showStructureExpanded>(OPTIONS)
 
- Option               --Default
- show_chapter_examples  'EXPAND'
+ -Option               --Default
+  show_chapter_examples  'EXPAND'
 
-. show_chapter_examples => 'NO'|'EXPAND'
+=over 2
 
-=over 4
+=item show_chapter_examples => 'NO'|'EXPAND'
 
 The I<chapter examples> are all examples which are not subroutine
 related: examples which come at the end of a chapter, section, or
@@ -413,59 +351,47 @@ subsection.
 
 =back
 
-=back
+=item $obj-E<gt>B<showStructureRefer>(OPTIONS)
 
-$obj-E<gt>B<showStructureRefer>(OPTIONS)
+=item $obj-E<gt>B<showSubroutine>((@))
 
-=over 4
+ -Option                --Default
+  last                    0
+  manual                  <required>
+  output                  <selected filehandle>
+  show_described_options  'EXPAND'
+  show_diagnostics        'NO'
+  show_examples           'EXPAND'
+  show_inherited_options  'USE'
+  show_option_table       'ALL'
+  show_sub_description    'DESCRIBED'
+  show_subroutine         'EXPAND'
+  subroutine              <required>
 
-=back
+=over 2
 
-$obj-E<gt>B<showSubroutine>((@))
+=item last => BOOLEAN
 
-=over 4
+=item manual => MANUAL
 
- Option                --Default
- last                    0
- manual                  <required>
- output                  <selected filehandle>
- show_described_options  'EXPAND'
- show_diagnostics        'NO'
- show_examples           'EXPAND'
- show_inherited_options  'USE'
- show_option_table       'ALL'
- show_sub_description    'DESCRIBED'
- show_subroutine         'EXPAND'
- subroutine              <required>
+=item output => FILE
 
-. last => BOOLEAN
+=item show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. manual => MANUAL
-
-. output => FILE
-
-. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
-
-. show_diagnostics => 'NO'|'EXPAND'
-
-=over 4
+=item show_diagnostics => 'NO'|'EXPAND'
 
 Diagnostics (error and warning messages) are defined per subroutine,
 but are usually not listed with the subroutine.  The POD formatter's
 default behavior, for instance, puts them all in a separate DIAGNOSTICS
 chapter per manual page.
 
-=back
+=item show_examples => 'NO'|'EXPAND'
 
-. show_examples => 'NO'|'EXPAND'
+=item show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
+=item show_option_table => 'NO'|'INHERITED'|'DESCRIBED'|'ALL'
 
-. show_option_table => 'NO'|'INHERITED'|'DESCRIBED'|'ALL'
-
-. show_sub_description => 'NO'|'DESCRIBED'|'REFER'|'ALL'
-
-=over 4
+=item show_sub_description => 'NO'|'DESCRIBED'|'REFER'|'ALL'
 
 Included the description of the use of the subroutines, which
 comes before the options are being explained.  C<NO> will cause
@@ -475,126 +401,122 @@ C<REFER> means that a reference to inherited documentation is
 made, and with C<ALL> the inherited texts are expanded into this
 file as well.
 
-=back
+=item show_subroutine => 'NO'|'NAMES'|'USE'|'EXPAND'
 
-. show_subroutine => 'NO'|'NAMES'|'USE'|'EXPAND'
-
-. subroutine => OBJECT
+=item subroutine => OBJECT
 
 =back
 
-$obj-E<gt>B<showSubroutineDescription>(OPTIONS)
+=item $obj-E<gt>B<showSubroutineDescription>(OPTIONS)
 
-=over 4
+ -Option    --Default
+  manual      <required>
+  output      <required>
+  subroutine  <required>
 
- Option    --Default
- manual      <required>
- output      <required>
- subroutine  <required>
+=over 2
 
-. manual => OBJECT
+=item manual => OBJECT
 
-. output => FILE
+=item output => FILE
 
-. subroutine => OBJECT
-
-=back
-
-$obj-E<gt>B<showSubroutineName>(OPTIONS)
-
-=over 4
-
- Option    --Default
- last        0
- manual      <required>
- output      <required>
- subroutine  <required>
-
-. last => BOOLEAN
-
-. manual => OBJECT
-
-. output => FILE
-
-. subroutine => OBJECT
+=item subroutine => OBJECT
 
 =back
 
-$obj-E<gt>B<showSubroutineUse>(OPTIONS)
+=item $obj-E<gt>B<showSubroutineName>(OPTIONS)
 
-=over 4
+ -Option    --Default
+  last        0
+  manual      <required>
+  output      <required>
+  subroutine  <required>
 
- Option    --Default
- manual      <required>
- output      <required>
- subroutine  <required>
+=over 2
 
-. manual => OBJECT
+=item last => BOOLEAN
 
-. output => FILE
+=item manual => OBJECT
 
-. subroutine => OBJECT
+=item output => FILE
+
+=item subroutine => OBJECT
 
 =back
 
-$obj-E<gt>B<showSubroutines>(OPTIONS)
+=item $obj-E<gt>B<showSubroutineUse>(OPTIONS)
 
-=over 4
+ -Option    --Default
+  manual      <required>
+  output      <required>
+  subroutine  <required>
 
- Option                --Default
- manual                  <required>
- output                  <selected filehandle>
- show_described_options  'EXPAND'
- show_described_subs     'EXPAND'
- show_diagnostics        'NO'
- show_examples           'EXPAND'
- show_inherited_options  'USE'
- show_inherited_subs     'USE'
- show_option_table       'ALL'
- show_subs_index         'NO'
- subroutines             []
+=over 2
 
-. manual => MANUAL
+=item manual => OBJECT
 
-. output => FILE
+=item output => FILE
 
-. show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
+=item subroutine => OBJECT
 
-. show_described_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
+=back
 
-. show_diagnostics => 'NO'|'EXPAND'
+=item $obj-E<gt>B<showSubroutines>(OPTIONS)
 
-. show_examples => 'NO'|'EXPAND'
+ -Option                --Default
+  manual                  <required>
+  output                  <selected filehandle>
+  show_described_options  'EXPAND'
+  show_described_subs     'EXPAND'
+  show_diagnostics        'NO'
+  show_examples           'EXPAND'
+  show_inherited_options  'USE'
+  show_inherited_subs     'USE'
+  show_option_table       'ALL'
+  show_subs_index         'NO'
+  subroutines             []
 
-. show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
+=over 2
 
-. show_inherited_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
+=item manual => MANUAL
 
-. show_option_table => 'NO'|'DESCRIBED'|'INHERITED'|'ALL'
+=item output => FILE
 
-. show_subs_index => 'NO'|'NAMES'|'USE'
+=item show_described_options => 'NO'|'LIST'|'USE'|'EXPAND'
 
-. subroutines => ARRAY
+=item show_described_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
+
+=item show_diagnostics => 'NO'|'EXPAND'
+
+=item show_examples => 'NO'|'EXPAND'
+
+=item show_inherited_options => 'NO'|'LIST'|'USE'|'EXPAND'
+
+=item show_inherited_subs => 'NO'|'NAMES'|'USE'|'EXPAND'
+
+=item show_option_table => 'NO'|'DESCRIBED'|'INHERITED'|'ALL'
+
+=item show_subs_index => 'NO'|'NAMES'|'USE'
+
+=item subroutines => ARRAY
+
+=back
 
 =back
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Format-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Format-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -602,49 +524,29 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<mainManual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<mainManual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manual>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
+=item $obj-E<gt>B<manuals>
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
+=item $obj-E<gt>B<manualsForPackage>(NAME)
 
 See L<OODoc::Object/"Manual Repository">
 
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -652,60 +554,40 @@ See L<OODoc::Object/"Manual Repository">
 
 =head1 DIAGNOSTICS
 
-Error: formatter does not know the version.
-
 =over 4
 
-=back
+=item Error: formatter does not know the version.
 
-Error: formatter has no project name.
-
-=over 4
+=item Error: formatter has no project name.
 
 A formatter was created without a name specified for the project at
 hand.  This should be passed with L<new(project)|OODoc::Format/"METHODS">.
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-=back
+=item Warning: missing required chapter $name in $manual
 
-Warning: missing required chapter $name in $manual
-
-=over 4
-
-=back
-
-Error: no working directory specified.
-
-=over 4
+=item Error: no working directory specified.
 
 The formatter has to know where the output can be written.  This
 directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was not specified.
 
-=back
-
-Warning: unknown subroutine type $type for $name in $manual
-
-=over 4
+=item Warning: unknown subroutine type $type for $name in $manual
 
 =back
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

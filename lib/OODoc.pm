@@ -1,11 +1,11 @@
-# Copyrights 2003-2009 by Mark Overmeer.
+# Copyrights 2003-2011 by Mark Overmeer.
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.05.
+# Pod stripped from pm file by OODoc 1.06.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use base 'OODoc::Object';
 
@@ -257,7 +257,8 @@ sub prepare(@)
 
     print "Expand manual contents.\n" if $verbose >1;
     foreach my $manual ($self->manuals)
-    {   $manual->expand;
+    {   print "  expand manual $manual\n" if $verbose > 1;
+        $manual->expand;
     }
 
     print "Create inheritance chapter.\n" if $verbose >1;
@@ -381,7 +382,7 @@ sub create($@)
                 next;
             }
 
-            print "Creating manual $manual with ",ref($format), "\n"
+            print "  creating manual $manual with ",ref($format), "\n"
                 if $verbose > 1;
 
             $format->createManual

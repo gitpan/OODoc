@@ -12,13 +12,11 @@ OODoc::Format::TemplateMagic - helpers to simplify use of Template::Magic
 
  # Never instantiated directly.
 
-=head1 DESCRIPTION
-
 =head1 METHODS
 
-$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
 =over 4
+
+=item $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
 
 Takes a Template::Magic::Zone object to process the text after the
 tag.  You may also specify a string, for instance a modified
@@ -35,12 +33,12 @@ example: of valid arguments
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -27,23 +27,13 @@ template system.  It may be a bit simpler to configure the outcome
 using the template, than using L<OODoc::Format::Pod|OODoc::Format::Pod>, however you
 first need to install L<Bundle::Template::Magic>.
 
-=head1 OVERLOADED
-
 =head1 METHODS
-
-$obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
-=over 4
-
-See L<OODoc::Format::TemplateMagic/"METHODS">
-
-=back
 
 =head2 Constructors
 
-OODoc::Format::Pod2-E<gt>B<new>(OPTIONS)
-
 =over 4
+
+=item OODoc::Format::Pod2-E<gt>B<new>(OPTIONS)
 
 See L<OODoc::Format/"METHODS">
 
@@ -51,9 +41,9 @@ See L<OODoc::Format/"METHODS">
 
 =head2 Inheritance knowledge
 
-$obj-E<gt>B<extends>([OBJECT])
-
 =over 4
+
+=item $obj-E<gt>B<extends>([OBJECT])
 
 See L<OODoc::Object/"Inheritance knowledge">
 
@@ -61,33 +51,21 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =head2 Attributes
 
-$obj-E<gt>B<manifest>
-
 =over 4
+
+=item $obj-E<gt>B<manifest>
 
 See L<OODoc::Format/"Attributes">
 
-=back
-
-$obj-E<gt>B<project>
-
-=over 4
+=item $obj-E<gt>B<project>
 
 See L<OODoc::Format/"Attributes">
 
-=back
-
-$obj-E<gt>B<version>
-
-=over 4
+=item $obj-E<gt>B<version>
 
 See L<OODoc::Format/"Attributes">
 
-=back
-
-$obj-E<gt>B<workdir>
-
-=over 4
+=item $obj-E<gt>B<workdir>
 
 See L<OODoc::Format/"Attributes">
 
@@ -95,44 +73,36 @@ See L<OODoc::Format/"Attributes">
 
 =head2 Page generation
 
-$obj-E<gt>B<cleanup>(MANUAL, STRING)
-
 =over 4
+
+=item $obj-E<gt>B<cleanup>(MANUAL, STRING)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<cleanupPOD>(IN, OUT)
-
-=over 4
+=item $obj-E<gt>B<cleanupPOD>(IN, OUT)
 
 See L<OODoc::Format::Pod/"Page generation">
 
-=back
+=item $obj-E<gt>B<createManual>(OPTIONS)
 
-$obj-E<gt>B<createManual>(OPTIONS)
+ -Option        --Defined in     --Default
+  append          OODoc::Format::Pod  ''
+  format_options  OODoc::Format    []
+  manual          OODoc::Format    <required>
+  project         OODoc::Format    <required>
+  template                         <in code>
 
-=over 4
+=over 2
 
- Option        --Defined in     --Default
- append          OODoc::Format::Pod  ''
- format_options  OODoc::Format    []
- manual          OODoc::Format    <required>
- project         OODoc::Format    <required>
- template                         <in code>
+=item append => STRING|CODE
 
-. append => STRING|CODE
+=item format_options => ARRAY
 
-. format_options => ARRAY
+=item manual => MANUAL
 
-. manual => MANUAL
+=item project => STRING
 
-. project => STRING
-
-. template => FILENAME
-
-=over 4
+=item template => FILENAME
 
 The default template is included in the DATA segment of
 L<OODoc::Format::Pod2|OODoc::Format::Pod2>.  You may start your own template
@@ -140,171 +110,87 @@ by copying it to a file.
 
 =back
 
-=back
-
-$obj-E<gt>B<createOtherPages>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<createOtherPages>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<formatManual>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<formatManual>(OPTIONS)
 
 See L<OODoc::Format::Pod/"Page generation">
 
-=back
-
-$obj-E<gt>B<link>(MANUAL, OBJECT, [TEXT])
-
-=over 4
+=item $obj-E<gt>B<link>(MANUAL, OBJECT, [TEXT])
 
 See L<OODoc::Format::Pod/"Page generation">
 
-=back
-
-$obj-E<gt>B<removeMarkup>(STRING)
-
-=over 4
+=item $obj-E<gt>B<removeMarkup>(STRING)
 
 See L<OODoc::Format::Pod/"Page generation">
 
-=back
-
-$obj-E<gt>B<showChapter>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showChapter>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showChapterIndex>(FILE, CHAPTER, INDENT)
-
-=over 4
+=item $obj-E<gt>B<showChapterIndex>(FILE, CHAPTER, INDENT)
 
 See L<OODoc::Format::Pod/"Page generation">
 
-=back
-
-$obj-E<gt>B<showExamples>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showExamples>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showOptionExpand>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showOptionExpand>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showOptionTable>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showOptionTable>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showOptionUse>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showOptionUse>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showOptionalChapter>(NAME, OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showOptions>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showOptions>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showRequiredChapter>(NAME, OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showStructureExpanded>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showStructureExpanded>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showStructureRefer>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showStructureRefer>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showSubroutine>((@))
-
-=over 4
+=item $obj-E<gt>B<showSubroutine>((@))
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showSubroutineDescription>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showSubroutineDescription>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showSubroutineName>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showSubroutineName>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showSubroutineUse>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showSubroutineUse>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<showSubroutines>(OPTIONS)
-
-=over 4
+=item $obj-E<gt>B<showSubroutines>(OPTIONS)
 
 See L<OODoc::Format/"Page generation">
 
-=back
-
-$obj-E<gt>B<writeTable>
-
-=over 4
+=item $obj-E<gt>B<writeTable>
 
 See L<OODoc::Format::Pod/"Page generation">
 
@@ -312,29 +198,25 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =head2 Template processing
 
-$obj-E<gt>B<templateChapter>
-
 =over 4
+
+=item $obj-E<gt>B<templateChapter>
 
 =back
 
 =head2 Commonly used functions
 
-$obj-E<gt>B<filenameToPackage>(FILENAME)
+=over 4
+
+=item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
 OODoc::Format::Pod2-E<gt>B<filenameToPackage>(FILENAME)
 
-=over 4
-
 See L<OODoc::Object/"Commonly used functions">
 
-=back
-
-$obj-E<gt>B<mkdirhier>(DIRECTORY)
+=item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
 OODoc::Format::Pod2-E<gt>B<mkdirhier>(DIRECTORY)
-
-=over 4
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -342,151 +224,93 @@ See L<OODoc::Object/"Commonly used functions">
 
 =head2 Manual Repository
 
-$obj-E<gt>B<addManual>(MANUAL)
-
 =over 4
+
+=item $obj-E<gt>B<addManual>(MANUAL)
+
+See L<OODoc::Object/"Manual Repository">
+
+=item $obj-E<gt>B<mainManual>(NAME)
+
+See L<OODoc::Object/"Manual Repository">
+
+=item $obj-E<gt>B<manual>(NAME)
+
+See L<OODoc::Object/"Manual Repository">
+
+=item $obj-E<gt>B<manuals>
+
+See L<OODoc::Object/"Manual Repository">
+
+=item $obj-E<gt>B<manualsForPackage>(NAME)
+
+See L<OODoc::Object/"Manual Repository">
+
+=item $obj-E<gt>B<packageNames>
 
 See L<OODoc::Object/"Manual Repository">
 
 =back
 
-$obj-E<gt>B<mainManual>(NAME)
-
 =over 4
 
-See L<OODoc::Object/"Manual Repository">
+=item $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
+
+See L<OODoc::Format::TemplateMagic/"METHODS">
 
 =back
-
-$obj-E<gt>B<manual>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manuals>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<manualsForPackage>(NAME)
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-$obj-E<gt>B<packageNames>
-
-=over 4
-
-See L<OODoc::Object/"Manual Repository">
-
-=back
-
-=head1 DETAILS
 
 =head1 DIAGNOSTICS
 
-Error: cannot read prelimary pod from $infn: $!
-
 =over 4
 
-=back
+=item Error: cannot read prelimary pod from $infn: $!
 
-Error: cannot write final pod to $outfn: $!
+=item Error: cannot write final pod to $outfn: $!
 
-=over 4
-
-=back
-
-Error: chapter without name in template.
-
-=over 4
+=item Error: chapter without name in template.
 
 In your template file, a {chapter} statement is used, which is
 erroneous, because it requires a chapter name.
 
-=back
+=item Error: formatter does not know the version.
 
-Error: formatter does not know the version.
-
-=over 4
-
-=back
-
-Error: formatter has no project name.
-
-=over 4
+=item Error: formatter has no project name.
 
 A formatter was created without a name specified for the project at
 hand.  This should be passed with L<new(project)|OODoc::Format/"METHODS">.
 
-=back
-
-Error: manual definition requires manual object
-
-=over 4
+=item Error: manual definition requires manual object
 
 A call to L<addManual()|OODoc::Object/"Manual Repository"> expects a new manual object (a L<OODoc::Manual|OODoc::Manual>),
 however an incompatible thing was passed.  Usually, intended was a call
 to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OODoc::Object/"Manual Repository">.
 
-=back
+=item Warning: missing required chapter $name in $manual
 
-Warning: missing required chapter $name in $manual
+=item Error: no directory to put pod manual for $name in
 
-=over 4
+=item Warning: no meaning for container $container in chapter block
 
-=back
+=item Error: no package name for pod production
 
-Error: no directory to put pod manual for $name in
-
-=over 4
-
-=back
-
-Warning: no meaning for container $container in chapter block
-
-=over 4
-
-=back
-
-Error: no package name for pod production
-
-=over 4
-
-=back
-
-Error: no working directory specified.
-
-=over 4
+=item Error: no working directory specified.
 
 The formatter has to know where the output can be written.  This
 directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was not specified.
 
-=back
-
-Warning: unknown subroutine type $type for $name in $manual
-
-=over 4
+=item Warning: unknown subroutine type $type for $name in $manual
 
 =back
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.05,
-built on January 26, 2009. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 1.06,
+built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2009 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
