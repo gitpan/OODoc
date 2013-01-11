@@ -58,7 +58,7 @@ is not supported here.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Object-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Object-E<gt>B<filenameToPackage>(FILENAME)
 
 example: 
 
@@ -66,7 +66,7 @@ example:
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Object-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Object-E<gt>B<mkdirhier>(DIRECTORY)
 
 Creates this DIRECTORY and all its non-existing parents.
 
@@ -94,7 +94,7 @@ documentation for the code of the package NAME.
 
 Returns the manual with the specified name, or else C<undef>.
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 All manuals are returned.
 
@@ -104,7 +104,7 @@ Returns a list package objects which are related to the specified NAME.
 One NAME can appear in more than one file, and therefore a list is
 returned.
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 Returns the names of all defined packages.
 
@@ -134,12 +134,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -23,15 +23,15 @@ OODoc::Text::Section - collects the text of one section within a chapter
 
 =over 4
 
-=item overload: B<'""' (stringification)>
+=item overload: B<'""' (stringification)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'==' and '!='>
+=item overload: B<'==' and '!='>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'cmp' (string comparison)>
+=item overload: B<'cmp' (string comparison)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
@@ -49,14 +49,14 @@ See L<OODoc::Text::Structure/"Constructors">
 
 =item OODoc::Text::Section-E<gt>B<new>(OPTIONS)
 
- -Option     --Defined in     --Default
-  chapter                       <required>
-  container    OODoc::Text      new(chapter)
-  description  OODoc::Text      ''
+ -Option     --Defined in            --Default
+  chapter                              <required>
+  container    OODoc::Text             new(chapter)
+  description  OODoc::Text             ''
   level        OODoc::Text::Structure  2
-  linenr       OODoc::Text      <required>
-  name         OODoc::Text      undef
-  type         OODoc::Text      'Section'
+  linenr       OODoc::Text             <required>
+  name         OODoc::Text             undef
+  type         OODoc::Text             'Section'
 
 =over 2
 
@@ -96,23 +96,23 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<description>
+=item $obj-E<gt>B<description>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<level>
+=item $obj-E<gt>B<level>()
 
 See L<OODoc::Text::Structure/"Attributes">
 
-=item $obj-E<gt>B<name>
+=item $obj-E<gt>B<name>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<niceName>
+=item $obj-E<gt>B<niceName>()
 
 See L<OODoc::Text::Structure/"Attributes">
 
-=item $obj-E<gt>B<type>
+=item $obj-E<gt>B<type>()
 
 See L<OODoc::Text/"Attributes">
 
@@ -122,7 +122,7 @@ See L<OODoc::Text/"Attributes">
 
 =over 4
 
-=item $obj-E<gt>B<chapter>
+=item $obj-E<gt>B<chapter>()
 
 Returns the chapter object for this section.
 
@@ -134,15 +134,15 @@ See L<OODoc::Text::Structure/"Location">
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<path>
+=item $obj-E<gt>B<path>()
 
 See L<OODoc::Text::Structure/"Location">
 
-=item $obj-E<gt>B<unique>
+=item $obj-E<gt>B<unique>()
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<where>
+=item $obj-E<gt>B<where>()
 
 See L<OODoc::Text/"Location">
 
@@ -160,19 +160,19 @@ See L<OODoc::Text::Structure/"Collected">
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<examples>
+=item $obj-E<gt>B<examples>()
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<findDescriptionObject>
+=item $obj-E<gt>B<findDescriptionObject>()
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<isEmpty>
+=item $obj-E<gt>B<isEmpty>()
 
 See L<OODoc::Text::Structure/"Collected">
 
-=item $obj-E<gt>B<openDescription>
+=item $obj-E<gt>B<openDescription>()
 
 See L<OODoc::Text/"Collected">
 
@@ -194,7 +194,7 @@ See L<OODoc::Text::Structure/"Subroutines">
 
 See L<OODoc::Text::Structure/"Subroutines">
 
-=item $obj-E<gt>B<subroutines>
+=item $obj-E<gt>B<subroutines>()
 
 See L<OODoc::Text::Structure/"Subroutines">
 
@@ -222,13 +222,13 @@ Returns a list of all subsections in this chapter.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Text::Section-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Text::Section-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Text::Section-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Text::Section-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -246,7 +246,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -254,7 +254,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -274,12 +274,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

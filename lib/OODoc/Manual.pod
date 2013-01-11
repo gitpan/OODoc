@@ -27,7 +27,7 @@ More than one manual can be related to a single package.
 
 =over 4
 
-=item overload: B<cmp>
+=item overload: B<cmp>()
 
 String comparison takes place between a manual name and another
 manual name which may be a manual object or any other string or
@@ -39,7 +39,7 @@ example:
  if($man1 eq $man2) ...
  my @sorted = sort @manuals;    # implicit calls to cmp
 
-=item overload: B<stringification>
+=item overload: B<stringification>()
 
 Used in string context, a manual produces its name.
 
@@ -99,31 +99,31 @@ The file where the stripped code is written to.
 
 =over 4
 
-=item $obj-E<gt>B<distribution>
+=item $obj-E<gt>B<distribution>()
 
 Returns the distribution which includes this manual.
 
-=item $obj-E<gt>B<isPurePod>
+=item $obj-E<gt>B<isPurePod>()
 
 Returns whether this package has real code related to it.
 
-=item $obj-E<gt>B<package>
+=item $obj-E<gt>B<package>()
 
 Returns the package of the manual.
 
-=item $obj-E<gt>B<parser>
+=item $obj-E<gt>B<parser>()
 
 Returns the parser which has produced this manual object.
 
-=item $obj-E<gt>B<source>
+=item $obj-E<gt>B<source>()
 
 Returns the source of this manual information.
 
-=item $obj-E<gt>B<stripped>
+=item $obj-E<gt>B<stripped>()
 
 The name of the produced stripped package file.
 
-=item $obj-E<gt>B<version>
+=item $obj-E<gt>B<version>()
 
 Returns the version of this manual information.
 
@@ -159,7 +159,7 @@ insensitive).  Without any type, all are selected.
 
 =back
 
-=item $obj-E<gt>B<examples>
+=item $obj-E<gt>B<examples>()
 
 All examples of all chapters within this manual together, especially
 useful for counting.
@@ -168,7 +168,7 @@ example:
 
  print scalar $manual->examples;
 
-=item $obj-E<gt>B<name>
+=item $obj-E<gt>B<name>()
 
 Returns the name of the manual, which is found in the NAME chapter.
 
@@ -178,7 +178,7 @@ Returns the subroutine with the specified NAME as object reference.  When
 the manual is part of a package description which is spread over multiple
 manuals, then these other manuals will be searched as well.
 
-=item $obj-E<gt>B<subroutines>
+=item $obj-E<gt>B<subroutines>()
 
 All subroutines of all chapters within this manual together, especially
 useful for counting.
@@ -207,7 +207,7 @@ example:
 
 See L<OODoc::Object/"Inheritance knowledge">
 
-=item $obj-E<gt>B<extraCode>
+=item $obj-E<gt>B<extraCode>()
 
 Returns a list of manuals which contain extra code for this package.
 
@@ -216,7 +216,7 @@ Returns a list of manuals which contain extra code for this package.
 Returns whether the SUBROUTINE or OPTION was defined by this manual page,
 or inherited from it.
 
-=item $obj-E<gt>B<ownSubroutines>
+=item $obj-E<gt>B<ownSubroutines>()
 
 Returns only the subroutines which are described in this manual page
 itself.  L<subroutines()|OODoc::Manual/"Collected"> returns them all.
@@ -250,16 +250,16 @@ will be added to the list of superclasses first.
 
 =over 4
 
-=item $obj-E<gt>B<collectPackageRelations>
+=item $obj-E<gt>B<collectPackageRelations>()
 
-=item $obj-E<gt>B<createInheritance>
+=item $obj-E<gt>B<createInheritance>()
 
 Create the text which represents the inheritance relationships of
 a certain package.  More than one MANUAL can be defined for one
 package, and will each produce the same text.  The returned string
 still has to be cleaned-up before inclusion.
 
-=item $obj-E<gt>B<expand>
+=item $obj-E<gt>B<expand>()
 
 Add the information of lower level manuals into this one.
 
@@ -318,7 +318,7 @@ more detail.  The most detailed location for the description is returned.
 
 =over 4
 
-=item $obj-E<gt>B<index>
+=item $obj-E<gt>B<index>()
 
 Returns a string which can be used as index of headings used in this
 manual page.
@@ -327,7 +327,7 @@ example:
 
   print $manual->index;
 
-=item $obj-E<gt>B<stats>
+=item $obj-E<gt>B<stats>()
 
 Returns a string which displays some stats about the manual.
 
@@ -339,13 +339,13 @@ Returns a string which displays some stats about the manual.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Manual-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Manual-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Manual-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Manual-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -367,7 +367,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -375,7 +375,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -452,12 +452,12 @@ is not permitted.  Join the contents of both parts.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

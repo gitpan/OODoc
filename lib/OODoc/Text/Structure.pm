@@ -1,19 +1,19 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc::Text::Structure;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 use base 'OODoc::Text';
 
 use strict;
 use warnings;
 
-use Carp;
-use List::Util 'first';
+use Log::Report    'oodoc';
+use List::Util     'first';
 
 
 sub init($)
@@ -21,7 +21,7 @@ sub init($)
     $self->SUPER::init($args) or return;
     $self->{OTS_subs} = [];
     $self->{OTS_level} = delete $args->{level}
-        or croak "ERROR: no level defined for structural component";
+        or panic "no level defined for structural component";
 
     $self;
 }
@@ -54,10 +54,10 @@ sub niceName()
 #-------------------------------------------
 
 
-sub path() { confess "Not implemented" }
+sub path() { panic "Not implemented" }
 
 
-sub findEntry($) { confess "Not implemented" }
+sub findEntry($) { panic "Not implemented" }
 
 #-------------------------------------------
 
@@ -85,6 +85,7 @@ sub isEmpty()
     1;
 }
 
+#-------------------
 
 sub addSubroutine(@)
 {  my $self = shift;
@@ -93,20 +94,14 @@ sub addSubroutine(@)
    $self;
 }
 
-#-------------------------------------------
-
 
 sub subroutines() { @{shift->{OTS_subs}} }
-
-#-------------------------------------------
 
 
 sub subroutine($)
 {   my ($self, $name) = @_;
     first {$_->name eq $name} $self->subroutines;
 }
-
-#-------------------------------------------
 
 
 sub setSubroutines($)

@@ -31,17 +31,17 @@ objects and convert it into manual pages.
 
 =over 4
 
-=item overload: B<'""' (stringification)>
+=item overload: B<'""' (stringification)>()
 
 Returned is the name of the text object.
 
-=item overload: B<'==' and '!='>
+=item overload: B<'==' and '!='>()
 
 Numeric comparison is used to compare to objects whether they are
 identical.  String comparison is overloaded to compare the names
 of the objects.
 
-=item overload: B<'cmp' (string comparison)>
+=item overload: B<'cmp' (string comparison)>()
 
 Names are compared.
 
@@ -107,12 +107,12 @@ The text element which encapsulates the text element at hand.  This
 defines the structure of the documentation.
 Only for chapters, this value will be undefined.
 
-=item $obj-E<gt>B<description>
+=item $obj-E<gt>B<description>()
 
 Returns the description text for this object.  Nearly all objects
 contains some kind of introductory description.
 
-=item $obj-E<gt>B<name>
+=item $obj-E<gt>B<name>()
 
 The name of this text element.  Stringification is overloaded to call
 this name method.
@@ -122,7 +122,7 @@ example:
  print $text->name;
  print $text;   # via overload
 
-=item $obj-E<gt>B<type>
+=item $obj-E<gt>B<type>()
 
 Returns the type name of this data object.
 
@@ -138,7 +138,7 @@ Without a NAME, the manual of the text object is returned. With a NAME,
 the manual with that name is returned, even when that does not have a
 relation to the object: it calls L<OODoc::Object::manual()|OODoc::Object/"Manual Repository">.
 
-=item $obj-E<gt>B<unique>
+=item $obj-E<gt>B<unique>()
 
 Returns a unique id for this text item.  This is the easiest way to
 see whether two references to the same (overloaded) objects point to
@@ -149,7 +149,7 @@ example:
  if($obj1->unique == $obj2->unique) {...}
  if($obj1 == $obj2) {...}   # same via overload
 
-=item $obj-E<gt>B<where>
+=item $obj-E<gt>B<where>()
 
 Returns the source of the text item: the filename name and the line
 number of the start of it.
@@ -166,16 +166,16 @@ Add a new example (a OODoc::Text::Example object) to the list already in
 this object.  You can not look for a specific because they have no real
 name (only a sequence number).
 
-=item $obj-E<gt>B<examples>
+=item $obj-E<gt>B<examples>()
 
 Returns a list of all examples contained in this text element.
 
-=item $obj-E<gt>B<findDescriptionObject>
+=item $obj-E<gt>B<findDescriptionObject>()
 
 From the current object, search in the extends until an object is found
 which has a content for the description field.
 
-=item $obj-E<gt>B<openDescription>
+=item $obj-E<gt>B<openDescription>()
 
 Returns a reference to the scalar which will contain the description for
 this object.
@@ -193,13 +193,13 @@ example:
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Text-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Text-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Text-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Text-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -217,7 +217,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -225,7 +225,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -251,12 +251,12 @@ define the elements relative location.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -1,28 +1,26 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 use base 'OODoc::Object';
 
 use strict;
 use warnings;
 
+use Log::Report    'oodoc';
+
 use OODoc::Manifest;
 
-use Carp;
 use File::Copy;
 use File::Spec;
 use File::Basename;
 use IO::File;
 use List::Util 'first';
-
-
-#-------------------------------------------
 
 
 sub init($)
@@ -33,8 +31,8 @@ sub init($)
     $self->{O_pkg}    = {};
 
     my $distribution  = $self->{O_distribution} = delete $args->{distribution};
-    croak "ERROR: the produced distribution needs a project description"
-        unless defined $distribution;
+    defined $distribution
+        or error __x"the produced distribution needs a project description";
 
     $self->{O_project} = delete $args->{project} || $distribution;
 
@@ -45,18 +43,18 @@ sub init($)
                        : undef;
         if(defined $fn)
         {   my $v = IO::File->new($fn, 'r')
-               or die "ERROR: Cannot read version from file $fn: $!\n";
+                or fault __x"cannot read version from file {file}", file=> $fn;
             $version = $v->getline;
             $version = $1 if $version =~ m/(\d+\.[\d\.]+)/;
             chomp $version;
         }
     }
 
-    croak "ERROR: no version specified for distribution \"$distribution\""
-        unless defined $version;
+    defined $version
+        or error __x"no version specified for distribution '{dist}'"
+              , dist  => $distribution;
 
     $self->{O_version} = $version;
-    $self->{O_verbose} = delete $args->{verbose} || 0;
     $self;
 }
 
@@ -81,9 +79,10 @@ sub selectFiles($@)
       = ref $files eq 'Regexp' ? sub { $_[0] =~ $files }
       : ref $files eq 'CODE'   ? $files
       : ref $files eq 'ARRAY'  ? $files
-      : croak "ERROR: use regex, code reference or array for file selection";
+      : error __x"use regex, code reference or array for file selection";
 
-    return ($select, []) if ref $select eq 'ARRAY';
+    return ($select, [])
+        if ref $select eq 'ARRAY';
 
     my (@process, @copy);
     foreach my $fn (@_)
@@ -97,10 +96,9 @@ sub selectFiles($@)
 
 sub processFiles(@)
 {   my ($self, %args) = @_;
-    my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
-    croak "ERROR: requires a directory to write the distribution to"
-       unless exists $args{workdir};
+    exists $args{workdir}
+        or error __x"requires a directory to write the distribution to";
 
     my $dest    = $args{workdir};
     my $source  = $args{source};
@@ -115,14 +113,14 @@ sub processFiles(@)
                 :                   'VERSION';
         if(defined $fn)
         {   my $v = IO::File->new($fn, "r")
-                or die "ERROR: Cannot read version from $fn: $!";
+                or fault __x"cannot read version from {file}", file => $fn;
             $version = $v->getline;
             $version = $1 if $version =~ m/(\d+\.[\d\.]+)/;
             chomp $version;
         }
         elsif($version = $self->version) { ; }
         else
-        {   die "ERROR: there is no version defined for the source files.\n";
+        {   error __x"there is no version defined for the source files";
         }
     }
 
@@ -156,8 +154,7 @@ sub processFiles(@)
     my $select    = $args{select} || qr/\.(pm|pod)$/;
     my ($process, $copy) = $self->selectFiles($select, @$manifest);
 
-    print @$process. " files to process and ".@$copy." files to copy\n"
-       if $verbose > 1;
+    trace @$process." files to process and ".@$copy." files to copy";
 
     #
     # Copy all the files which do not contain pseudo doc
@@ -169,16 +166,20 @@ sub processFiles(@)
                    :                   $filename;
 
             my $dn = File::Spec->catfile($dest, $fn);
-            carp "WARNING: no file $fn to include in the distribution", next
-               unless -f $fn;
+            unless(-f $fn)
+            {   warning __x"no file {file} to include in the distribution"
+                  , file => $fn;
+                next;
+            }
 
             unless(-e $dn && ( -M $dn < -M $fn ) && ( -s $dn == -s $fn ))
             {   $self->mkdirhier(dirname $dn);
 
                 copy $fn, $dn
-                   or die "ERROR: cannot copy distribution file $fn to $dest: $!\n";
+                   or fault __x"cannot copy distribution file {from} to {to}"
+                        , from => $fn, to => $dest;
 
-                print "Copied $fn to $dest\n" if $verbose > 2;
+                trace "  copied $fn to $dest";
             }
 
             $manout->add($dn);
@@ -194,11 +195,11 @@ sub processFiles(@)
 
     unless(ref $parser)
     {   eval "require $parser";
-        croak "ERROR: Cannot compile $parser class:\n$@"
-           if $@;
+        error __x"cannot compile {pkg} class: {err}", pkg => $parser, err => $@
+            if $@;
 
         $parser = $parser->new(skip_links => $skip_links)
-           or croak "ERROR: Parser $parser could not be instantiated";
+           or error __x"parser {name} could not be instantiated", name=>$parser;
     }
 
     #
@@ -208,8 +209,11 @@ sub processFiles(@)
     foreach my $filename (@$process)
     {   my $fn = $source ? File::Spec->catfile($source, $filename) : $filename; 
 
-        carp "WARNING: no file $fn to include in the distribution", next
-            unless -f $fn;
+        unless(-f $fn)
+        {   warning __x"no file {file} to include in the distribution"
+              , file => $fn;
+            next;
+        }
 
         my $dn;
         if($dest)
@@ -227,21 +231,17 @@ sub processFiles(@)
           , notice       => $notice
           );
 
-        if($verbose > 2)
-        {   print "Stripped $fn into $dn\n" if defined $dn;
-            print $_->stats foreach @manuals;
-        }
+        trace "stripped $fn into $dn" if defined $dn;
+        trace $_->stats for @manuals;
 
         foreach my $man (@manuals)
         {   $self->addManual($man) if $man->chapters;
         }
     }
 
-    #
     # Some general subtotals
-    #
+    trace $self->stats;
 
-    print $self->stats if $verbose > 1;
     $self;
 }
 
@@ -250,20 +250,20 @@ sub processFiles(@)
 
 sub prepare(@)
 {   my ($self, %args) = @_;
-    my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
-    print "Collect package relations.\n" if $verbose >1;
-    $self->getPackageRelations($verbose);
+    info "collect package relations";
+    $self->getPackageRelations;
 
-    print "Expand manual contents.\n" if $verbose >1;
+    info "expand manual contents";
     foreach my $manual ($self->manuals)
-    {   print "  expand manual $manual\n" if $verbose > 1;
+    {   trace "  expand manual $manual";
         $manual->expand;
     }
 
-    print "Create inheritance chapter.\n" if $verbose >1;
+    info "Create inheritance chapter";
     foreach my $manual ($self->manuals)
-    {   $manual->createInheritance;
+    {   trace "  create inheritance for $manual";
+        $manual->createInheritance;
     }
 
     $self;
@@ -271,29 +271,29 @@ sub prepare(@)
 
 
 sub getPackageRelations($)
-{   my ($self, $verbose) = @_;
+{   my $self = shift;
     my @manuals  = $self->manuals;  # all
 
     #
     # load all distributions (which are not loaded yet)
     #
 
-    print "Compile all packages\n" if $verbose;
+    info "compile all packages";
 
     foreach my $manual (@manuals)
     {    next if $manual->isPurePod;
-         print "  require package $manual\n" if $verbose > 1;
+         trace "  require package $manual";
 
          eval "require $manual";
-         warn "WARNING: errors from $manual; $@\n"
+         warning __x"errors from {manual}: {err}", manual => $manual, err =>$@
             if $@ && $@ !~ /can't locate/i && $@ !~ /attempt to reload/i;
     }
 
-    print "Detect inheritance relationships\n" if $verbose;
+    info "detect inheritance relationships";
 
     foreach my $manual (@manuals)
     {
-         print "  relations for $manual\n" if $verbose > 1;
+        trace "  relations for $manual";
 
         if($manual->name ne $manual->package)  # autoloaded code
         {   my $main = $self->mainManual("$manual");
@@ -324,18 +324,18 @@ sub getPackageRelations($)
 
 
 our %formatters =
- ( pod  => 'OODoc::Format::Pod'
- , pod2 => 'OODoc::Format::Pod2'
- , pod3 => 'OODoc::Format::Pod3'
- , html => 'OODoc::Format::Html'
+ ( pod   => 'OODoc::Format::Pod'
+ , pod2  => 'OODoc::Format::Pod2'
+ , pod3  => 'OODoc::Format::Pod3'
+ , html  => 'OODoc::Format::Html'
+ , html2 => 'OODoc::Format::Html2'
  );
 
 sub create($@)
 {   my ($self, $format, %args) = @_;
-    my $verbose = defined $args{verbose} ? $args{verbose} : $self->{O_verbose};
 
     my $dest    = $args{workdir}
-       or croak "ERROR: requires a directory to write the manuals to";
+       or error __x"create requires a directory to write the manuals to";
 
     #
     # Start manifest
@@ -348,10 +348,12 @@ sub create($@)
     # Create the formatter
 
     unless(ref $format)
-    {   $format = $formatters{$format} if exists $formatters{$format};
+    {   $format = $formatters{$format}
+            if exists $formatters{$format};
 
         eval "require $format";
-        die "ERROR: formatter $format has compilation errors: $@" if $@;
+        error __x"formatter {name} has compilation errors: {err}"
+          , name => $format, err => $@ if $@;
 
         my $options    = delete $args{format_options} || [];
 
@@ -370,7 +372,7 @@ sub create($@)
 
     my $select = ! defined $args{select}     ? sub {1}
                : ref $args{select} eq 'CODE' ? $args{select}
-               :                        sub { $_[0]->name =~ $args{select}};
+               : sub { $_[0]->name =~ $args{select}};
 
     foreach my $package (sort $self->packageNames)
     {
@@ -378,19 +380,18 @@ sub create($@)
         {   next unless $select->($manual);
 
             unless($manual->chapters)
-            {   print "Skipping $manual: no chapters\n" if $verbose > 1;
+            {   trace "  skipping $manual: no chapters";
                 next;
             }
 
-            print "  creating manual $manual with ",ref($format), "\n"
-                if $verbose > 1;
+            trace "  creating manual $manual with ".(ref $format);
 
             $format->createManual
-             ( manual         => $manual
-             , template       => $args{manual_template}
-             , append         => $args{append}
-             , format_options => ($args{manual_format} || [])
-             );
+              ( manual         => $manual
+              , template       => $args{manual_templates}
+              , append         => $args{append}
+              , format_options => ($args{manual_format} || [])
+              );
         }
     }
 
@@ -398,9 +399,9 @@ sub create($@)
     # Create other pages
     #
 
-    print "Creating other pages\n" if $verbose > 1;
+    trace "creating other pages";
     $format->createOtherPages
-     ( source   => $args{other_files}
+     ( source   => $args{other_templates}
      , process  => $args{process_files}
      );
 

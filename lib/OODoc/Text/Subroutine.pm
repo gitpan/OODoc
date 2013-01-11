@@ -1,27 +1,28 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc::Text::Subroutine;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 use base 'OODoc::Text';
 
 use strict;
 use warnings;
 
-use Carp;
+use Log::Report    'oodoc';
 
 
 sub init($)
 {   my ($self, $args) = @_;
 
-    confess "no name for subroutine"
-       unless exists $args->{name};
+    exists $args->{name}
+        or error __x"no name for subroutine";
 
-    $self->SUPER::init($args) or return;
+    $self->SUPER::init($args)
+        or return;
 
     $self->{OTS_param}    = delete $args->{parameters};
     $self->{OTS_options}  = {};
@@ -35,7 +36,7 @@ sub init($)
 
 sub extends($)
 {   my $self  = shift;
-    return $self->SUPER::extends unless @_;
+    @_ or return $self->SUPER::extends;
 
     my $super = shift;
     if($self->type ne $super->type)
@@ -43,11 +44,10 @@ sub extends($)
         my ($fn2, $ln2) = $super->where;
         my ($t1,  $t2 ) = ($self->type, $super->type);
 
-        warn <<WARN;
-WARNING: subroutine $self() extended by different type:
-   $t1 in $fn1 line $ln1
-   $t2 in $fn2 line $ln2
-WARN
+        warning __x"subroutine {name}() extended by different type:\n  {type1} in {file1} line {line1}\n  {type2} in {file2} line {line2}"
+          , name => "$self"
+          , type1 => $t1, file1 => $fn1, line1 => $ln1
+          , type2 => $t2, file2 => $fn2, line2 => $ln2;
     }
 
     $self->SUPER::extends($super);
@@ -64,7 +64,8 @@ sub parameters() {shift->{OTS_param}}
 sub location($)
 {   my ($self, $manual) = @_;
     my $container = $self->container;
-    my $super     = $self->extends or return $container;
+    my $super     = $self->extends
+        or return $container;
 
     my $superloc  = $super->location;
     my $superpath = $superloc->path;
@@ -74,7 +75,7 @@ sub location($)
     
     if(length $superpath < length $mypath)
     {   return $container
-           if substr($mypath, 0, length($superpath)+1) eq "$superpath/";
+            if substr($mypath, 0, length($superpath)+1) eq "$superpath/";
     }
     elsif(substr($superpath, 0, length($mypath)+1) eq "$mypath/")
     {   if($superloc->isa("OODoc::Text::Chapter"))
@@ -98,11 +99,10 @@ sub location($)
    {   my ($myfn, $myln)       = $self->where;
        my ($superfn, $superln) = $super->where;
 
-       warn <<WARN
-WARNING: Subroutine $self() location conflict:
-   $mypath in $myfn line $myln
-   $superpath in $superfn line $superln
-WARN
+       warning __x"subroutine {name}() location conflict:\n  {path1} in {file1} line {line1}\n  {path2} in {file2} line {line2}"
+         , name => "$self"
+         , path1 => $mypath, file1 => $myfn, line1 => $myln
+         , path2 => $superpath, file2 => $superfn, line2 => $superln;
    }
 
    $container;
@@ -116,7 +116,8 @@ sub path() { shift->container->path }
 
 sub default($)
 {   my ($self, $it) = @_;
-    return $self->{OTS_defaults}{$it} unless ref $it;
+    ref $it
+        or return $self->{OTS_defaults}{$it};
 
     my $name = $it->name;
     $self->{OTS_defaults}{$name} = $it;
@@ -131,7 +132,8 @@ sub defaults() { values %{shift->{OTS_defaults}} }
 
 sub option($)
 {   my ($self, $it) = @_;
-    return $self->{OTS_options}{$it} unless ref $it;
+    ref $it
+        or return $self->{OTS_options}{$it};
 
     my $name = $it->name;
     $self->{OTS_options}{$name} = $it;
@@ -179,7 +181,8 @@ sub collectedOptions(@)
 
         unless(exists $options{$name})
         {   my ($fn, $ln) = $default->where;
-            warn "WARNING: no option $name for default in $fn line $ln\n";
+            warning __x"no option {name} for default in {file} line {line}"
+              , name => $name, file => $fn, line => $ln;
             next;
         }
         $options{$name}[1] = $default;
@@ -190,13 +193,14 @@ sub collectedOptions(@)
         next if defined $options{$name}[1];
 
         my ($fn, $ln) = $option->where;
-        warn "WARNING: no default for option $name defined in $fn line $ln\n";
+        warning __x"no default for option {name} defined in {file} line {line}"
+          , name => $name, file => $fn, line => $ln;
 
         my $default = $options{$name}[1] =
         OODoc::Text::Default->new
-         ( name => $name, value => 'undef'
-         , subroutine => $self, linenr => $ln
-         );
+          ( name => $name, value => 'undef'
+          , subroutine => $self, linenr => $ln
+          );
 
         $self->default($default);
     }

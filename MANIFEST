@@ -9,7 +9,6 @@ examples/markov.pm
 examples/markov.pod
 examples/mimetypes.tar.gz
 examples/oodoc.tar.gz
-examples/orl.tar.gz
 lib/OODoc.pm
 lib/OODoc.pod
 lib/OODoc/Format.pm
@@ -59,4 +58,6 @@ lib/OODoc/Text/Subroutine.pod
 t/00works.t
 t/10nomarkup.t
 t/99pod.t
-META.yml                                 Module meta-data (added by MakeMaker)
+xt/99pod.t
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)

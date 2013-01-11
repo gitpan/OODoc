@@ -18,6 +18,9 @@ that important things come first.
 
 =head1 METHODS
 
+take whatever you need in the order you wish to define it (order of the
+chapters is only determined by the output templates of the formatter)
+
 =head2 Constructors
 
 It is useful to use sections to group methods or functions when the number
@@ -27,7 +30,7 @@ the list.
 
 =over 4
 
-=item $obj-E<gt>B<clone>
+=item $obj-E<gt>B<clone>()
 
 Make a copy of the object.
 
@@ -42,9 +45,6 @@ so on in the manual-page of the OODoc::Parser::Markov.
 
 And so on.  Do not forget the C<=cut>'s!
 
-take whatever you need in the order you wish to define it (order of the
-chapters is only determined by the output templates of the formatter)
-
 =head1 DETAILS
 
 Here I put the detailed explanation, especially about how different methods
@@ -54,12 +54,12 @@ Again: do not forget the next line!!!
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

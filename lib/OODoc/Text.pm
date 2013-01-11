@@ -1,18 +1,18 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc::Text;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 use base 'OODoc::Object';
 
 use strict;
 use warnings;
 
-use Carp;
+use Log::Report    'oodoc';
 
 
 use overload '=='   => sub {$_[0]->unique == $_[1]->unique}
@@ -32,11 +32,14 @@ sub init($)
 
     $self->{OT_name}     = delete $args->{name};
 
-    my $nr = $self->{OT_linenr} = delete $args->{linenr} or confess;
-    $self->{OT_type}     = delete $args->{type} or confess;
+    my $nr = $self->{OT_linenr} = delete $args->{linenr} or panic;
+    $self->{OT_type}     = delete $args->{type} or panic;
 
-    confess "no text container specified for the ".ref($self)." object"
-       unless exists $args->{container};   # may be undef
+    exists $args->{container}   # may be explicit undef
+        or panic "no text container specified for the {pkg} object"
+             , pkg => ref $self;
+
+;   # may be undef
     $self->{OT_container}= delete $args->{container};
     
     $self->{OT_descr}    = delete $args->{description} || '';

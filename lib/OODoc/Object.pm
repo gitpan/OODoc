@@ -1,20 +1,17 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc::Object;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 
 use strict;
 use warnings;
 
-use Carp;
-
-
-#-------------------------------------------
+use Log::Report    'oodoc';
 
 
 sub new(@)
@@ -24,8 +21,8 @@ sub new(@)
     my $self = (bless {}, $class)->init(\%args);
 
     if(my @missing = keys %args)
-    {   local $" = ', ';
-        carp "WARNING: Unknown ".(@missing==1?'option':'options')." @missing";
+    {   error __xn"unknown option {options}", "unknown options {options}"
+           , scalar @missing, options => @missing;
     }
 
     $self;
@@ -60,14 +57,12 @@ sub mkdirhier($)
 
     while(@dirs)
     {   $path = File::Spec->catdir($path, shift @dirs);
-        die "Cannot create $path $!"
-            unless -d $path || mkdir $path;
+        -d $path || mkdir $path
+            or fault __x"cannot create {dir}", dir => $path;
     }
 
     $thing;
 }
-
-#-------------------------------------------
 
 
 sub filenameToPackage($)
@@ -87,23 +82,19 @@ my %manuals;
 sub addManual($)
 {   my ($self, $manual) = @_;
 
-    confess "ERROR: manual definition requires manual object"
-        unless ref $manual && $manual->isa('OODoc::Manual');
+    ref $manual && $manual->isa('OODoc::Manual')
+         or panic "manual definition requires manual object";
 
     push @{$packages{$manual->package}}, $manual;
     $manuals{$manual->name} = $manual;
     $self;
 }
 
-#-------------------------------------------
-
 
 sub mainManual($)
 {  my ($self, $name) = @_;
    (grep {$_ eq $_->package} $self->manualsForPackage($name))[0];
 }
-
-#-------------------------------------------
 
 
 sub manualsForPackage($)
@@ -112,17 +103,11 @@ sub manualsForPackage($)
     defined $packages{$name} ? @{$packages{$name}} : ();
 }
 
-#-------------------------------------------
-
 
 sub manuals() { values %manuals }
 
-#-------------------------------------------
-
 
 sub manual($) { $manuals{ $_[1] } }
-
-#-------------------------------------------
 
 
 sub packageNames() { keys %packages }

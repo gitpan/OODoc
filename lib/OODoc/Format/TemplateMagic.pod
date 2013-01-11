@@ -5,7 +5,6 @@ OODoc::Format::TemplateMagic - helpers to simplify use of Template::Magic
 =head1 INHERITANCE
 
  OODoc::Format::TemplateMagic is extended by
-   OODoc::Format::Html
    OODoc::Format::Pod2
 
 =head1 SYNOPSIS
@@ -33,12 +32,12 @@ example: of valid arguments
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

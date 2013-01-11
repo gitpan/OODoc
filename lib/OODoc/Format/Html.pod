@@ -1,15 +1,12 @@
 =head1 NAME
 
-OODoc::Format::Html - Produce HTML pages using Template::Magic
+OODoc::Format::Html - Produce HTML pages using OODoc::Template
 
 =head1 INHERITANCE
 
  OODoc::Format::Html
    is a OODoc::Format
    is a OODoc::Object
-
- OODoc::Format::Html
-   is a OODoc::Format::TemplateMagic
 
 =head1 SYNOPSIS
 
@@ -21,7 +18,7 @@ OODoc::Format::Html - Produce HTML pages using Template::Magic
 
 =head1 DESCRIPTION
 
-Create manual pages in the HTML syntax, using the Template::Magic
+Create manual pages in the HTML syntax, using the L<OODoc::Template|OODoc::Template>
 template system.  Producing HTML is more complicated than producing
 POD, because one manual page may be spread over multiple output files.
 
@@ -33,14 +30,15 @@ POD, because one manual page may be spread over multiple output files.
 
 =item OODoc::Format::Html-E<gt>B<new>(OPTIONS)
 
- -Option        --Defined in     --Default
-  html_meta_data                   ''
-  html_root                        '/'
-  jump_script                      <html_root>/jump.cgi
-  manifest        OODoc::Format    undef
-  project         OODoc::Format    <required>
-  version         OODoc::Format    <required>
-  workdir         OODoc::Format    <required>
+ -Option         --Defined in     --Default
+  html_meta_data                    ''
+  html_root                         '/'
+  html_stylesheet                   undef
+  jump_script                       <html_root>/jump.cgi
+  manifest         OODoc::Format    undef
+  project          OODoc::Format    <required>
+  version          OODoc::Format    <required>
+  workdir          OODoc::Format    <required>
 
 =over 2
 
@@ -50,6 +48,10 @@ Will be (usually) be added to the header, and may contain links to
 Cascading Style Sheets, and such.
 
 =item html_root => URI
+
+=item html_stylesheet => STRING
+
+Adds a link to the stylesheet to the meta-data.
 
 =item jump_script => URI
 
@@ -79,19 +81,23 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =over 4
 
-=item $obj-E<gt>B<manifest>
+=item $obj-E<gt>B<manifest>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<project>
+=item $obj-E<gt>B<manual>([MANUAL])
+
+Returns (optionally after setting) the MANUAL which is being processed.
+
+=item $obj-E<gt>B<project>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<version>
+=item $obj-E<gt>B<version>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<workdir>
+=item $obj-E<gt>B<workdir>()
 
 See L<OODoc::Format/"Attributes">
 
@@ -158,15 +164,12 @@ Complex:
  -Option --Defined in     --Default
   process  OODoc::Format    qr/\.(s?html|cgi)$/
   source   OODoc::Format    "html/other/"
-  verbose  OODoc::Format    0
 
 =over 2
 
 =item process => REGEXP
 
 =item source => DIRECTORY
-
-=item verbose => INTEGER
 
 =back
 
@@ -263,7 +266,7 @@ See L<OODoc::Format/"Page generation">
 
 See L<OODoc::Format/"Page generation">
 
-=item $obj-E<gt>B<writeTable>
+=item $obj-E<gt>B<writeTable>()
 
  -Option--Default
   ARRAY   <required>
@@ -300,17 +303,17 @@ is the header.
 
 =back
 
-=item $obj-E<gt>B<templateChapter>
+=item $obj-E<gt>B<templateChapter>()
 
-=item $obj-E<gt>B<templateDate>(ZONE, ARGS)
+=item $obj-E<gt>B<templateDate>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateDistribution>(ZONE, ARGS)
+=item $obj-E<gt>B<templateDistribution>(TEMPL, ATTRS, IF, ELSE)
 
 The name of the distribution which contains the manual page at hand.
 
-=item $obj-E<gt>B<templateHref>(ZONE, ARGS)
+=item $obj-E<gt>B<templateHref>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateIndex>(ZONE, ARGS)
+=item $obj-E<gt>B<templateIndex>(TEMPL, ATTRS, IF, ELSE)
 
 The I<index> template is called with one keyword, which tells the
 kind of index to be built.  Valid values are C<MANUALS>,
@@ -349,16 +352,12 @@ are listed or C<error> for diagnostics.
 example: use of the template tag "index"
 
  <table cellspacing="10">
- <!--{index DIAGNOSTICS type error starting_with A}-->
+ <!--{index DIAGNOSTICS type => error, starting_with => A}-->
  </table>
 
-=item $obj-E<gt>B<templateInheritance>(ZONE, ARGS)
+=item $obj-E<gt>B<templateInheritance>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateList>(ZONE, ARGS)
-
-The ZONE (which originate from the template file) start with the
-name of a chapter or C<'ALL'>.  The rest of the ZONE
-are interpreted as argument list which overrule the OPTIONS.
+=item $obj-E<gt>B<templateList>(TEMPL, ATTRS, IF, ELSE)
 
  -Option          --Default
   manual            <required>
@@ -387,19 +386,19 @@ in the tag parameter list, which is a pity.
 
 =back
 
-=item $obj-E<gt>B<templateManual>(ZONE, ARGS)
+=item $obj-E<gt>B<templateManual>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateMeta>(ZONE, ARGS)
+=item $obj-E<gt>B<templateMeta>(TEMPL, ATTRS, IF, ELSE)
 
 ARGS is a reference to a hash with options.  ZONE contains the attributes
-in the template.  Use L<new(html_meta_data)|OODoc::Format::Html/"METHODS"> to set the result of this
+in the template.  Use L<new(html_meta_data)|OODoc::Format::Html/"Constructors"> to set the result of this
 method, or extend its implementation.
 
-=item $obj-E<gt>B<templateName>(ZONE, ARGS)
+=item $obj-E<gt>B<templateName>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateTitle>(ZONE, ARGS)
+=item $obj-E<gt>B<templateTitle>(TEMPL, ATTRS, IF, ELSE)
 
-=item $obj-E<gt>B<templateVersion>(ZONE, ARGS)
+=item $obj-E<gt>B<templateVersion>(TEMPL, ATTRS, IF, ELSE)
 
 The version is taken from the manual (which means that you may have
 a different version number per manual) when a manual is being formatted,
@@ -413,13 +412,13 @@ and otherwise the project total version.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Format::Html-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Format::Html-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Format::Html-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Format::Html-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -437,11 +436,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manual>(NAME)
-
-See L<OODoc::Object/"Manual Repository">
-
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -449,17 +444,9 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
-
-=back
-
-=over 4
-
-=item $obj-E<gt>B<zoneGetParameters>(ZONE|STRING)
-
-See L<OODoc::Format::TemplateMagic/"METHODS">
 
 =back
 
@@ -476,16 +463,22 @@ for a template.  However, it does not seem to exist.  Unfortunately,
 the location where the source is specified is not known when the
 error is produced.
 
-=item Error: cannot write html manual at $filename: $!
+=item Error: cannot write html manual to $filename: $!
+
+=item Error: cannot write html to $filename: $!
+
+=item Error: cannot write markers to $filename: $!
 
 =item Error: chapter NAME in manual $name has illegal shape
 
-=item Error: chapter without name in template.
+=item Error: chapter without name in template $fn
 
 In your template file, a {chapter} statement is used, which is
 erroneous, because it requires a chapter name.
 
-=item Error: html source directory $source does not exist.
+=item Error: chmod of $filename to $mode failed: $!
+
+=item Error: html source directory $source: $!
 
 =item Error: illegal value to show_sections: $show_sec
 
@@ -497,8 +490,6 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =item Warning: missing required chapter $name in $manual
 
-=item Error: no directory to put other html pages in.
-
 =item Error: no group named as attribute for index
 
 In your template file, an {index} statement is used without a chapter name
@@ -507,13 +498,11 @@ be built.
 
 =item Error: no group named as attribute for list
 
+=item Warning: no meaning for container $contained in chapter block
+
+=item Warning: no meaning for container $contained in index block
+
 =item Warning: no meaning for container $contained in list block
-
-=item Warning: no meaning for container $container in chapter block
-
-=item Warning: no meaning for container $container in index block
-
-=item Error: no package name for html production
 
 =item Error: not a manual, so no automatic title in $template
 
@@ -529,12 +518,12 @@ be built.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

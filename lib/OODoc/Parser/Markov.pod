@@ -183,13 +183,13 @@ a "E<lt>" will stay that way, not being translated in a "E<amp>lt;".
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Parser::Markov-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Parser::Markov-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Parser::Markov-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Parser::Markov-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -211,7 +211,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -219,7 +219,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -228,6 +228,20 @@ See L<OODoc::Object/"Manual Repository">
 =head1 DETAILS
 
 =head2 General Description
+
+The Markov parser has some commonalities with the common POD syntax.
+You can use the same tags as are defined by POD, however these tags are
+"visual style", which means that OODoc can not treat it smart.  The Markov
+parser adds many logical markups which will produce nicer pages.
+
+Furthermore, the parser will remove the documentation from the
+source code, because otherwise the package installation would fail:
+Perl's default installation behavior will extract POD from packages,
+but the markup is not really POD, which will cause many complaints.
+
+The version of the module is defined by the OODoc object which creates
+the manual page.  Therefore, C<$VERSION> will be added to each package
+automatically.
 
 =head3 Disadvantages
 
@@ -244,20 +258,6 @@ how to produce these "raw" packages.
 
 Finally, a difference with the standard POD process: the manual-page must
 be preceeded with a C<package> keyword.
-
-The Markov parser has some commonalities with the common POD syntax.
-You can use the same tags as are defined by POD, however these tags are
-"visual style", which means that OODoc can not treat it smart.  The Markov
-parser adds many logical markups which will produce nicer pages.
-
-Furthermore, the parser will remove the documentation from the
-source code, because otherwise the package installation would fail:
-Perl's default installation behavior will extract POD from packages,
-but the markup is not really POD, which will cause many complaints.
-
-The version of the module is defined by the OODoc object which creates
-the manual page.  Therefore, C<$VERSION> will be added to each package
-automatically.
 
 =head2 Structural tags
 
@@ -342,6 +342,13 @@ For comfort, all POD markups are supported as well
 
 =head2 Text markup
 
+Next to the structural markup, there is textual markup.  This markup
+is the same as POD defines in the perlpod manual page. For instance,
+CE<lt>some codeE<gt> can be used to create visual markup as a code
+fragment.
+
+One kind is added to the standard list: the C<M>.
+
 =head3 The M-link
 
 The C<M>-link can not be nested inside other text markup items.  It is used
@@ -350,6 +357,7 @@ to manuals as well, however then the POD output filter will modify the
 manual page while converting it to other manual formats.
 
 Syntax of the C<M>-link:
+
  M E<lt> OODoc::Object E<gt>
  M E<lt> OODoc::Object::new() E<gt>
  M E<lt> OODoc::Object::new(verbose) E<gt>
@@ -367,6 +375,7 @@ The standard POD defines a C<L> markup tag.  This can also be used with
 this Markov parser.
 
 The following syntaxes are supported:
+
  L E<lt> manual E<gt>
  L E<lt> manual/section E<gt>
  L E<lt> manual/"section" E<gt>
@@ -389,19 +398,13 @@ I<subsection> a subsection (in that manual, by default the current manual).
 The I<unix-manual> MUST be formatted with its chapter number, for instance
 C<cat(1)>, otherwise a link will be created.  See the following examples
 in the html version of these manual pages:
+
  M E<lt> perldoc E<gt>              illegal: not in distribution
  L E<lt> perldoc E<gt>              manual perldoc
  L E<lt> perldoc(1perl) E<gt>       manual perldoc(1perl)
  M E<lt> OODoc::Object E<gt>        OODoc::Object
  L E<lt> OODoc::Object E<gt>        OODoc::Object
  L E<lt> OODoc::Object(3pm) E<gt>   manual OODoc::Object(3pm)
-
-Next to the structural markup, there is textual markup.  This markup
-is the same as POD defines in the perlpod manual page. For instance,
-CE<lt>some codeE<gt> can be used to create visual markup as a code
-fragment.
-
-One kind is added to the standard list: the C<M>.
 
 =head2 Grouping subroutines
 
@@ -598,12 +601,12 @@ is not always easy to find.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

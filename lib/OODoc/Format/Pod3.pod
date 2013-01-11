@@ -48,19 +48,19 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =over 4
 
-=item $obj-E<gt>B<manifest>
+=item $obj-E<gt>B<manifest>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<project>
+=item $obj-E<gt>B<project>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<version>
+=item $obj-E<gt>B<version>()
 
 See L<OODoc::Format/"Attributes">
 
-=item $obj-E<gt>B<workdir>
+=item $obj-E<gt>B<workdir>()
 
 See L<OODoc::Format/"Attributes">
 
@@ -80,12 +80,12 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =item $obj-E<gt>B<createManual>(OPTIONS)
 
- -Option        --Defined in     --Default
+ -Option        --Defined in        --Default
   append          OODoc::Format::Pod  ''
-  format_options  OODoc::Format    []
-  manual          OODoc::Format    <required>
-  project         OODoc::Format    <required>
-  template                         <in code>
+  format_options  OODoc::Format       []
+  manual          OODoc::Format       <required>
+  project         OODoc::Format       <required>
+  template                            <in code>
 
 =over 2
 
@@ -185,7 +185,7 @@ See L<OODoc::Format/"Page generation">
 
 See L<OODoc::Format/"Page generation">
 
-=item $obj-E<gt>B<writeTable>
+=item $obj-E<gt>B<writeTable>()
 
 See L<OODoc::Format::Pod/"Page generation">
 
@@ -197,13 +197,13 @@ See L<OODoc::Format::Pod/"Page generation">
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Format::Pod3-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Format::Pod3-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Format::Pod3-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Format::Pod3-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -225,7 +225,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -233,7 +233,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -279,12 +279,12 @@ directory must be provided via L<new(workdir)|OODoc::Format/"METHODS">, but was 
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

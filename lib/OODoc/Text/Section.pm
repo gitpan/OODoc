@@ -1,26 +1,27 @@
-# Copyrights 2003-2011 by Mark Overmeer.
+# Copyrights 2003-2013 by [Mark Overmeer].
 #  For other contributors see ChangeLog.
 # See the manual pages for details on the licensing terms.
-# Pod stripped from pm file by OODoc 1.06.
+# Pod stripped from pm file by OODoc 2.00.
 
 package OODoc::Text::Section;
 use vars '$VERSION';
-$VERSION = '1.06';
+$VERSION = '2.00';
 
 use base 'OODoc::Text::Structure';
 
 use strict;
 use warnings;
 
-use Carp;
-use List::Util 'first';
+use Log::Report    'oodoc';
+use List::Util     'first';
+
 
 
 sub init($)
 {   my ($self, $args) = @_;
     $args->{type}      ||= 'Section';
     $args->{level}     ||= 2;
-    $args->{container} ||= delete $args->{chapter} or confess;
+    $args->{container} ||= delete $args->{chapter} or panic;
 
     $self->SUPER::init($args) or return;
 

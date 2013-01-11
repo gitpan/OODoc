@@ -21,21 +21,21 @@ or use the oodist script
 =head1 DESCRIPTION
 
 OODoc stands for "Object Oriented Documentation": to produce manual-pages
-in HTML or the usual man-page UNIX format, describing Perl programs.  The
-OO part refers to two things: this module simplifies writing documentation
-for Object Oriented programs, and at the same time, it is Object Oriented
-itself: easily extensible.
+in HTML or the usual man-page UNIX format, describing Perl programs.
+The OO part of the name refers to two things: this module simplifies
+writing documentation for Object Oriented programs, and at the same time,
+it is Object Oriented itself: easily extensible.
 
 Before you read any further, decide:
 
 =over 4
 
-=item 1.
+=item 1
 
 to use your own modified version of the mkdist and mkdoc scripts, as provided
 in the examples which come with this module, or
 
-=item 2.
+=item 2
 
 use the oodist, which is less flexible but much simpler, and only requires
 some additions to your Makefile.PL.
@@ -70,7 +70,6 @@ example of the produced output.
  -Option      --Default
   distribution  <required>
   project       <distribution>
-  verbose       0
   version       <from version or VERSION file>
 
 =over 2
@@ -84,11 +83,6 @@ The name of the package, as released on CPAN.
 A short description of the distribution, as will be shown on many places
 in the produced manual pages and code.  You can use the main package name,
 or something which is nicer to read.
-
-=item verbose => INTEGER
-
-Verbosity during the process.  The higher the number, the more information
-will be presented (current useful maximum is 4).
 
 =item version => STRING
 
@@ -115,15 +109,15 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 =over 4
 
-=item $obj-E<gt>B<distribution>
+=item $obj-E<gt>B<distribution>()
 
 Returns the nice name for the distribution.
 
-=item $obj-E<gt>B<project>
+=item $obj-E<gt>B<project>()
 
 Returns the general project description, by default the distribution name.
 
-=item $obj-E<gt>B<version>
+=item $obj-E<gt>B<version>()
 
 Returns the version string for the distribution.
 
@@ -143,7 +137,6 @@ Returns the version string for the distribution.
   select        qr/\.(pod|pm)$/
   skip_links    []
   source        '.'
-  verbose       <from object>
   version       <from source directory or OODoc object>
   workdir       <required>
 
@@ -186,11 +179,6 @@ The location where the files are located.  This is useful when you collect
 the documentation of other distributions into the main one.  Usually in
 combination with an undefined value for C<workdir>.
 
-=item verbose => INTEGER
-
-Tell more about each stage of the processing.  The higher the number,
-the more information you will get.
-
 =item version => STRING
 
 The version of the distribution.  If not specified, the C<source>
@@ -226,7 +214,7 @@ L<processFiles(select)|OODoc/"Parser"> and the LIST are files from a manifest.
 
 =over 4
 
-=item $obj-E<gt>B<getPackageRelations>(VERBOSITY)
+=item $obj-E<gt>B<getPackageRelations>()
 
 Compile all files which contain packages, and then try to find-out
 how they are related.
@@ -236,15 +224,6 @@ how they are related.
 Add information to the documentation tree about inheritance relationships
 of the packages.  C<prepare> must be called between L<processFiles()|OODoc/"Parser">
 and L<create()|OODoc/"Formatter">.
-
- -Option --Default
-  verbose  <from object>
-
-=over 2
-
-=item verbose => INTEGER
-
-=back
 
 =back
 
@@ -265,17 +244,16 @@ and C<html> representing L<OODoc::Format::Pod|OODoc::Format::Pod> and L<OODoc::F
 respectively), the name of a CLASS which needs to be instantiated,
 or an instantiated formatter.
 
- -Option         --Default
-  append           undef
-  format_options   []
-  manifest         <workdir>/MANIFEST
-  manual_format    []
-  manual_template  undef
-  other_files      undef
-  process_files    <formatter dependent>
-  select           undef
-  verbose          0
-  workdir          <required>
+ -Option          --Default
+  append            undef
+  format_options    []
+  manifest          <workdir>/MANIFEST
+  manual_format     []
+  manual_templates  undef
+  other_templates   undef
+  process_files     <formatter dependent>
+  select            undef
+  workdir           <required>
 
 =over 2
 
@@ -300,14 +278,14 @@ Options passed to L<OODoc::Format::createManual(format_options)|OODoc::Format/"P
 a manual page has to be produced.  See the applicable formatter
 manual page for the possible flags and values.
 
-=item manual_template => LOCATION
+=item manual_templates => DIRECTORY
 
 Passed to L<OODoc::Format::createManual(template)|OODoc::Format/"Page generation">, and defines the
 location of the set of pages which has to be created for each manual
 page.  Some formatters do not support templates and the valid values
 are formatter dependent.
 
-=item other_files => DIRECTORY
+=item other_templates => DIRECTORY
 
 Other files which have to be copied
 passed to L<OODoc::Format::createOtherPages(source)|OODoc::Format/"Page generation">.
@@ -325,18 +303,13 @@ manuals from different distributions.  When a REGEXP is provided, it
 will be checked against the manual name.  The CODE reference will be
 called with a manual as only argument.
 
-=item verbose => INTEGER
-
-Debug level, the higher the number, the more details about the process
-you will have.
-
 =item workdir => DIRECTORY
 
 The directory where the output is going to.
 
 =back
 
-=item $obj-E<gt>B<stats>
+=item $obj-E<gt>B<stats>()
 
 Returns a string which contains some statistics about the whole parsed
 document set.
@@ -349,13 +322,13 @@ document set.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -377,7 +350,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -385,7 +358,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -415,6 +388,13 @@ distributions, but is much more needed when programs grow larger.
 
 =head2 How OODoc works
 
+Like with POD, you simply mix your documentation with your code.  When
+the module is distributed, this information is stripped from the files
+by a I<parser>, and translated into an object tree.  This tree is then
+optimized: items combined, reorganized, etc, to collect all information
+required to produce useable manual pages.  Then, a I<formatter> is called
+to generate the manual pages.
+
 =head3 The parser
 
 The parser reads the package files, and (by default) strip them from all
@@ -442,13 +422,6 @@ manual page generators.
 The final phase can be called more than once: based on the same object
 tree, documents can be produced in various formats.  The initial
 implementation produces POD and HTML.
-
-Like with POD, you simply mix your documentation with your code.  When
-the module is distributed, this information is stripped from the files
-by a I<parser>, and translated into an object tree.  This tree is then
-optimized: items combined, reorganized, etc, to collect all information
-required to produce useable manual pages.  Then, a I<formatter> is called
-to generate the manual pages.
 
 =head2 Getting Started from scratch
 
@@ -495,8 +468,7 @@ when you glue multiple modules together into one big HTML documentation
 website (see the mailbox example), then this separate file simplifies
 the production script.
 
-To test the document production, use C<./mkdoc 1>  (C<1> = verbose)
-The output can be found in the specified C<workdir>.  To see them:
+To test the document production,
 try (on UNIX/Linux)  C<<pod2man xyz.pod | man -l - >>
 
 To get a prepared distribution, use C<./mkdist 1>.  This will first
@@ -525,6 +497,12 @@ an other error message which will tell you the exact cause.
 
 For some reason, a plain file from can not be copied from your source
 tree to the location where the distribution is made.
+
+=item Error: create requires a directory to write the manuals to
+
+You have to give a value to C<workdir>, which will be used as top directory
+for the produced output.  It does not matter whether there is already some
+stuff in that directory.
 
 =item Error: formatter $name has compilation errors: $@
 
@@ -565,12 +543,6 @@ to a temporary directory.  The packages are first stripped from
 their pseudo doc, and then written to the same directory.  That
 directory will be the place where C<make dist> is run later.
 
-=item Error: requires a directory to write the manuals to
-
-You have to give a value to C<workdir>, which will be used as top directory
-for the produced output.  It does not matter whether there is already some
-stuff in that directory.
-
 =item Error: the destribution must be specified
 
 =item Error: there is no version defined for the source files
@@ -589,12 +561,12 @@ an ARRAY, regular expression, or a code reference.
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -20,15 +20,15 @@ they differ.
 
 =over 4
 
-=item overload: B<'""' (stringification)>
+=item overload: B<'""' (stringification)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'==' and '!='>
+=item overload: B<'==' and '!='>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'cmp' (string comparison)>
+=item overload: B<'cmp' (string comparison)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
@@ -84,20 +84,20 @@ See L<OODoc::Text/"OVERLOADED">
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<description>
+=item $obj-E<gt>B<description>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<name>
+=item $obj-E<gt>B<name>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<parameters>
+=item $obj-E<gt>B<parameters>()
 
 The parameter list for the subroutine is returned as string.  The
 result may be C<undef> or empty.
 
-=item $obj-E<gt>B<type>
+=item $obj-E<gt>B<type>()
 
 See L<OODoc::Text/"Attributes">
 
@@ -119,15 +119,15 @@ current manual.
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<path>
+=item $obj-E<gt>B<path>()
 
 Returns the path of the text structure which contains this subroutine.
 
-=item $obj-E<gt>B<unique>
+=item $obj-E<gt>B<unique>()
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<where>
+=item $obj-E<gt>B<where>()
 
 See L<OODoc::Text/"Location">
 
@@ -137,7 +137,7 @@ See L<OODoc::Text/"Location">
 
 =over 4
 
-=item $obj-E<gt>B<collectedOptions>
+=item $obj-E<gt>B<collectedOptions>()
 
 Returns a list of option-default combinations on this subroutine.
 
@@ -148,7 +148,7 @@ does not search through super classes, but solely which is defined with
 this subroutine.  When passed an OBJECT of type OODoc::Text::Default
 that will be stored.
 
-=item $obj-E<gt>B<defaults>
+=item $obj-E<gt>B<defaults>()
 
 Returns a list of all defaults as defined by this documentation item in
 one manual.
@@ -159,7 +159,7 @@ Add a new diagnostic message (a OODoc::Text::Diagnostic object) to the
 list already in this object.  You can not look for a message because
 these names are without use.
 
-=item $obj-E<gt>B<diagnostics>
+=item $obj-E<gt>B<diagnostics>()
 
 Returns a list of all diagnostics.
 
@@ -167,11 +167,11 @@ Returns a list of all diagnostics.
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<examples>
+=item $obj-E<gt>B<examples>()
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<findDescriptionObject>
+=item $obj-E<gt>B<findDescriptionObject>()
 
 See L<OODoc::Text/"Collected">
 
@@ -180,7 +180,7 @@ See L<OODoc::Text/"Collected">
 Does a little more thorough job than L<option()|OODoc::Text::Subroutine/"Collected"> bu searching the inherited
 options for this subroutine as well.
 
-=item $obj-E<gt>B<openDescription>
+=item $obj-E<gt>B<openDescription>()
 
 See L<OODoc::Text/"Collected">
 
@@ -191,7 +191,7 @@ does not search through super classes, but solely which is defined with
 this subroutine.  When passed an OBJECT of type OODoc::Text::Option
 that will be stored.
 
-=item $obj-E<gt>B<options>
+=item $obj-E<gt>B<options>()
 
 Returns a list of all options as defined by this documentation item in
 one manual.
@@ -204,13 +204,13 @@ one manual.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Text::Subroutine-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Text::Subroutine-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Text::Subroutine-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Text::Subroutine-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -228,7 +228,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -236,7 +236,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -274,12 +274,12 @@ be a part of the chapter).
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -30,15 +30,15 @@ provide a structure to the document.
 
 =over 4
 
-=item overload: B<'""' (stringification)>
+=item overload: B<'""' (stringification)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'==' and '!='>
+=item overload: B<'==' and '!='>()
 
 See L<OODoc::Text/"OVERLOADED">
 
-=item overload: B<'cmp' (string comparison)>
+=item overload: B<'cmp' (string comparison)>()
 
 See L<OODoc::Text/"OVERLOADED">
 
@@ -105,26 +105,26 @@ See L<OODoc::Object/"Inheritance knowledge">
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<description>
+=item $obj-E<gt>B<description>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<level>
+=item $obj-E<gt>B<level>()
 
 Returns the level of the text structure.  Like in pod and html, a chapter
 will be 1, section 2, and subsection 3.
 
-=item $obj-E<gt>B<name>
+=item $obj-E<gt>B<name>()
 
 See L<OODoc::Text/"Attributes">
 
-=item $obj-E<gt>B<niceName>
+=item $obj-E<gt>B<niceName>()
 
 Returns the name of this chapter, section or sub-section beautified to
 normal caps.  If the name does not contain lower-case characters, then
 the whole string is lower-cased, and then the first upper-cased.
 
-=item $obj-E<gt>B<type>
+=item $obj-E<gt>B<type>()
 
 See L<OODoc::Text/"Attributes">
 
@@ -143,7 +143,7 @@ is returned.
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<path>
+=item $obj-E<gt>B<path>()
 
 Represent the location of this chapter, section, or subsection as
 one string, separated by slashes.
@@ -153,11 +153,11 @@ example:
  print $subsect->path; 
     # may print:  METHODS/Container/Search
 
-=item $obj-E<gt>B<unique>
+=item $obj-E<gt>B<unique>()
 
 See L<OODoc::Text/"Location">
 
-=item $obj-E<gt>B<where>
+=item $obj-E<gt>B<where>()
 
 See L<OODoc::Text/"Location">
 
@@ -179,15 +179,15 @@ returned as list.
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<examples>
+=item $obj-E<gt>B<examples>()
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<findDescriptionObject>
+=item $obj-E<gt>B<findDescriptionObject>()
 
 See L<OODoc::Text/"Collected">
 
-=item $obj-E<gt>B<isEmpty>
+=item $obj-E<gt>B<isEmpty>()
 
 Return true if this text structure is only a place holder for something
 found in a super class.  Structured elements are created with
@@ -199,7 +199,7 @@ example:
 
  unless($chapter->isEmpty) ...
 
-=item $obj-E<gt>B<openDescription>
+=item $obj-E<gt>B<openDescription>()
 
 See L<OODoc::Text/"Collected">
 
@@ -227,7 +227,7 @@ each-other to simplify working with the inheritance relations.
 
 Returns the subroutine with the specific name.
 
-=item $obj-E<gt>B<subroutines>
+=item $obj-E<gt>B<subroutines>()
 
 Returns the list of subroutines which are related to this text object.
 
@@ -239,13 +239,13 @@ Returns the list of subroutines which are related to this text object.
 
 =item $obj-E<gt>B<filenameToPackage>(FILENAME)
 
-OODoc::Text::Structure-E<gt>B<filenameToPackage>(FILENAME)
+=item OODoc::Text::Structure-E<gt>B<filenameToPackage>(FILENAME)
 
 See L<OODoc::Object/"Commonly used functions">
 
 =item $obj-E<gt>B<mkdirhier>(DIRECTORY)
 
-OODoc::Text::Structure-E<gt>B<mkdirhier>(DIRECTORY)
+=item OODoc::Text::Structure-E<gt>B<mkdirhier>(DIRECTORY)
 
 See L<OODoc::Object/"Commonly used functions">
 
@@ -263,7 +263,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<manuals>
+=item $obj-E<gt>B<manuals>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -271,7 +271,7 @@ See L<OODoc::Object/"Manual Repository">
 
 See L<OODoc::Object/"Manual Repository">
 
-=item $obj-E<gt>B<packageNames>
+=item $obj-E<gt>B<packageNames>()
 
 See L<OODoc::Object/"Manual Repository">
 
@@ -293,12 +293,12 @@ to L<manualsForPackage()|OODoc::Object/"Manual Repository"> or L<mainManual()|OO
 
 =head1 SEE ALSO
 
-This module is part of OODoc distribution version 1.06,
-built on January 26, 2011. Website: F<http://perl.overmeer.net/oodoc/>
+This module is part of OODoc distribution version 2.00,
+built on January 11, 2013. Website: F<http://perl.overmeer.net/oodoc/>
 
 =head1 LICENSE
 
-Copyrights 2003-2011 by Mark Overmeer. For other contributors see ChangeLog.
+Copyrights 2003-2013 by [Mark Overmeer]. For other contributors see ChangeLog.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
